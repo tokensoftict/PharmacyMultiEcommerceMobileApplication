@@ -7,27 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* PSGeneralDrugCentreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PSGeneralDrugCentreTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-PSGeneralDrugCentre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-PSGeneralDrugCentre.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.a */; };
+		811EBBDF82F6C32A4119D551 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1AAE8EE019E2A9A37CFF4B34 /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		F757EB752C2EE5710031A103 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F757EB742C2EE5710031A103 /* main.jsbundle */; };
+		2C5F9A6F14764AC0BD9052D5 /* Urbanist-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77930B12D5A74AC8BF6224BB /* Urbanist-Black.ttf */; };
+		D94D3E939F2649A08D9D4764 /* Urbanist-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC3BCA6882514689BB09E7B0 /* Urbanist-BlackItalic.ttf */; };
+		786DD039EF8C4311B983C1D5 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C1524779BBF4587AEF36225 /* Urbanist-Bold.ttf */; };
+		AE4A783B23C7406689AA2CA5 /* Urbanist-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870060BAA92341E68207AF1F /* Urbanist-BoldItalic.ttf */; };
+		60382F95C17C47858B487152 /* Urbanist-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0826BCE5FAC64398BF8E10A6 /* Urbanist-ExtraBold.ttf */; };
+		E1F3CBDB21BC44BE812724AE /* Urbanist-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836CE9DCAB3480CB63091B4 /* Urbanist-ExtraBoldItalic.ttf */; };
+		5548E210625848A5AD0448DF /* Urbanist-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C9345C0900C4DA59B9788C9 /* Urbanist-ExtraLight.ttf */; };
+		1E8212389CF243EC91F75485 /* Urbanist-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19D0349100F247A2ACA4C7B2 /* Urbanist-ExtraLightItalic.ttf */; };
+		15CA5780AAFF40569378B8DE /* Urbanist-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80EE9A77FE7B405883AFD914 /* Urbanist-Italic.ttf */; };
+		51D152D302B9452494FBCE7A /* Urbanist-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA269752AF374296B8F705B9 /* Urbanist-Light.ttf */; };
+		AC14078C752C472A8208B0B7 /* Urbanist-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C3D3B32FDB9E4893A69EE87D /* Urbanist-LightItalic.ttf */; };
+		D5DBCEAF86AF4A6AAE55222E /* Urbanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F3D5BCBDD0E47DCB114DD52 /* Urbanist-Medium.ttf */; };
+		B9FF9629584C4E91B09E891A /* Urbanist-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 456B112D4B61404E9573398F /* Urbanist-MediumItalic.ttf */; };
+		0D9194082AA94DDEBC7DB1C3 /* Urbanist-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 239DCC5BF40C4C0BB92844A4 /* Urbanist-Regular.ttf */; };
+		9695D88A47CD40258EDEEF57 /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DDD3CD13EC74857BCA2FD97 /* Urbanist-SemiBold.ttf */; };
+		945BE326CA53404CA8EC19D1 /* Urbanist-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB011144EA984819AC23B311 /* Urbanist-SemiBoldItalic.ttf */; };
+		539996622E2144C8B3529C1A /* Urbanist-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81D2C4B40F0D45E3A8A39012 /* Urbanist-Thin.ttf */; };
+		F71E5A60D4B84057B98C3B55 /* Urbanist-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8AA52FADF07E4F9DAD8F7A71 /* Urbanist-ThinItalic.ttf */; };
+		1410C25EA1B5403A9CFC2DC0 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 347ADFCB688845F88A21084D /* Poppins-Black.ttf */; };
+		BB16CEDFDDF645D7BA9463A2 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FDC69BF6660421F8D36983E /* Poppins-BlackItalic.ttf */; };
+		4D406E8192804A6C9F10E851 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58D8C2DD941840FDA45E3FCA /* Poppins-Bold.ttf */; };
+		1FB6FB4A31DE4E7ABE654BC1 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79EEDD2A82A84298924C91E7 /* Poppins-BoldItalic.ttf */; };
+		6238C3698CB144DDB07A6808 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A471AD9D7D0F41DDB48965AE /* Poppins-ExtraBold.ttf */; };
+		FD4F17CA7A9544ADBA640A52 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ACA50C2012F42819A7BC475 /* Poppins-ExtraBoldItalic.ttf */; };
+		19AF8B453DB64A79A498B274 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D420DF7E6574403987E1DEE /* Poppins-ExtraLight.ttf */; };
+		808140865C6E449E803BB19B /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 421E0223E12F4C0B93A641EB /* Poppins-ExtraLightItalic.ttf */; };
+		6712642A15B5493D9DD8566D /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B93CE033A04F7192D23FA3 /* Poppins-Italic.ttf */; };
+		9CC60B5A86DB4AD8A0E9BE6D /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163EDB286DE54F23BED5039C /* Poppins-Light.ttf */; };
+		DD05884F4BF545BD96C8D456 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B8D3CE9A0844A438D79A741 /* Poppins-LightItalic.ttf */; };
+		76F2E2BEEF224EA798A7CC4F /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD1519CAE304479BBCD9D446 /* Poppins-Medium.ttf */; };
+		7F1EADD3F68C4F88B30F6949 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39908C78C9F44A0392F0DDFE /* Poppins-MediumItalic.ttf */; };
+		D537D68E9E1643FAB7A5F9BF /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E158D254EF24B7D80C3418A /* Poppins-Regular.ttf */; };
+		2E87657F7ADC46BFBC05B87C /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9874B5AFDFAD4C2FAFBCE900 /* Poppins-SemiBold.ttf */; };
+		92BC062B99D24F82B2C53CBD /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE19DFD4E1224C04823E72A2 /* Poppins-SemiBoldItalic.ttf */; };
+		C11D609D0C8B4BD1BA9628C4 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8504940E61C04F929D72FC54 /* Poppins-Thin.ttf */; };
+		8A2F7FD2973B40759122D705 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBCA8A5C335946D3A08E5EE9 /* Poppins-ThinItalic.ttf */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = PSGeneralDrugCentre;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* PSGeneralDrugCentreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PSGeneralDrugCentreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PSGeneralDrugCentreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PSGeneralDrugCentreTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* PSGeneralDrugCentre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSGeneralDrugCentre.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,8 +61,9 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PSGeneralDrugCentre/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PSGeneralDrugCentre/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PSGeneralDrugCentre/main.m; sourceTree = "<group>"; };
-	    13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = PSGeneralDrugCentre/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = PSGeneralDrugCentre/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AAE8EE019E2A9A37CFF4B34 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = PSGeneralDrugCentre/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-PSGeneralDrugCentre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PSGeneralDrugCentre.debug.xcconfig"; path = "Target Support Files/Pods-PSGeneralDrugCentre/Pods-PSGeneralDrugCentre.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-PSGeneralDrugCentre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PSGeneralDrugCentre.release.xcconfig"; path = "Target Support Files/Pods-PSGeneralDrugCentre/Pods-PSGeneralDrugCentre.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.debug.xcconfig"; path = "Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -45,17 +71,46 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PSGeneralDrugCentre/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.release.xcconfig"; path = "Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F757EB742C2EE5710031A103 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		77930B12D5A74AC8BF6224BB /* Urbanist-Black.ttf */ = {isa = PBXFileReference; name = "Urbanist-Black.ttf"; path = "../app/assets/fonts/Urbanist-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AC3BCA6882514689BB09E7B0 /* Urbanist-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-BlackItalic.ttf"; path = "../app/assets/fonts/Urbanist-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4C1524779BBF4587AEF36225 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; name = "Urbanist-Bold.ttf"; path = "../app/assets/fonts/Urbanist-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		870060BAA92341E68207AF1F /* Urbanist-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-BoldItalic.ttf"; path = "../app/assets/fonts/Urbanist-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0826BCE5FAC64398BF8E10A6 /* Urbanist-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Urbanist-ExtraBold.ttf"; path = "../app/assets/fonts/Urbanist-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C836CE9DCAB3480CB63091B4 /* Urbanist-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-ExtraBoldItalic.ttf"; path = "../app/assets/fonts/Urbanist-ExtraBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5C9345C0900C4DA59B9788C9 /* Urbanist-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Urbanist-ExtraLight.ttf"; path = "../app/assets/fonts/Urbanist-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		19D0349100F247A2ACA4C7B2 /* Urbanist-ExtraLightItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-ExtraLightItalic.ttf"; path = "../app/assets/fonts/Urbanist-ExtraLightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80EE9A77FE7B405883AFD914 /* Urbanist-Italic.ttf */ = {isa = PBXFileReference; name = "Urbanist-Italic.ttf"; path = "../app/assets/fonts/Urbanist-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AA269752AF374296B8F705B9 /* Urbanist-Light.ttf */ = {isa = PBXFileReference; name = "Urbanist-Light.ttf"; path = "../app/assets/fonts/Urbanist-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C3D3B32FDB9E4893A69EE87D /* Urbanist-LightItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-LightItalic.ttf"; path = "../app/assets/fonts/Urbanist-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3F3D5BCBDD0E47DCB114DD52 /* Urbanist-Medium.ttf */ = {isa = PBXFileReference; name = "Urbanist-Medium.ttf"; path = "../app/assets/fonts/Urbanist-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		456B112D4B61404E9573398F /* Urbanist-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-MediumItalic.ttf"; path = "../app/assets/fonts/Urbanist-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		239DCC5BF40C4C0BB92844A4 /* Urbanist-Regular.ttf */ = {isa = PBXFileReference; name = "Urbanist-Regular.ttf"; path = "../app/assets/fonts/Urbanist-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6DDD3CD13EC74857BCA2FD97 /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; name = "Urbanist-SemiBold.ttf"; path = "../app/assets/fonts/Urbanist-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB011144EA984819AC23B311 /* Urbanist-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-SemiBoldItalic.ttf"; path = "../app/assets/fonts/Urbanist-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		81D2C4B40F0D45E3A8A39012 /* Urbanist-Thin.ttf */ = {isa = PBXFileReference; name = "Urbanist-Thin.ttf"; path = "../app/assets/fonts/Urbanist-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8AA52FADF07E4F9DAD8F7A71 /* Urbanist-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Urbanist-ThinItalic.ttf"; path = "../app/assets/fonts/Urbanist-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		347ADFCB688845F88A21084D /* Poppins-Black.ttf */ = {isa = PBXFileReference; name = "Poppins-Black.ttf"; path = "../app/assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8FDC69BF6660421F8D36983E /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-BlackItalic.ttf"; path = "../app/assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		58D8C2DD941840FDA45E3FCA /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../app/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79EEDD2A82A84298924C91E7 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-BoldItalic.ttf"; path = "../app/assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A471AD9D7D0F41DDB48965AE /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBold.ttf"; path = "../app/assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0ACA50C2012F42819A7BC475 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBoldItalic.ttf"; path = "../app/assets/fonts/Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1D420DF7E6574403987E1DEE /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraLight.ttf"; path = "../app/assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		421E0223E12F4C0B93A641EB /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraLightItalic.ttf"; path = "../app/assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F2B93CE033A04F7192D23FA3 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; name = "Poppins-Italic.ttf"; path = "../app/assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		163EDB286DE54F23BED5039C /* Poppins-Light.ttf */ = {isa = PBXFileReference; name = "Poppins-Light.ttf"; path = "../app/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5B8D3CE9A0844A438D79A741 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-LightItalic.ttf"; path = "../app/assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AD1519CAE304479BBCD9D446 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../app/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		39908C78C9F44A0392F0DDFE /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-MediumItalic.ttf"; path = "../app/assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8E158D254EF24B7D80C3418A /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../app/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9874B5AFDFAD4C2FAFBCE900 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../app/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AE19DFD4E1224C04823E72A2 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBoldItalic.ttf"; path = "../app/assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8504940E61C04F929D72FC54 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; name = "Poppins-Thin.ttf"; path = "../app/assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CBCA8A5C335946D3A08E5EE9 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Poppins-ThinItalic.ttf"; path = "../app/assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E356EB1AD99517003FC87E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7699B88040F8A987B510C191 /* libPods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,6 +149,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				1AAE8EE019E2A9A37CFF4B34 /* PrivacyInfo.xcprivacy */,
 			);
 			name = PSGeneralDrugCentre;
 			sourceTree = "<group>";
@@ -118,12 +174,14 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F757EB742C2EE5710031A103 /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* PSGeneralDrugCentre */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PSGeneralDrugCentreTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				EF529086E320422BA827BC83 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -134,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* PSGeneralDrugCentre.app */,
-				00E356EE1AD99517003FC87E /* PSGeneralDrugCentreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,30 +207,53 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EF529086E320422BA827BC83 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				77930B12D5A74AC8BF6224BB /* Urbanist-Black.ttf */,
+				AC3BCA6882514689BB09E7B0 /* Urbanist-BlackItalic.ttf */,
+				4C1524779BBF4587AEF36225 /* Urbanist-Bold.ttf */,
+				870060BAA92341E68207AF1F /* Urbanist-BoldItalic.ttf */,
+				0826BCE5FAC64398BF8E10A6 /* Urbanist-ExtraBold.ttf */,
+				C836CE9DCAB3480CB63091B4 /* Urbanist-ExtraBoldItalic.ttf */,
+				5C9345C0900C4DA59B9788C9 /* Urbanist-ExtraLight.ttf */,
+				19D0349100F247A2ACA4C7B2 /* Urbanist-ExtraLightItalic.ttf */,
+				80EE9A77FE7B405883AFD914 /* Urbanist-Italic.ttf */,
+				AA269752AF374296B8F705B9 /* Urbanist-Light.ttf */,
+				C3D3B32FDB9E4893A69EE87D /* Urbanist-LightItalic.ttf */,
+				3F3D5BCBDD0E47DCB114DD52 /* Urbanist-Medium.ttf */,
+				456B112D4B61404E9573398F /* Urbanist-MediumItalic.ttf */,
+				239DCC5BF40C4C0BB92844A4 /* Urbanist-Regular.ttf */,
+				6DDD3CD13EC74857BCA2FD97 /* Urbanist-SemiBold.ttf */,
+				AB011144EA984819AC23B311 /* Urbanist-SemiBoldItalic.ttf */,
+				81D2C4B40F0D45E3A8A39012 /* Urbanist-Thin.ttf */,
+				8AA52FADF07E4F9DAD8F7A71 /* Urbanist-ThinItalic.ttf */,
+				347ADFCB688845F88A21084D /* Poppins-Black.ttf */,
+				8FDC69BF6660421F8D36983E /* Poppins-BlackItalic.ttf */,
+				58D8C2DD941840FDA45E3FCA /* Poppins-Bold.ttf */,
+				79EEDD2A82A84298924C91E7 /* Poppins-BoldItalic.ttf */,
+				A471AD9D7D0F41DDB48965AE /* Poppins-ExtraBold.ttf */,
+				0ACA50C2012F42819A7BC475 /* Poppins-ExtraBoldItalic.ttf */,
+				1D420DF7E6574403987E1DEE /* Poppins-ExtraLight.ttf */,
+				421E0223E12F4C0B93A641EB /* Poppins-ExtraLightItalic.ttf */,
+				F2B93CE033A04F7192D23FA3 /* Poppins-Italic.ttf */,
+				163EDB286DE54F23BED5039C /* Poppins-Light.ttf */,
+				5B8D3CE9A0844A438D79A741 /* Poppins-LightItalic.ttf */,
+				AD1519CAE304479BBCD9D446 /* Poppins-Medium.ttf */,
+				39908C78C9F44A0392F0DDFE /* Poppins-MediumItalic.ttf */,
+				8E158D254EF24B7D80C3418A /* Poppins-Regular.ttf */,
+				9874B5AFDFAD4C2FAFBCE900 /* Poppins-SemiBold.ttf */,
+				AE19DFD4E1224C04823E72A2 /* Poppins-SemiBoldItalic.ttf */,
+				8504940E61C04F929D72FC54 /* Poppins-Thin.ttf */,
+				CBCA8A5C335946D3A08E5EE9 /* Poppins-ThinItalic.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* PSGeneralDrugCentreTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PSGeneralDrugCentreTests" */;
-			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
-				00E356EA1AD99517003FC87E /* Sources */,
-				00E356EB1AD99517003FC87E /* Frameworks */,
-				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				00E356F51AD99517003FC87E /* PBXTargetDependency */,
-			);
-			name = PSGeneralDrugCentreTests;
-			productName = PSGeneralDrugCentreTests;
-			productReference = 00E356EE1AD99517003FC87E /* PSGeneralDrugCentreTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		13B07F861A680F5B00A75B9A /* PSGeneralDrugCentre */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PSGeneralDrugCentre" */;
@@ -203,10 +283,6 @@
 			attributes = {
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1120;
 					};
@@ -226,25 +302,55 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* PSGeneralDrugCentre */,
-				00E356ED1AD99517003FC87E /* PSGeneralDrugCentreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		00E356EC1AD99517003FC87E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				811EBBDF82F6C32A4119D551 /* PrivacyInfo.xcprivacy in Resources */,
+				F757EB752C2EE5710031A103 /* main.jsbundle in Resources */,
+				2C5F9A6F14764AC0BD9052D5 /* Urbanist-Black.ttf in Resources */,
+				D94D3E939F2649A08D9D4764 /* Urbanist-BlackItalic.ttf in Resources */,
+				786DD039EF8C4311B983C1D5 /* Urbanist-Bold.ttf in Resources */,
+				AE4A783B23C7406689AA2CA5 /* Urbanist-BoldItalic.ttf in Resources */,
+				60382F95C17C47858B487152 /* Urbanist-ExtraBold.ttf in Resources */,
+				E1F3CBDB21BC44BE812724AE /* Urbanist-ExtraBoldItalic.ttf in Resources */,
+				5548E210625848A5AD0448DF /* Urbanist-ExtraLight.ttf in Resources */,
+				1E8212389CF243EC91F75485 /* Urbanist-ExtraLightItalic.ttf in Resources */,
+				15CA5780AAFF40569378B8DE /* Urbanist-Italic.ttf in Resources */,
+				51D152D302B9452494FBCE7A /* Urbanist-Light.ttf in Resources */,
+				AC14078C752C472A8208B0B7 /* Urbanist-LightItalic.ttf in Resources */,
+				D5DBCEAF86AF4A6AAE55222E /* Urbanist-Medium.ttf in Resources */,
+				B9FF9629584C4E91B09E891A /* Urbanist-MediumItalic.ttf in Resources */,
+				0D9194082AA94DDEBC7DB1C3 /* Urbanist-Regular.ttf in Resources */,
+				9695D88A47CD40258EDEEF57 /* Urbanist-SemiBold.ttf in Resources */,
+				945BE326CA53404CA8EC19D1 /* Urbanist-SemiBoldItalic.ttf in Resources */,
+				539996622E2144C8B3529C1A /* Urbanist-Thin.ttf in Resources */,
+				F71E5A60D4B84057B98C3B55 /* Urbanist-ThinItalic.ttf in Resources */,
+				1410C25EA1B5403A9CFC2DC0 /* Poppins-Black.ttf in Resources */,
+				BB16CEDFDDF645D7BA9463A2 /* Poppins-BlackItalic.ttf in Resources */,
+				4D406E8192804A6C9F10E851 /* Poppins-Bold.ttf in Resources */,
+				1FB6FB4A31DE4E7ABE654BC1 /* Poppins-BoldItalic.ttf in Resources */,
+				6238C3698CB144DDB07A6808 /* Poppins-ExtraBold.ttf in Resources */,
+				FD4F17CA7A9544ADBA640A52 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				19AF8B453DB64A79A498B274 /* Poppins-ExtraLight.ttf in Resources */,
+				808140865C6E449E803BB19B /* Poppins-ExtraLightItalic.ttf in Resources */,
+				6712642A15B5493D9DD8566D /* Poppins-Italic.ttf in Resources */,
+				9CC60B5A86DB4AD8A0E9BE6D /* Poppins-Light.ttf in Resources */,
+				DD05884F4BF545BD96C8D456 /* Poppins-LightItalic.ttf in Resources */,
+				76F2E2BEEF224EA798A7CC4F /* Poppins-Medium.ttf in Resources */,
+				7F1EADD3F68C4F88B30F6949 /* Poppins-MediumItalic.ttf in Resources */,
+				D537D68E9E1643FAB7A5F9BF /* Poppins-Regular.ttf in Resources */,
+				2E87657F7ADC46BFBC05B87C /* Poppins-SemiBold.ttf in Resources */,
+				92BC062B99D24F82B2C53CBD /* Poppins-SemiBoldItalic.ttf in Resources */,
+				C11D609D0C8B4BD1BA9628C4 /* Poppins-Thin.ttf in Resources */,
+				8A2F7FD2973B40759122D705 /* Poppins-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,28 +390,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre/Pods-PSGeneralDrugCentre-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -328,23 +412,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -362,34 +429,9 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre/Pods-PSGeneralDrugCentre-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests/Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00E356EA1AD99517003FC87E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E356F31AD99517003FC87E /* PSGeneralDrugCentreTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -401,66 +443,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* PSGeneralDrugCentre */;
-			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = PSGeneralDrugCentreTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PSGeneralDrugCentre.app/PSGeneralDrugCentre";
-			};
-			name = Debug;
-		};
-		00E356F71AD99517003FC87E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-PSGeneralDrugCentre-PSGeneralDrugCentreTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = PSGeneralDrugCentreTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PSGeneralDrugCentre.app/PSGeneralDrugCentre";
-			};
-			name = Release;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-PSGeneralDrugCentre.debug.xcconfig */;
@@ -468,8 +451,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3NNS6BWW6B;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PSGeneralDrugCentre/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PSGeneralDrugCentre;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,7 +466,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tokensoftict.psgdc;
 				PRODUCT_NAME = PSGeneralDrugCentre;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -495,7 +481,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3NNS6BWW6B;
 				INFOPLIST_FILE = PSGeneralDrugCentre/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PSGeneralDrugCentre;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -506,7 +495,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tokensoftict.psgdc;
 				PRODUCT_NAME = PSGeneralDrugCentre;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -517,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -544,6 +534,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -563,6 +554,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -582,7 +575,14 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl",
+					"-ld_classic",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -590,6 +590,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -617,6 +618,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -629,6 +631,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -647,7 +651,14 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl",
+					"-ld_classic",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -655,15 +666,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PSGeneralDrugCentreTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
-				00E356F71AD99517003FC87E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PSGeneralDrugCentre" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

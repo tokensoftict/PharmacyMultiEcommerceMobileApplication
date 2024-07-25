@@ -1,0 +1,113 @@
+import React, {useState} from "react";
+import Wrapper from "../../../shared/component/wrapper";
+import HeaderWithIcon from "../../../shared/component/headerBack";
+import {Image, View} from "react-native";
+import TitleAuth from "../../../shared/component/titleAuth";
+import Typography from "../../../shared/component/typography";
+import Input from "../../../shared/component/input";
+import { Button } from "../../../shared/component/buttons";
+import {styles} from './styles'
+import {normalize} from "../../../shared/helpers";
+import {logo} from "../../../assets/images";
+import {CommonActions, useNavigation} from "@react-navigation/native";
+import {NavigationProps} from "../../../shared/routes/stack.tsx";
+import ErrorText from "../../../shared/component/ErrorText";
+import ResetPasswordService from "../../../service/auth/ResetPasswordService.tsx";
+import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
+import Toast from "react-native-toast-message";
+
+export default function ForgotPassword() {
+    const navigation = useNavigation<NavigationProps>();
+    const [isLoading, setIsLoading] = useState(false);
+    const [emailOrPhone, setEmailOrPhone] = useState("");
+    const [emailOrPhoneError, setEmailOrPhoneError] = useState("");
+
+    const forgotPasswordService = new ResetPasswordService();
+
+    const backToLoginPage = () => {
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [{name: "login" }]
+            }));
+    }
+
+    function doPasswordRequest() {
+        if(emailOrPhone === ""){
+            setEmailOrPhoneError("Please enter your phone number or email address!")
+        }else{
+            setEmailOrPhoneError("");
+            setIsLoading(true);
+            forgotPasswordService.resetPasswordRequest(emailOrPhone).then(function(response){
+                setIsLoading(false);
+                if(response.data.status === true){
+                    if(!isNaN(Number(emailOrPhone))){
+                        //this means they entered a phone number
+                        (new AuthSessionService().setPageSessionData("phone", emailOrPhone));
+                        Toast.show({
+                            type: 'success',
+                            text1: 'Reset Password',
+                            text2: response.data.data.message,
+                            position : "top",
+                            onHide : () => {
+                                navigation.navigate("resetPassword");
+                            }
+                        });
+                    }else{
+                        Toast.show({
+                            type: 'success',
+                            text1: 'Reset Password',
+                            text2: response.data.data.message,
+                            position : "top",
+                            onHide : () => {
+                               backToLoginPage();
+                            }
+                        });
+                    }
+                }else{
+                    const error = response.data.error;
+                    if(error.hasOwnProperty("email_or_phone")){
+                        const error_string = error.email_or_phone.join("\\n");
+                        setEmailOrPhoneError(error_string);
+                    }else{
+                        setEmailOrPhoneError(error);
+                    }
+                }
+            }, function (error){ setIsLoading(false);})
+        }
+    }
+
+  return (
+    <Wrapper loading={isLoading}>
+      <View style={styles.container}>
+        <HeaderWithIcon />
+
+        <View style={styles.titleImageContainer}>
+          <TitleAuth title="Forgot Password"/>
+          <Image
+              style={{
+                width: normalize(100),
+                height: normalize(60),
+                marginTop: normalize(10)
+              }}
+              source={logo}
+          />
+        </View>
+
+
+        <Typography style={styles.description}>{"Don't worry! it Happens. please enter the email associated with your account"}</Typography>
+
+        <View style={styles.form}>
+          <Input
+            label="Email/Phone Number"
+            placeholder="Enter Your Email or Phone Number"
+            value={emailOrPhone}
+            onChangeText={(emailOrPhone) => setEmailOrPhone(emailOrPhone)}
+          />
+            {emailOrPhoneError !== '' ? <ErrorText>{emailOrPhoneError}</ErrorText> : ''}
+        </View>
+        <Button title={"Reset Password"} disabled={isLoading} loading={isLoading} onPress={doPasswordRequest} />
+      </View>
+    </Wrapper>
+  )
+}
