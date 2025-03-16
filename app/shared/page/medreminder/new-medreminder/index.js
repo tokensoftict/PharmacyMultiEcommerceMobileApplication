@@ -1,9 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, ScrollView, Switch, Text, TouchableOpacity, View} from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {useState} from 'react';
+import {FlatList, ScrollView, Switch, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {Controller, useForm} from "react-hook-form";
-import {scheduleDrugAlarm} from "@/shared/utils/ScheduleNotification";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import {palette, semantic} from "@/shared/constants/colors";
@@ -18,7 +15,6 @@ import Icon from "@/shared/component/icon";
 import SearchDialog from "@/shared/component/product_search";
 import MedReminderService from "@/service/medReminder/MedReminderService";
 import Toastss from "@/shared/utils/Toast";
-import {MedReminderInterface} from "@/service/medReminder/interface/MedReminderInterface";
 
 const MedReminderForm = () => {
     const [stock_id, setStockId] = useState("");

@@ -1,25 +1,20 @@
-import {CommonActions, useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack.tsx";
 import React, {useState} from "react";
 import {styles} from "./styles";
-import HeaderWithIcon from "../../../shared/component/headerBack";
-import Wrapper from "../../../shared/component/wrapper";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import Wrapper from "@/shared/component/wrapper";
 import {Image, View} from "react-native";
-import TitleAuth from "../../../shared/component/titleAuth";
-import {normalize} from "../../../shared/helpers";
-import {logo} from "../../../assets/images";
-import Input from "../../../shared/component/input";
-import Icon from "../../../shared/component/icon";
-import {eyeFilled, eyeOff, lock} from "../../../assets/icons";
-import ErrorText from "../../../shared/component/ErrorText";
-import {Button} from "../../../shared/component/buttons";
-import ResetPasswordService from "../../../service/auth/ResetPasswordService";
-import AuthSessionService from "../../../service/auth/AuthSessionService";
+import TitleAuth from "@/shared/component/titleAuth";
+import {normalize} from "@/shared/helpers";
+import {logo} from "@/assets/images";
+import Input from "@/shared/component/input";
+import Icon from "@/shared/component/icon";
+import {eyeFilled, eyeOff, lock} from "@/assets/icons";
+import ErrorText from "@/shared/component/ErrorText";
+import {Button} from "@/shared/component/buttons";
 import Toasts from "@/shared/utils/Toast.tsx";
 import Security from "@/service/auth/Security.tsx";
 
 export default function ChangePassword() {
-    const navigation = useNavigation<NavigationProps>();
     const [isLoading, setIsLoading] = useState(false);
     const [isPasswordShown, setIsPasswordShown] = useState(true);
     const [isOldPasswordShown, setIsOldPasswordShown] = useState(true);

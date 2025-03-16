@@ -1,24 +1,22 @@
-import React, {useEffect, useState} from "react";
-import Wrapper from "../../../shared/component/wrapper";
+import React, {useState} from "react";
+import Wrapper from "@/shared/component/wrapper";
 import {Image, View} from "react-native";
-import Typography from "../../../shared/component/typography";
-import OtpForm from "../../../shared/component/otpForm";
-import { Button } from "../../../shared/component/buttons";
+import Typography from "@/shared/component/typography";
+import OtpForm from "@/shared/component/otpForm";
+import { Button } from "@/shared/component/buttons";
 import {styles} from './styles'
-import TitleAuth from "../../../shared/component/titleAuth";
-import {normalize} from "../../../shared/helpers";
-import {logo} from "../../../assets/images";
-import AuthSessionService from "../../../service/auth/AuthSessionService";
-import ErrorText from "../../../shared/component/ErrorText";
-import OtpService from "../../../service/auth/OtpService";
-import {CommonActions, useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack.tsx";
-import Toasts from "@/shared/utils/Toast.tsx";
-import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
+import TitleAuth from "@/shared/component/titleAuth";
+import {normalize} from "@/shared/helpers";
+import {logo} from "@/assets/images";
+import AuthSessionService from "@/service/auth/AuthSessionService";
+import ErrorText from "@/shared/component/ErrorText";
+import OtpService from "@/service/auth/OtpService";
+import Toasts from "@/shared/utils/Toast";
+import useEffectOnce from "@/shared/hooks/useEffectOnce";
 
 
-export default  function EnterOtp() {
-    const navigation = useNavigation<NavigationProps>();
+// @ts-ignore
+export default  function EnterOtp({ navigation }) {
     const [otpError, setOtpError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState("");
@@ -35,11 +33,7 @@ export default  function EnterOtp() {
     }, []);
 
     const navigateAndClearStack = () => {
-        navigation.dispatch(
-            CommonActions.reset({
-                index: 0,
-                routes: [{name: "storeSelector" }]
-            }));
+        navigation.replace("storeSelector")
     }
 
     function doValidateOTP() {

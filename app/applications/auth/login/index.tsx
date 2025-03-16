@@ -1,27 +1,25 @@
 import React, {useState} from 'react';
 import { View } from "react-native";
 import { styles } from "./styles.tsx";
-import TitleAuth from "../../../shared/component/titleAuth";
-import Input from "../../../shared/component/input";
-import Icon from "../../../shared/component/icon";
-import {eyeFilled, eyeOff, lock, mail} from "../../../assets/icons";
-import { Button } from "../../../shared/component/buttons";
-import Typography from "../../../shared/component/typography";
-import Wrapper from "../../../shared/component/wrapper";
-import CheckBox from "../../../shared/component/checkbox";
-import LoginService from "../../../service/auth/LoginService.tsx";
-import {normalize} from "../../../shared/helpers";
+import TitleAuth from "@/shared/component/titleAuth";
+import Input from "@/shared/component/input";
+import Icon from "@/shared/component/icon";
+import {eyeFilled, eyeOff, lock, mail} from "@/assets/icons";
+import { Button } from "@/shared/component/buttons";
+import Typography from "@/shared/component/typography";
+import Wrapper from "@/shared/component/wrapper";
+import CheckBox from "@/shared/component/checkbox";
+import LoginService from "@/service/auth/LoginService.tsx";
+import {normalize} from "@/shared/helpers";
 import {Image} from "react-native";
-import {logo} from "../../../assets/images";
-import ErrorText from "../../../shared/component/ErrorText";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "../../../shared/routes/stack";
-import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
+import {logo} from "@/assets/images";
+import ErrorText from "@/shared/component/ErrorText";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
 
-export default function Login() {
+// @ts-ignore
+export default function Login({ navigation }) {
 
-  const navigation = useNavigation<NavigationProps>();
   const [isPasswordShown, setIsPasswordShown] = useState(true);
   const [email , setEmail] = useState('admin@store.com');
   const [password , setPassword] = useState('123456');
@@ -71,7 +69,7 @@ export default function Login() {
             Toasts('Login successful, please wait..');
             setTimeout(() => {
               // @ts-ignore
-              navigation.navigate("storeSelector");
+              navigation.replace("storeSelector");
             }, 1000)
           }
         }

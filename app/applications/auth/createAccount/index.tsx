@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
-import Wrapper from "../../../shared/component/wrapper";
-import Typography from "../../../shared/component/typography";
-import Input from "../../../shared/component/input";
+import Wrapper from "@/shared/component/wrapper";
+import Typography from "@/shared/component/typography";
+import Input from "@/shared/component/input";
 import {Image, View} from "react-native";
-import { Button } from "../../../shared/component/buttons";
+import { Button } from "@/shared/component/buttons";
 import { styles } from "./styles";
-import TitleAuth from "../../../shared/component/titleAuth";
-import Icon from "../../../shared/component/icon";
-import {eyeFilled, eyeOff, lock, mail, phone, user} from "../../../assets/icons";
-import {normalize} from "../../../shared/helpers";
-import {logo} from "../../../assets/images";
-import ErrorText from "../../../shared/component/ErrorText";
-import SignUpService from "../../../service/auth/SignUpService.tsx";
+import TitleAuth from "@/shared/component/titleAuth";
+import Icon from "@/shared/component/icon";
+import {eyeFilled, eyeOff, lock, mail, phone, user} from "@/assets/icons";
+import {normalize} from "@/shared/helpers";
+import {logo} from "@/assets/images";
+import ErrorText from "@/shared/component/ErrorText";
+import SignUpService from "@/service/auth/SignUpService.tsx";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "../../../shared/routes/stack";
+import { NavigationProps } from "@/shared/routes/stack";
 
 export default function CreateAccount() {
   const navigation = useNavigation<NavigationProps>()
@@ -75,7 +75,6 @@ export default function CreateAccount() {
       setFirstNameError('');
       setLastNameError('')
       signUpService.signUp(firstname, lastname, email, password, phoneNumber).then(function (response: any) {
-        console.log(response);
         setIsLoading(false);
 
         if (response.status === false) {

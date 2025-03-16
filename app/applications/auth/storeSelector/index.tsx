@@ -11,8 +11,8 @@ const stores = [
 ];
 
 
-const StoreSelectionScreen = () => {
-    const navigation = useNavigation();
+// @ts-ignore
+const StoreSelectionScreen = ({ navigation }) => {
     const animations = useRef(stores.map(() => new Animated.Value(0))).current;
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const StoreSelectionScreen = () => {
 
     function selectStore(store: string) {
         new AuthSessionService().setEnvironment(store)
-        navigation.navigate("tab")
+        navigation.replace("tab")
     }
 
     return (

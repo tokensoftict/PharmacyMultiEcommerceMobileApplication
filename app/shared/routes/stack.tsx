@@ -19,9 +19,12 @@ import Wishlist from "@/shared/page/wishlist";
 import Orders from "@/shared/page/orders";
 import ShowOrder from "@/shared/page/orders/show";
 import StoreSelectionScreen from "@/applications/auth/storeSelector";
-import MedReminderForm from "@/shared/page/medreminder/new-medreminder";
 import MainMenu from "@/shared/page/medreminder/main";
 import SplashScreen from "@/shared/page/medreminder/splashscreen";
+import MedReminderForm from "@/shared/page/medreminder/new-medreminder";
+import ListMedReminder from "@/shared/page/medreminder/list-medreminder";
+import HistoryLogs from "@/shared/page/medreminder/history-logs";
+import RefillTracker from "@/shared/page/medreminder/refill-tracker";
 
 export type RootStackParamList = {
     login: undefined,
@@ -50,7 +53,10 @@ export type RootStackParamList = {
     mainMenu : undefined,
 
 
-    medReminderForm : undefined
+    medReminderForm : undefined,
+    listMedReminder : undefined,
+    historyLogs : undefined,
+    refillTracker : undefined,
 
 }
 
@@ -179,7 +185,21 @@ const RoutesStack: RouteItem[] = [
         component: MainMenu,
         private: true
     },
-
+    {
+        path:'listMedReminder',
+        component: ListMedReminder,
+        private: true
+    },
+    {
+        path:'historyLogs',
+        component: HistoryLogs,
+        private: true
+    },
+    {
+        path:'refillTracker',
+        component: RefillTracker,
+        private: true
+    },
 
 ];
 

@@ -1,20 +1,17 @@
-import Wrapper from "../../../shared/component/wrapper";
-import React, {useEffect, useState} from "react";
-import {ScrollView, TouchableOpacity, View} from "react-native";
-import Header from "../../../shared/component/header";
-import Search from "../../../shared/component/search";
-import WholesalesHomeService from "../../../service/wholesales/WholesalesHomeService";
+import Wrapper from "@/shared/component/wrapper";
+import React, {useState} from "react";
+import Header from "@/shared/component/header";
+import Search from "@/shared/component/search";
+import WholesalesHomeService from "@/service/wholesales/WholesalesHomeService";
 import {useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import {WholesalesHomePageInterface} from "@/service/wholesales/interface/WholesalesHomePageInterface.ts";
-import SpecialOffers from "../../../shared/component/specialOffers";
-import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
-import HorizontalProductList from "../../../shared/component/HorizontalProductList";
-import Typography from "@/shared/component/typography";
+import SpecialOffers from "@/shared/component/specialOffers";
+import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import HorizontalProductList from "@/shared/component/HorizontalProductList";
 
 
 export default function WholesalesHomePage() {
-    const navigation = useNavigation<NavigationProps>();
     const [isLoading, setIsLoading] = useState(false);
     const [homePageData, setHomePageData] = useState<WholesalesHomePageInterface>();
     const wholesalesService = new WholesalesHomeService();

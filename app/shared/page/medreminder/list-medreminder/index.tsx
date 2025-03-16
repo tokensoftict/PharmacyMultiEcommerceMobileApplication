@@ -1,0 +1,11 @@
+import React, {useState} from 'react';
+import {styles} from "./styles"
+
+
+export default function ListMedReminder() {
+
+    return (
+        <></>
+    );
+
+}

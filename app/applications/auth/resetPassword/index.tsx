@@ -1,21 +1,21 @@
 import {CommonActions, useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack.tsx";
+import {NavigationProps} from "@/shared/routes/stack.tsx";
 import React, {useState} from "react";
 import {styles} from "./styles";
-import HeaderWithIcon from "../../../shared/component/headerBack";
-import Wrapper from "../../../shared/component/wrapper";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import Wrapper from "@/shared/component/wrapper";
 import {Image, View} from "react-native";
-import TitleAuth from "../../../shared/component/titleAuth";
-import {normalize} from "../../../shared/helpers";
-import {logo} from "../../../assets/images";
-import Typography from "../../../shared/component/typography";
-import Input from "../../../shared/component/input";
-import Icon from "../../../shared/component/icon";
-import {eyeFilled, eyeOff, lock} from "../../../assets/icons";
-import ErrorText from "../../../shared/component/ErrorText";
-import {Button} from "../../../shared/component/buttons";
-import ResetPasswordService from "../../../service/auth/ResetPasswordService";
-import AuthSessionService from "../../../service/auth/AuthSessionService";
+import TitleAuth from "@/shared/component/titleAuth";
+import {normalize} from "@/shared/helpers";
+import {logo} from "@/assets/images";
+import Typography from "@/shared/component/typography";
+import Input from "@/shared/component/input";
+import Icon from "@/shared/component/icon";
+import {eyeFilled, eyeOff, lock} from "@/assets/icons";
+import ErrorText from "@/shared/component/ErrorText";
+import {Button} from "@/shared/component/buttons";
+import ResetPasswordService from "@/service/auth/ResetPasswordService";
+import AuthSessionService from "@/service/auth/AuthSessionService";
 import Toasts from "@/shared/utils/Toast.tsx";
 
 export default function ResetPassword() {
@@ -64,7 +64,6 @@ export default function ResetPassword() {
             setIsLoading(true)
             passwordRequest.resetPassword(phone, pin, password, passwordConfirmation).then(function (response){
                 setIsLoading(false);
-                console.log(response.data);
                 if(response.data.status === true){
                  new AuthSessionService().setPageSessionData("phone", "");
                  Toasts('Your password has been reset successfully 👋 , please login with your new password');
