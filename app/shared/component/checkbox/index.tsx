@@ -1,7 +1,7 @@
 // @ts-ignore
 import {checkBoxRed, checkIcon} from "../../../assets/icons";
 import {Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {normalize} from '../../helpers';
 import {semantic} from '../../constants/colors';
 
@@ -15,6 +15,10 @@ export default function CheckBox({onChange, value}: CheckBoxProps) {
     onChange(!acceptedTerms)
     setAcceptedTerms(!acceptedTerms);
   }
+
+    useEffect(() => {
+        setAcceptedTerms(value);
+    }, [value]);
 
   // @ts-ignore
     return (

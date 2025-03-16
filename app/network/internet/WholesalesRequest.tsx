@@ -1,6 +1,8 @@
 import wholesalesAxiosInstance from "../interceptors/wholesalesInterceptors";
+import {EnvironmentRequestInterface} from "@/network/internet/EnvironmentRequest.tsx";
 
-export default class WholesalesRequest{
+export default class WholesalesRequest implements EnvironmentRequestInterface
+{
 
     /**
      *

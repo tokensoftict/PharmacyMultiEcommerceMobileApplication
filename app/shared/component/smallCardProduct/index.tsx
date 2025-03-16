@@ -8,11 +8,7 @@ import { normalize } from "../../helpers";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "@/shared/routes/stack";
 import {ProductListInterface} from "@/service/product/ProductListInterface";
-import Icon from "../../../shared/component/icon";
-import {white_shopping_cart} from "../../../assets/icons";
-import {store} from "../../../redux/store/store";
-import * as action from "../../../redux/actions";
-import {semantic} from "../../../shared/constants/colors.ts";
+import Environment from "@/shared/utils/Environment";
 
 
 interface ProductList {
@@ -39,7 +35,7 @@ export default function SmallCardProduct({product}: ProductList) {
             <Typography ellipsizeMode={'tail'} numberOfLines={2} style={styles.name}>{product.name}</Typography>
             <View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
             {
-                product.special !== undefined ?
+                product.special !== false ?
                     <View>
                         <Typography style={styles.special}>{currencyType} {product.price}</Typography>
                         <Typography style={styles.price}>{currencyType} {product.special}</Typography>
@@ -55,7 +51,11 @@ export default function SmallCardProduct({product}: ProductList) {
                 </TouchableOpacity>
               */}
         </View>
-          <Typography style={styles.doorStep}>+ {currencyType} {product.doorstep}</Typography>
+            {
+                Environment.isWholeSalesEnvironment() ?
+                <Typography style={styles.doorStep}>+ {currencyType} {product.doorstep}</Typography> :
+                    <></>
+            }
           <Typography style={styles.category}>{product.quantity} Available</Typography>
         </View>
     </TouchableOpacity>

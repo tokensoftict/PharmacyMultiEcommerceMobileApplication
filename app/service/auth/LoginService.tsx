@@ -1,5 +1,6 @@
 import Request from "../../network/internet/request.tsx";
 import AuthSessionService from "./AuthSessionService.tsx";
+import {store} from "@/redux/store/store.tsx";
 export default class LoginService
 {
     request : Request
@@ -16,7 +17,7 @@ export default class LoginService
     login(email : string, password : string) {
         let parent = this;
         return new Promise(function (resolve : any, reject : any){
-            parent.request.post("login", {email : email, password : password})
+            parent.request.post("login", {email : email, password : password, deviceKey : store.getState().systemReducer.fireBaseKey})
                 .then(function (response : any){
                     if(response.data.status === true){
                         resolve(parent.prepareUserSession(response.data))
@@ -33,6 +34,54 @@ export default class LoginService
                 });
         });
     }
+
+
+    logout() {
+        let parent = this;
+        return new Promise(function (resolve : any, reject : any){
+            parent.request.get("logout")
+                .then(function (response : any){
+                    console.log(response.toString());
+                    if(response.data.status === true){
+                        resolve(new AuthSessionService().destroySession())
+                    }else{
+                        resolve(
+                            parent.parseError({
+                                error : response.data.error,
+                                message : response.data.message
+                            })
+                        )
+                    }
+                }, function (error) {
+                    reject(error)
+                });
+        })
+    }
+
+
+    me() {
+        let parent = this;
+        return new Promise(function (resolve : any, reject : any){
+            parent.request.get("me?deviceKey=" + store.getState().systemReducer.fireBaseKey)
+                .then(function (response : any){
+                    console.log(response)
+                    if(response.data.status === true){
+                        resolve(parent.prepareUserSession(response.data))
+                    }else{
+                        resolve(
+                            parent.parseError({
+                                error : response.data.error,
+                                message : response.data.message
+                            })
+                        )
+                    }
+                }, function (error) {
+                    console.log(error);
+                    reject(error)
+                });
+        });
+    }
+
 
     /**
      * @param error

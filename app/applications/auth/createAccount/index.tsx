@@ -21,11 +21,11 @@ export default function CreateAccount() {
   const [isPasswordShown, setIsPasswordShown] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [firstname , setFirstName] = useState('Yusuf');
-  const [lastname , setLastName] = useState('Olatunji');
-  const [password , setPassword] = useState('123456');
-  const [email , setEmail] = useState('yoyforever@gmail.com');
-  const [phoneNumber , setPhoneNumber] = useState('08130610627');
+  const [firstname , setFirstName] = useState('');
+  const [lastname , setLastName] = useState('');
+  const [password , setPassword] = useState('');
+  const [email , setEmail] = useState('');
+  const [phoneNumber , setPhoneNumber] = useState('');
 
   const [firstNameError , setFirstNameError] = useState('');
   const [lastNameError , setLastNameError] = useState('');
@@ -75,7 +75,7 @@ export default function CreateAccount() {
       setFirstNameError('');
       setLastNameError('')
       signUpService.signUp(firstname, lastname, email, password, phoneNumber).then(function (response: any) {
-
+        console.log(response);
         setIsLoading(false);
 
         if (response.status === false) {
@@ -196,7 +196,7 @@ export default function CreateAccount() {
 
           <View style={styles.formControl}>
             {messageError !== '' ?  <ErrorText textAlign={'center'} style={{marginBottom: 10}}>{messageError}</ErrorText> : <View/>}
-            <Button title="Sign Up" loading={isLoading} disabled={isLoading}  onPress={doRegister}  loadingText="Signing Up Please wait.." />
+            <Button title="Sign Up" loading={isLoading} disabled={isLoading}  onPress={doRegister}  loadingText="Sign Up" />
           </View>
 
           <View style={styles.containerLink}>

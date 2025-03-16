@@ -14,7 +14,7 @@ import {NavigationProps} from "../../../shared/routes/stack.tsx";
 import ErrorText from "../../../shared/component/ErrorText";
 import ResetPasswordService from "../../../service/auth/ResetPasswordService.tsx";
 import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
-import Toast from "react-native-toast-message";
+import Toasts from "@/shared/utils/Toast.tsx";
 
 export default function ForgotPassword() {
     const navigation = useNavigation<NavigationProps>();
@@ -44,25 +44,9 @@ export default function ForgotPassword() {
                     if(!isNaN(Number(emailOrPhone))){
                         //this means they entered a phone number
                         (new AuthSessionService().setPageSessionData("phone", emailOrPhone));
-                        Toast.show({
-                            type: 'success',
-                            text1: 'Reset Password',
-                            text2: response.data.data.message,
-                            position : "top",
-                            onHide : () => {
-                                navigation.navigate("resetPassword");
-                            }
-                        });
+                        Toasts(response.data.data.message)
                     }else{
-                        Toast.show({
-                            type: 'success',
-                            text1: 'Reset Password',
-                            text2: response.data.data.message,
-                            position : "top",
-                            onHide : () => {
-                               backToLoginPage();
-                            }
-                        });
+                        Toasts(response.data.data.message)
                     }
                 }else{
                     const error = response.data.error;

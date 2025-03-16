@@ -4,8 +4,8 @@ import { normalize } from "../../helpers";
 
 export const styles = StyleSheet.create({
   title: {
-    fontSize: normalize(32),
-    fontWeight: "700",
+    fontSize: normalize(26),
+    fontWeight: 700,
     width: '50%'
   },
 })

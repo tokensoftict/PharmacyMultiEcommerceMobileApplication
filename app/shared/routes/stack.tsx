@@ -8,6 +8,20 @@ import ResetPassword from "../../applications/auth/resetPassword";
 import WholesalesHomePage from "../../applications/wholesales/home/wholesalesHome.tsx";
 import DetailProduct from "../page/product";
 import ProductList from "../../shared/page/productList";
+import EditProfile from "../../applications/supermarket/editProfile";
+import Checkout from "../../shared/page/checkout";
+import AddressList from "@/shared/page/myaccount/address/addressList/index";
+import NewAddress from  "@/shared/page/myaccount/address/newAddress/index";
+import PaymentMethodList from "@/shared/page/myaccount/paymentmethod";
+import DeliveryMethodList from "@/shared/page/myaccount/deliverymethod";
+import ChangePassword from "@/applications/auth/security";
+import Wishlist from "@/shared/page/wishlist";
+import Orders from "@/shared/page/orders";
+import ShowOrder from "@/shared/page/orders/show";
+import StoreSelectionScreen from "@/applications/auth/storeSelector";
+import MedReminderForm from "@/shared/page/medreminder/new-medreminder";
+import MainMenu from "@/shared/page/medreminder/main";
+import SplashScreen from "@/shared/page/medreminder/splashscreen";
 
 export type RootStackParamList = {
     login: undefined,
@@ -15,9 +29,29 @@ export type RootStackParamList = {
     enterOTP: undefined,
     forgotPassword: undefined,
     resetPassword: undefined,
+    security: undefined
     wholesalesHome : undefined,
     detailProduct:undefined,
     productList:undefined,
+    editProfile:undefined,
+    checkout:undefined,
+    wishlist:undefined,
+
+    addressList:undefined,
+    newAddress:undefined,
+    paymentMethodList:undefined,
+    deliveryMethodList:undefined,
+    orders:undefined,
+    showOrder:undefined,
+    storeSelector:undefined,
+
+
+    splashScreen:undefined,
+    mainMenu : undefined,
+
+
+    medReminderForm : undefined
+
 }
 
 export type RouteItem = {
@@ -55,6 +89,11 @@ const RoutesStack: RouteItem[] = [
         private: false
     },
     {
+        path: 'security',
+        component: ChangePassword,
+        private: false
+    },
+    {
         path: 'resetPassword',
         component: ResetPassword,
         private: false
@@ -73,7 +112,75 @@ const RoutesStack: RouteItem[] = [
         path: 'productList',
         component: ProductList,
         private: true,
-    }
+    },
+    {
+        path: 'editProfile',
+        component: EditProfile,
+        private: true,
+    },
+    {
+        path: 'checkout',
+        component: Checkout,
+        private: true,
+    },
+    {
+        path:'addressList',
+        component: AddressList,
+        private: true
+    },
+    {
+        path:'newAddress',
+        component: NewAddress,
+        private: true
+    },
+    {
+        path:'paymentMethodList',
+        component: PaymentMethodList,
+        private: true
+    },
+    {
+        path:'deliveryMethodList',
+        component: DeliveryMethodList,
+        private: true
+    },
+    {
+        path:'wishlist',
+        component: Wishlist,
+        private: true
+    },
+    {
+        path:'orders',
+        component: Orders,
+        private: true
+    },
+    {
+        path:'showOrder',
+        component: ShowOrder,
+        private: true
+    },
+    {
+        path:'storeSelector',
+        component: StoreSelectionScreen,
+        private: true
+    },
+    {
+        path:'medReminderForm',
+        component: MedReminderForm,
+        private: true
+    },
+
+    {
+        path:'splashScreen',
+        component: SplashScreen,
+        private: true
+    },
+    {
+        path:'mainMenu',
+        component: MainMenu,
+        private: true
+    },
+
+
 ];
 
 

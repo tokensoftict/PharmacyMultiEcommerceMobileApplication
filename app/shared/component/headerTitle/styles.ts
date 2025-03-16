@@ -3,7 +3,7 @@ import {normalize} from '../../helpers';
 
 export const styles = StyleSheet.create({
   header: {
-    paddingVertical: normalize(24),
+    paddingVertical: normalize(15),
     borderBottomWidth: 1,
     borderBottomColor: '#E9E9E9',
   },

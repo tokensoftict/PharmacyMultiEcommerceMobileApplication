@@ -12,6 +12,7 @@ import {trash} from "../../../assets/icons";
 import {NavigationProps} from "@/shared/routes/stack";
 import {ProductListInterface} from "@/service/product/ProductListInterface";
 import {normalize} from "../../../shared/helpers";
+import Environment from "@/shared/utils/Environment.tsx";
 
 interface ProductList {
     product: ProductListInterface|undefined,
@@ -38,7 +39,7 @@ export default function CardProductHorizontal({product}: ProductList) {
                 <View style={styles.actions}>
                     <Typography numberOfLines={2} ellipsizeMode={'tail'} style={styles.name}>{product?.name}</Typography>
                     {
-                        product?.special !== undefined ?
+                        product?.special !== false ?
                             <View style={{flexDirection : "row", justifyContent: 'space-between', marginTop: normalize(5)}}>
                                 <Typography style={styles.price}>{currencyType} {product?.special}</Typography>
                                 <View style={{width:normalize(10)}}/>
@@ -47,12 +48,24 @@ export default function CardProductHorizontal({product}: ProductList) {
                         :
                          <Typography style={styles.price}>{currencyType} {product?.price}</Typography>
                     }
-                    <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product?.doorstep}</Typography>
+                    {
+                        (Environment.isWholeSalesEnvironment() &&  product?.doorstep ) ?
+                        <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product?.doorstep}</Typography>
+                        : <></>
+                    }
                     <Typography style={styles.category}>{product?.quantity} Available</Typography>
                 </View>
                 <View style={styles.actions}>
                     <Counter onChange={(newCant) => setCant(newCant)} />
-                    <Typography style={styles.totalPrice}>{currencyType} {(((product?.special_not_formatted ?? product?.price_not_formatted) ?? 0) * cant).toFixed(2)}</Typography>
+                    {
+                        // @ts-ignore
+                        product?.special_not_formatted ?
+                            // @ts-ignore
+                            <Typography style={styles.totalPrice}>{currencyType} { (product?.special_not_formatted * cant).toFixed(2) }</Typography>
+                            :
+                            // @ts-ignore
+                            <Typography style={styles.totalPrice}>{currencyType} { (product?.price_not_formatted * cant).toFixed(2) }</Typography>
+                    }
                 </View>
             </View>
 

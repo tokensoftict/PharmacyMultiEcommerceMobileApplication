@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {normalize} from '../../helpers';
+import {semantic} from "@/shared/constants/colors.ts";
 
 const btn = {
-  width: normalize(24),
-  height: normalize(24),
+  width: normalize(34),
+  height: normalize(34),
 };
 
 const icons = {
@@ -39,4 +40,20 @@ export const styles = StyleSheet.create({
   plus: {
     ...icons,
   },
+  input : {
+    width: normalize(60),
+    height: normalize(40),
+    borderRadius: normalize(8),
+    borderStyle : 'solid',
+    borderColor : semantic.alert.danger.d500,
+    borderWidth : normalize(1),
+    backgroundColor:  semantic.fill.f03,
+    paddingHorizontal: normalize(12),
+    paddingVertical: normalize(12),
+    color:  '#000',
+    textAlign: 'center',
+    marginHorizontal: normalize(12),
+    fontSize: 12,
+    fontWeight: 'bold',
+  }
 });

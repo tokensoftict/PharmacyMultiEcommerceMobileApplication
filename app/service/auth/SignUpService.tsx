@@ -1,6 +1,7 @@
 import Request from "../../network/internet/request.tsx";
 import AuthSessionService from "./AuthSessionService.tsx";
 import LoginService from "./LoginService.tsx";
+import {store} from "@/redux/store/store.tsx";
 
 export default class SignUpService {
 
@@ -21,9 +22,11 @@ export default class SignUpService {
                 password : password,
                 phone : phone,
                 firstname : firstname,
-                lastname : lastname
+                lastname : lastname,
+                deviceKey : store.getState().systemReducer.fireBaseKey
             })
                 .then(function (response : any){
+                    console.log(response.toString());
                     if(response.data.status === true){
                         resolve(parent.loginService.prepareUserSession(response.data))
                     }else{

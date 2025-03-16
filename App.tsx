@@ -1,161 +1,173 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import RoutesStack, {RootStackParamList} from "./app/shared/routes/stack";
-import {store} from './app/redux/store/store';
+import RoutesStack, {RootStackParamList} from "@/shared/routes/stack";
+import {store} from '@/redux/store/store';
+import * as action from "@/redux/actions";
 import {Provider} from 'react-redux';
-import Toast from "react-native-toast-message";
-import useDarkMode from "./app/shared/hooks/useDarkMode";
-import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
-import RoutesTab from './app/shared/routes/tab';
-import {palette, semantic} from "./app/shared/constants/colors";
-import Icon from "./app/shared/component/icon";
-import {Image, TouchableOpacity, View} from "react-native";
-import {normalize} from "./app/shared/helpers";
-import {white_shopping_cart} from "./app/assets/icons";
-import {BottomTabBarButtonProps, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {FONT} from "./app/shared/constants/fonts.ts";
-import Typography from "./app/shared/component/typography";
+import useDarkMode from "@/shared/hooks/useDarkMode";
+import RoutesTab from '@/shared/routes/tab';
+import {palette, semantic} from "@/shared/constants/colors";
+import Icon from "@/shared/component/icon";
+import {ActivityIndicator, Platform, StyleSheet, View} from "react-native";
+import {normalize} from "@/shared/helpers";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {FONT} from "@/shared/constants/fonts";
+import Typography from "@/shared/component/typography";
+import {LoadingProvider} from "@/shared/utils/LoadingProvider";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import {usePushNotification} from "@/notification/usePushNotification.ts";
+
+
+
+
+//import FullScreenReminder from "@/shared/page/medreminder2/reminder/FullScreenReminder.tsx";
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
-
-const CustomTabButton = ({children, onPress} : any) => {
-   return ( <TouchableOpacity
-       style={{
-           top: normalize(-30),
-           justifyContent : "center",
-           alignItems : 'center'
-       }}
-       onPress={onPress}
-   >
-       <View style={{
-           width : normalize(70),
-           height : normalize(70),
-           backgroundColor: palette.main.p500,
-           borderRadius : normalize(35),
-           shadowColor: '#171717',
-           elevation : 50,
-           shadowOffset: {width: 2, height: 2},
-           shadowOpacity: 0.5,
-           shadowRadius: 1,
-       }}>
-           {children}
-       </View>
-   </TouchableOpacity>)
-};
-
-
 function TabNavigation() {
-
     const {isDarkMode} = useDarkMode();
 
     return (
         <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown : false,
-                tabBarStyle : {
-                    height: normalize(85),
-                    paddingHorizontal: normalize(5),
-                    paddingTop: 0,
-                    backgroundColor: semantic.text.lightgrey,
-                    position: 'absolute',
-                    borderTopWidth: 0,
-                    elevation : normalize(50),
-                    shadowOffset: {width: 2, height: 2},
-                    shadowOpacity: 0.5,
-                    shadowRadius: 1,
-                },
-                tabBarLabelStyle : {
-                    color : semantic.background.red.d100,
-                    fontFamily: FONT.BOLD,
-                    fontSize : normalize(11),
-                    marginTop : normalize(-15)
-                }
+            screenOptions={({route}) => ({
+                headerShown: false,
+                tabBarStyle: styles.tabBar,
+                tabBarItemStyle: styles.tabBarItem,
+                tabBarLabelStyle: styles.tabBarLabel,
             })}
         >
             {RoutesTab.map(route => (
-
-                route.name == "myCart" ?
-                    <Tab.Screen
-                        key={route.name}
-                        name={route.name}
-                        component={route.component}
-                        options={{
-                            tabBarLabel: "",
-                            tabBarIcon : ({focused}) => {
-                                return (
-                                    <Image
-                                        source={white_shopping_cart}
-                                        resizeMode="contain"
-                                        tintColor={semantic.background.white.w500}
-                                        style={{
-                                            width : normalize(30),
-                                            height : normalize(30),
-                                            tintColor : semantic.background.white.w500
-                                        }}/>
-                                );
-                            },
-                            tabBarButton : (props : BottomTabBarButtonProps) => {
-                                return (
-                                  <CustomTabButton {...props}/>
-                                );
-                            }
-                        }}
-                    />
-                    :
-                    <Tab.Screen
-                        key={route.name}
-                        name={route.name}
-                        component={route.component}
-                        options={{
-                            tabBarLabel: ({focused, color}) => (
-                                <Typography  style={{color: focused ? palette.main.p500 : semantic.text.black, fontWeight:'600',  marginTop : -15, fontSize: normalize(12)}}>{route.displayName}</Typography>
-                            ),
-                            tabBarIcon: ({focused, color}) => {
-                                return (
-                                    <Icon
-                                        customStyles={{
-                                            tintColor: focused
-                                                ? palette.main.p500
-                                                : semantic.text.black,
-                                        }}
-                                        icon={route.icon}
-                                    />
-                                );
-                            }
-                        }}
-                    />
+                <Tab.Screen
+                    key={route.name}
+                    name={route.name}
+                    component={route.component}
+                    options={{
+                        tabBarLabel: ({focused}) => (
+                            <Typography
+                                style={[
+                                    styles.tabBarText,
+                                    {color: focused ? palette.main.p500 : semantic.text.black}
+                                ]}
+                            >
+                                {route.displayName}
+                            </Typography>
+                        ),
+                        tabBarIcon: ({focused}) => (
+                            <Icon
+                                customStyles={{
+                                    width: normalize(24),
+                                    height: normalize(24),
+                                    resizeMode: 'contain',
+                                    tintColor: focused ? palette.main.p500 : semantic.text.black,
+                                }}
+                                icon={route.icon}
+                            />
+                        ),
+                    }}
+                />
             ))}
         </Tab.Navigator>
     );
 }
 
+
+
 function App(): React.JSX.Element {
-    return(
+    const [page, setPage] = useState('login');
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(true);
+        usePushNotification().then((status) => {
+        }).catch(() => {
+        }).finally(() => {
+            new AuthSessionService().autoLogin().then((value) => {
+                if(value.loginStatus) {
+                    setPage('storeSelector');
+                }
+                setLoading(false);
+            })
+        })
+    }, []);
+
+    if (loading) {
+        return <View style={{flex : 1, justifyContent : "center"}}><ActivityIndicator size="large" color="red" /></View>;
+    }
+
+    // Navigation.registerComponent('FullScreenReminder', () => FullScreenReminder);
+
+
+    return (
         <Provider store={store}>
             <NavigationContainer>
-                <Stack.Navigator
-                    initialRouteName={'login'}
-                    screenOptions={{headerShown: false}}>
-                    <Stack.Screen name="tab" component={TabNavigation} />
-                    {RoutesStack.map(route => {
-                        return (
+                <LoadingProvider>
+                    <Stack.Navigator
+                        // @ts-ignore
+                        initialRouteName={page}
+                        screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="tab" component={TabNavigation} />
+                        {RoutesStack.map(route => (
                             <Stack.Screen
                                 key={route.path}
                                 name={route.path}
                                 component={route.component}
                             />
-                        );
-                    })}
-                </Stack.Navigator>
+                        ))}
+                    </Stack.Navigator>
+                </LoadingProvider>
             </NavigationContainer>
-            <Toast position='top'
-                   bottomOffset={20}/>
         </Provider>
     );
 }
 
-
 export default App;
+
+const styles = StyleSheet.create({
+    tabBar: {
+        backgroundColor: semantic.text.lightgrey,
+        position: 'absolute',
+        borderTopWidth: 0,
+        elevation: normalize(5),
+        ...Platform.select({
+            ios: {
+                height: normalize(80),
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: -2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 5,
+                paddingHorizontal: normalize(5),
+                paddingBottom: normalize(30),
+            },
+            android: {
+                height: normalize(70),
+                paddingHorizontal: normalize(5),
+                paddingBottom: normalize(15),
+            }
+        })
+    },
+    tabBarItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tabBarLabel: {
+        fontFamily: FONT.BOLD,
+        fontSize: normalize(11),
+        marginTop: normalize(-10),
+    },
+    tabBarText: {
+        position: 'absolute',
+        ...Platform.select({
+            ios: {
+                fontWeight: '600',
+                fontSize: normalize(12),
+                bottom: normalize(-10),
+            },
+            android: {
+                fontWeight: '800',
+                fontSize: normalize(14),
+                bottom: normalize(-5),
+            }
+        })
+    }
+});

@@ -4,7 +4,9 @@ import {UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
 
 axiosInstance.interceptors.request.use( async function (request) {
 
-    request.baseURL = 'http://auth.mystore.test:8000/api/v1/account/';
+    //request.baseURL = 'http://auth.staging.generaldrugcentre.com/api/v1/account/';
+    request.baseURL = 'http://auth.mystore.test:8001/api/v1/account/';
+    request.headers['Content-Type'] = 'multipart/form-data';
 
     const authSession = new AuthSessionService();
 
@@ -38,13 +40,14 @@ axiosInstance.interceptors.request.use( async function (request) {
 
     return request;
 }, function (error) {
+    console.log(error.toString());
     return Promise.reject(error);
 });
 
 
 axiosInstance.interceptors.response.use((response) => response, (error) => {
     // whatever you want to do with the error\
-    console.log(error.response.data?.error);
+console.log(error.toString());
     switch (error.response.status) {
         case 422:
             return Promise.resolve({
@@ -85,6 +88,7 @@ axiosInstance.interceptors.response.use((response) => response, (error) => {
             })
     }
 });
+
 
 export default axiosInstance;
 

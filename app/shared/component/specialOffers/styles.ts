@@ -4,9 +4,9 @@ import {semantic} from '../../../shared/constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: normalize(14),
-    marginBottom: normalize(14),
-    marginLeft: normalize(24),
+    marginTop: normalize(15),
+    marginBottom: normalize(15),
+    marginLeft: normalize(10),
   },
   divider: {
     marginRight: normalize(10),
@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
   },
   titleSection: {
     fontSize: normalize(18),
-    fontWeight: '600',
-    marginBottom: normalize(24)
+    fontWeight: '700',
+    marginBottom: normalize(15)
   },
   containerBanner: {
     position: 'relative',

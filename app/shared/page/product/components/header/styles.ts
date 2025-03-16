@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     paddingBottom : normalize(10)
   },
   title: {
-    fontSize: normalize(24),
+    fontSize: normalize(15),
     fontWeight: '600',
     width: '70%'
   }

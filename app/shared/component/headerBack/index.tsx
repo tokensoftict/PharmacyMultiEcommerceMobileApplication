@@ -17,11 +17,11 @@ export default function HeaderWithIcon({title, icon, onPress}: HeaderBackProps) 
   const {goBack} = useNavigation()
   const {isDarkMode} = useDarkMode()
   const stylesIcon = {
-    tintColor: isDarkMode ? semantic.background.white.w500 : semantic.text.grey
+    tintColor: isDarkMode ? semantic.background.white.w500 : semantic.background.red.d500
   }
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={goBack}>
         <Icon customStyles={stylesIcon} icon={icon ? icon : arrowBack} />
       </TouchableOpacity>
       {title && (

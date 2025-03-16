@@ -7,7 +7,7 @@ export const _styles = (isDarkMode: boolean) =>
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      // backgroundColor: isDarkMode ? semantic.background.dark.d500 : semantic.background.white.w500,
+      backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500,
     },
     otpContainer: {
       flexDirection: 'row',

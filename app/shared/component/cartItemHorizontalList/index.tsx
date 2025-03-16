@@ -11,6 +11,7 @@ import {NavigationProps} from "@/shared/routes/stack";
 import {ProductListInterface} from "@/service/product/ProductListInterface";
 import {normalize} from "../../../shared/helpers";
 import {Items} from "@/service/cart/interface/CartInterface.tsx";
+import Environment from "@/shared/utils/Environment.tsx";
 
 interface ProductList {
     product: Items | undefined,
@@ -41,7 +42,11 @@ export default function CartItemHorizontalList({product}: ProductList) {
                             <Typography style={styles.price}>{currencyType} {product?.price} X {product?.cart_quantity}</Typography>
                             <Typography style={styles.totalPrice}>Total : {currencyType} {product?.total}</Typography>
                         </View>
-                        <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product?.doorstep}</Typography>
+                        {
+                            (Environment.isWholeSalesEnvironment() &&  product?.doorstep ) ?
+                            <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product?.doorstep}</Typography>
+                            : <></>
+                        }
                         <Typography style={styles.category}>{product?.quantity} Available</Typography>
                     </View>
                 </View>

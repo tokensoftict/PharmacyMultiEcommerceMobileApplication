@@ -21,3 +21,17 @@ export const setProductDialogData = (productDialogData:any) => (dispatch:any) =>
     payload: productDialogData,
   })
 }
+
+export const setEnvironment = (environment:string) => (dispatch:any) => {
+  dispatch({
+    type : actionTypes.ENVIRONMENT,
+    payload: environment,
+  })
+}
+
+export const setFirebaseDeviceToken = (token: string | null) => (dispatch:any) => {
+  dispatch({
+    type : actionTypes.FIREBASE_DEVICE_KEY,
+    payload: token,
+  })
+}

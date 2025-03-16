@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Platform, ScrollView, View} from 'react-native';
+import {Platform, SafeAreaView, ScrollView, View} from 'react-native';
 import OverlayLoader from "../overlayLoader";
 import CustomStatusBar from "../customStatusBar";
 import {StatusBarStyle} from 'react-native/Libraries/Components/StatusBar/StatusBar';
@@ -8,50 +8,46 @@ import useDarkMode from '../../hooks/useDarkMode.tsx';
 import {semantic} from '../../constants/colors';
 import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
 import {store} from "../../../redux/store/store.tsx";
-import {ProductListInterface} from "../../../service/product/ProductListInterface";
 import AddToCartDialog from "../../../shared/component/addToCartDialog";
+import {SafeAreaProvider} from "react-native-safe-area-context";
 
 interface WrapperProps {
-  children: React.ReactNode;
-  backgroundColorStatusBar?: string;
-  barStyle?: StatusBarStyle;
-  loading?: boolean;
-  titleLoader?: string;
+    children: React.ReactNode;
+    backgroundColorStatusBar?: string;
+    barStyle?: StatusBarStyle;
+    loading?: boolean;
+    titleLoader?: string;
+    overlayLoaderHeight?: number;
 }
 export default function WrapperNoScroll({
-  children,
-  backgroundColorStatusBar,
-  barStyle,
-  loading,
-  titleLoader,
-}: WrapperProps) {
-  const {isDarkMode} = useDarkMode();
+                                            children,
+                                            backgroundColorStatusBar,
+                                            barStyle,
+                                            loading,
+                                            titleLoader,
+                                            overlayLoaderHeight,
+                                        }: WrapperProps) {
+    const {isDarkMode} = useDarkMode();
     const [addToCartProduct, setAddToCartProduct] = useState()
 
     useEffectOnce(() => {
         store.subscribe(() =>{
             const selectedProduct = store.getState().systemReducer.product
-            console.log(selectedProduct);
             setAddToCartProduct(selectedProduct)
         });
     }, []);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: isDarkMode ? semantic.background.red.d500 : 'white',
-      }}>
-        <AddToCartDialog product={addToCartProduct}/>
-      <OverlayLoader loading={loading} title={titleLoader} />
-      <CustomStatusBar
-        barStyle={barStyle}
-        backgroundColor={backgroundColorStatusBar}
-      />
-      <View style={{height: normalize(32)}} />
-        {children}
-        {Platform.OS === 'ios' && <View style={{height: normalize(20), backgroundColor: 'black',  opacity: 0}} />}
-
-    </View>
-  );
+    return (
+        <SafeAreaProvider>
+            <SafeAreaView style={{
+                flex: 1,
+                backgroundColor : semantic.background.white.w101,
+            }}>
+                <View style={{height: normalize(10)}}/>
+                <AddToCartDialog product={addToCartProduct}/>
+                <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
+               {children}
+            </SafeAreaView>
+        </SafeAreaProvider>
+    );
 }

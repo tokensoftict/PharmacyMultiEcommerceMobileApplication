@@ -11,9 +11,10 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     marginLeft:normalize(5),
     backgroundColor: isDarkMode ? semantic.fill.f01 : semantic.fill.f03,
     borderRadius: normalize(5),
+    paddingVertical: normalize(10),
     shadowOpacity: 0.11,
     shadowRadius: 3,
-    elevation: 16,
+    elevation: 1,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -22,9 +23,10 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   },
   containerImage: {
     width: '100%',
-    height: normalize(60),
+    height: normalize(70),
   },
   image: {
+    marginTop: normalize(5),
     width: '100%',
     height: normalize(60)
   },
@@ -65,17 +67,4 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     color: isDarkMode ? semantic.text.white : palette.main.p500,
     fontWeight: 'regular',
   },
-  addToCart: {
-    marginRight:normalize(8),
-    marginTop:normalize(0),
-    backgroundColor:semantic.alert.danger.d500,
-    borderRadius:normalize(100),
-    width:normalize(35),
-    height:normalize(35),
-    padding:normalize(10),
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-  }
 })

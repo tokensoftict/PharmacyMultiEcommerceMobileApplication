@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import { normalize } from "../../../shared/helpers";
-import {design, semantic} from "../../../shared/constants/colors";
+import {design, labels, semantic} from "../../../shared/constants/colors";
 
 export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     container: {
@@ -17,6 +17,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     },
     containerFooter: {
         paddingHorizontal: normalize(24),
+        paddingVertical: normalize(10),
     },
     containerImage: {
         width: '100%',
@@ -28,18 +29,29 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         height: normalize(300)
     },
     containerName: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: normalize(15),
+        flex:1
+    },
+    quantityHolder: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: normalize(15),
+    },
+    buttonsHolder: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: normalize(15),
     },
     name: {
-        fontSize: normalize(19),
+        fontSize: normalize(15),
         fontWeight: '700',
-        width : '90%'
+        width : '100%',
     },
     addToCart: {
-        marginRight:normalize(20),
         backgroundColor:semantic.alert.danger.d500,
         borderRadius:normalize(100),
         width:normalize(50),
@@ -52,17 +64,19 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent : 'center'
     },
     containerCantSold: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent : 'space-between',
         marginTop: normalize(20)
     },
     sold: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: isDarkMode ? semantic.fill.f01 : semantic.fill.f04,
+        backgroundColor: semantic.fill.f04 ,
         paddingHorizontal: normalize(12),
         paddingVertical: normalize(4),
         borderRadius: normalize(4)
@@ -74,12 +88,46 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         width: normalize(2)
     },
     quantityStyle: {
-        color: isDarkMode ? semantic.text.white : design.text1.color,
-        backgroundColor : isDarkMode ? semantic.text.black :  design.text1.background,
+        color: design.text1.color,
+        backgroundColor :  design.text1.background,
         padding: normalize(2),
-        paddingLeft : normalize(5),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
         borderRadius: normalize(5),
-        width : '30%',
+        fontWeight: '600',
+        fontSize: normalize(10),
+        marginVertical: normalize(8),
+    },
+    cartonStyle: {
+        color: labels.type2.textColor,
+        backgroundColor :  labels.type2.background,
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(5),
+        fontWeight: '500',
+        fontSize: normalize(10),
+        marginVertical: normalize(8),
+    },
+    categoryStyle: {
+        color: labels.type4.textColor,
+        backgroundColor :  labels.type4.background,
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(5),
+        fontWeight: '500',
+        fontSize: normalize(10),
+        marginVertical: normalize(8),
+    },
+    expiryStyle: {
+        width: normalize(200),
+        color: labels.type1.textColor,
+        backgroundColor :  labels.type1.background,
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(5),
         fontWeight: '500',
         fontSize: normalize(10),
         marginVertical: normalize(8),
@@ -87,6 +135,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     sizeStar: {
         width: normalize(15),
         height: normalize(15),
+        marginBottom : normalize(5),
     },
     containerDescription: {
         marginTop: normalize(40)
@@ -108,11 +157,11 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         fontWeight: '700'
     },
     price: {
-        fontSize: normalize(18),
+        fontSize: normalize(14),
         fontWeight: '700'
     },
     total: {
-        fontSize: normalize(20),
+        fontSize: normalize(18),
         fontWeight: '700',
     },
     special: {
@@ -125,6 +174,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems : 'flex-start',
+        marginTop: normalize(10),
         marginRight : normalize(5)
     }
 })

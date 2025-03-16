@@ -5,8 +5,8 @@ export interface ProductListInterface {
     name: string | undefined;
     price: string | undefined;
     price_not_formatted: number | undefined;
-    special: string|undefined;
-    special_not_formatted: number|undefined;
+    special: string|undefined|boolean;
+    special_not_formatted: string|boolean;
     image: string | undefined;
     max: number | undefined;
     box: number | undefined;
@@ -22,8 +22,8 @@ export type ProductList = {
     name: string;
     price: string;
     price_not_formatted: number;
-    special: string|undefined;
-    special_not_formatted: number|undefined;
+    special: string|undefined|boolean;
+    special_not_formatted: string|undefined|boolean;
     image: string;
     max: number;
     box: number;

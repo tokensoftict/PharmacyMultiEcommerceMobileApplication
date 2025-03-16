@@ -8,8 +8,8 @@ export const _styles = (disabled: boolean | undefined, sm: boolean | undefined) 
             backgroundColor: disabled
                 ? palette.main.pdisabled
                 : palette.main.p500,
-            paddingHorizontal: normalize(sm ? 6 : 10),
-            paddingVertical: normalize(sm ? 8 : 16),
+            paddingHorizontal: normalize(sm ? 3 : 10),
+            paddingVertical: normalize(sm ? 5 : 13),
             borderRadius: normalize(sm ? 5 : 5),
             flexDirection: 'row',
             alignItems: 'center',

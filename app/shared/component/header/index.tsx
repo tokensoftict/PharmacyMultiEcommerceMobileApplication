@@ -7,8 +7,7 @@ import { location, homeNotifications, homeLike, homeNotificationsDark, homeLikeD
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../../routes/stack";
 import useDarkMode from "../../hooks/useDarkMode.tsx";
-import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
-import {normalize} from "@/shared/helpers";
+import AuthSessionService from "../../../service/auth/AuthSessionService";
 
 export default function Header() {
   const {isDarkMode} = useDarkMode()
@@ -19,18 +18,18 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Image style={styles.avatar} source={{uri: userProfile.data.image}} />
+        <Image style={styles.avatar} source={{uri: userProfile?.data?.image}} />
         <View>
-          <Typography style={styles.nameUser}>{ userProfile.data.firstname}</Typography>
+          <Typography style={styles.nameUser}>{ userProfile?.data?.firstname} { userProfile?.data?.lastname}</Typography>
           <View style={styles.row}>
             <Icon customStyles={styles.iconLocation} icon={location} />
-            <Typography style={styles.location}>No Location</Typography>
+            <Typography style={styles.location}> No Location</Typography>
           </View>
         </View>
       </View>
 
       <View style={styles.row}>
-        <TouchableOpacity onPress={() => navigate('enterOTP')}>
+        <TouchableOpacity onPress={() => navigate('wishlist')}>
           {isDarkMode ? (
             <Icon customStyles={styles.iconSize} icon={homeNotificationsDark} />
           ) : (
@@ -38,7 +37,7 @@ export default function Header() {
           )}
         </TouchableOpacity>
         <View style={styles.widthSpace}/>
-        <TouchableOpacity onPress={() => navigate('enterOTP')}>
+        <TouchableOpacity onPress={() => navigate('wishlist')}>
           {isDarkMode ? (
             <Icon customStyles={styles.iconSize} icon={homeLikeDark} />
           ) : (

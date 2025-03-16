@@ -25,11 +25,11 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     },
     seeAll: {
         color : semantic.alert.danger.d500,
-        fontWeight : '600'
+        fontWeight : '700'
     },
     categoryName: {
         color : semantic.text.black,
-        fontWeight : '600'
+        fontWeight : '700'
     },
     categoryHolder: {
         width : '100%',
@@ -37,7 +37,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         borderRadius: normalize(5),
         shadowOpacity: 0.11,
         shadowRadius: 3,
-        elevation: 16,
+        elevation: 0.5,
         shadowOffset: {
             width: 0,
             height: 0,

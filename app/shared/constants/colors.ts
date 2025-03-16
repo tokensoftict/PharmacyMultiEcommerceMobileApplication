@@ -61,6 +61,7 @@ export const semantic = {
       d300: '#0B0B0B',
       d200: '#070707',
       d100: '#000000',
+      d600 : '#333'
     },
     white: {
       w500: '#ffffff',
@@ -68,9 +69,32 @@ export const semantic = {
       w300: '#fcfcfc',
       w200: '#fdfdfd',
       w100: '#fefefe',
+      w101: '#fdfdfd',
+      w111: '#eeeeee',
+      wgrey: '#DDDDDD',
+      wgreyblack: '#808080',
     }
   },
 };
+
+export const labels = {
+  type1 : {
+    background : "#d1c4e9",
+    textColor: '#311b92',
+  },
+  type2 : {
+    background : "#f3e5f5",
+    textColor: '#4a148c',
+  },
+  type3 : {
+    background : "#b2dfdb",
+    textColor: '#004d40',
+  },
+  type4 : {
+    background : "#ffcc80",
+    textColor: '#e65100',
+  }
+}
 
 export const design = {
   text1 :{

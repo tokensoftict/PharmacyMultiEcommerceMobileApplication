@@ -8,7 +8,7 @@ export const _styles = (disabled: boolean | undefined, isDarkMode: boolean) =>
     container: {
       backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500,
       paddingHorizontal: normalize(10),
-      paddingVertical: normalize(16),
+      paddingVertical: normalize(13),
         borderRadius: normalize( 5),
       flexDirection: 'row',
       alignItems: 'center',

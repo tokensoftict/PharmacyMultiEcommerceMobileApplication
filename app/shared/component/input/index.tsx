@@ -1,4 +1,4 @@
-import React, { LegacyRef, useState } from "react";
+import React, {  useState } from "react";
 import {View, TextInput} from 'react-native';
 import {_styles} from './styles';
 import Typography from '../typography';
@@ -40,9 +40,9 @@ export default function Input({
 }: InputProps) {
   const [isFocus, setFocus] = useState(false);
   const {isDarkMode} = useDarkMode()
-  const styles = _styles(isFocus, isDarkMode);
+  const styles = _styles(isFocus, isDarkMode, multiline);
   return (
-    <View>
+    <View style={{width : '100%'}}>
       {label && <Typography style={styles.label}>{label}</Typography>}
       <View style={styles.container}>
         {leftIcon && leftIcon}

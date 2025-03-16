@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Modal, TouchableOpacity} from 'react-native';
 import {_styles} from './styles';
-import useDarkMode from "../../hooks/useDarkMode.tsx";
+import useDarkMode from "../../hooks/useDarkMode";
 import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
 interface ButtonSheetProps {

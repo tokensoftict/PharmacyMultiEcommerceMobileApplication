@@ -13,6 +13,7 @@ import {white_shopping_cart} from "../../../assets/icons";
 import {store} from "../../../redux/store/store";
 import * as action from "../../../redux/actions";
 import {semantic} from "../../../shared/constants/colors.ts";
+import Environment from "@/shared/utils/Environment.tsx";
 
 
 interface ProductList {
@@ -39,7 +40,7 @@ export default function CardProduct({product}: ProductList) {
             <Typography ellipsizeMode={'tail'} numberOfLines={2} style={styles.name}>{product.name}</Typography>
             <View style={{flexDirection : 'row', justifyContent : 'space-between'}}>
             {
-                product.special !== undefined ?
+                product.special !== false ?
                     <View>
                         <Typography style={styles.special}>{currencyType} {product.price}</Typography>
                         <Typography style={styles.price}>{currencyType} {product.special}</Typography>
@@ -53,7 +54,12 @@ export default function CardProduct({product}: ProductList) {
                     <Icon width={15} height={15} tintColor={semantic.background.white.w500}  icon={white_shopping_cart} />
                 </TouchableOpacity>
         </View>
-          <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product.doorstep}</Typography>
+            {
+                (Environment.isWholeSalesEnvironment() &&  product?.doorstep ) ?
+                    <Typography style={styles.doorStep}>+ Door Delivery : {currencyType} {product?.doorstep}</Typography>
+                    :
+                    <></>
+            }
           <Typography style={styles.category}>{product.quantity} Available</Typography>
         </View>
     </TouchableOpacity>

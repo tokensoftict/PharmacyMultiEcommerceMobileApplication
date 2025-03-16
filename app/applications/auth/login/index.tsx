@@ -17,7 +17,7 @@ import ErrorText from "../../../shared/component/ErrorText";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../../../shared/routes/stack";
 import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
-import Toast from "react-native-toast-message";
+import Toasts from "@/shared/utils/Toast.tsx";
 
 export default function Login() {
 
@@ -65,24 +65,13 @@ export default function Login() {
         } else {
           const userProfile = await (new AuthSessionService().getAuthSession());
           if(userProfile.data?.phone_verified_status === false){
-            Toast.show({
-              type: 'success',
-              text1: 'Account Verification',
-              text2: 'Please verify your phone number to continue!',
-              position : "top",
-            });
+            Toasts("Please verify your phone number to continue!")
             navigation.navigate('enterOTP'); // user have not verify there phone lets redirect to verify
           }else{
-            Toast.show({
-              type: 'success',
-              text1: 'Account Login',
-              text2: 'Login successful, please wait..',
-              position : "top",
-              onHide : () => {
-              }
-            });
+            Toasts('Login successful, please wait..');
             setTimeout(() => {
-              navigation.navigate("tab");
+              // @ts-ignore
+              navigation.navigate("storeSelector");
             }, 1000)
           }
         }
@@ -92,10 +81,11 @@ export default function Login() {
           setMessageError(error.message);
         }
       })
+
     }
   }
   return (
-      <Wrapper loading={isLoading}>
+      <Wrapper>
         <View style={styles.container}>
           <View style={styles.titleImageContainer}>
             <TitleAuth title="Login Your Account" />
@@ -148,7 +138,7 @@ export default function Login() {
           </View>
           <View style={styles.formControl}>
             {messageError !== '' ?  <ErrorText textAlign={'center'} style={{marginBottom: 10}}>{messageError}</ErrorText> : <View/>}
-            <Button loading={isLoading} disabled={isLoading} onPress={doLogin}  loadingText="Signing In Please wait.." title="Sign In" />
+            <Button loading={isLoading} disabled={isLoading} onPress={doLogin}  loadingText="Sign In" title="Sign In" />
           </View>
           <View style={styles.containerLink}>
             <Typography style={styles.alreadyAccount}>{"New user ?"}</Typography>

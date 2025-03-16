@@ -32,6 +32,9 @@ export interface Data {
     classification: string;
     productgroup: any;
     image: string;
+    reviews: number;
+    totalSold : number;
+    rating : string;
     max: number;
     box: number;
     sachet: boolean;

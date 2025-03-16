@@ -1,14 +1,14 @@
 import AuthSessionService from "../../../../service/auth/AuthSessionService";
-import WholesalesRequest from "../../../../network/internet/WholesalesRequest";
+import EnvironmentRequest, {EnvironmentRequestInterface} from "@/network/internet/EnvironmentRequest.tsx";
 
 
 export default class ProductListService {
 
-    request: WholesalesRequest
-    authSessionService: AuthSessionService
+    request : EnvironmentRequestInterface
+    authSessionService : AuthSessionService
 
     constructor() {
-        this.request = new WholesalesRequest();
+        this.request = new EnvironmentRequest().getRequest();
         this.authSessionService = new AuthSessionService();
     }
 

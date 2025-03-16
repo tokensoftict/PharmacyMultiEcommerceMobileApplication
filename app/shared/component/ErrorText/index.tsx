@@ -7,7 +7,7 @@ import Typography from "../typography";
 export default function ErrorText(props: any) {
   const {
     children,
-    numberOfLines = "1",
+    numberOfLines = 1,
     style = [],
     textAlign = "center"
   } = props;

@@ -1,40 +1,53 @@
-import { StyleSheet } from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import { normalize } from "../../helpers";
 import {design, palette, semantic} from "../../constants/colors";
 
 export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     width: normalize(176),
-    marginBottom: normalize(12),
-    marginTop:normalize(12),
+    marginBottom: normalize(12, 'height'),
+    marginTop:normalize(12, 'height'),
     marginRight:normalize(5),
     marginLeft:normalize(15),
     backgroundColor: isDarkMode ? semantic.fill.f01 : semantic.fill.f03,
     borderRadius: normalize(5),
     shadowOpacity: 0.11,
-    shadowRadius: 3,
-    elevation: 16,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
+    ...Platform.select({
+      ios: {
+        shadowRadius: normalize(3),
+        elevation: normalize(20),
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+      },
+      android: {
+        shadowRadius: normalize(3),
+        elevation: normalize(2),
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+      }
+    }),
 
   },
   containerImage: {
     width: '100%',
-    height: normalize(115),
+    height: normalize(115, 'height'),
   },
   image: {
     width: '100%',
-    height: normalize(115)
+    height: normalize(115, 'height')
   },
   name: {
-    fontWeight: '500',
+    fontWeight: '400',
     color: isDarkMode ? semantic.text.white : semantic.text.black,
-    maxHeight: normalize(40),
+    maxHeight: normalize(40, 'height'),
+    fontSize: normalize(12, 'height'),
     alignItems : "center",
-    marginBottom: normalize(4),
-    height: normalize(40),
+    marginBottom: normalize(4, 'height'),
+    height: normalize(35, 'height'),
   },
   category: {
     color: isDarkMode ? semantic.text.white : design.text1.color,

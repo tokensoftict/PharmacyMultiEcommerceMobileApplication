@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {normalize} from '../../../shared/helpers';
 import {semantic} from '../../../shared/constants/colors';
 
@@ -25,7 +25,14 @@ export const styles = StyleSheet.create({
     },
     titleSection: {
         fontSize: normalize(18),
-        fontWeight: '600',
+        ...Platform.select({
+            ios: {
+                fontWeight: '600',
+            },
+            android: {
+                fontWeight: '800',
+            }
+        }),
         marginLeft: normalize(10),
         marginBottom: normalize(12)
     },

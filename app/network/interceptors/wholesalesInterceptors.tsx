@@ -5,7 +5,9 @@ import {UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
 
 wholesalesAxiosInstance.interceptors.request.use( async function (request) {
 
-    request.baseURL = 'http://wholesales.mystore.test:8000/api/v1/';
+    //request.baseURL = 'http://wholesales.staging.generaldrugcentre.com/api/v1/';
+    request.baseURL = 'http://wholesales.mystore.test:8001/api/v1/';
+    request.headers['Content-Type'] = 'multipart/form-data';
 
     const authSession = new AuthSessionService();
 
@@ -36,6 +38,8 @@ wholesalesAxiosInstance.interceptors.request.use( async function (request) {
         },
     ];
 
+
+    console.log(request.baseURL+request.url);
 
     return request;
 }, function (error) {

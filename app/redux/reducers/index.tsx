@@ -1,7 +1,6 @@
 import * as actionTypes from "../actions/actionTypes.tsx";
-import {Data, UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
+import {UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
 import {ProductListInterface} from "@/service/product/ProductListInterface.tsx";
-import {Float} from "react-native/Libraries/Types/CodegenTypes";
 import {Data as pData} from "@/service/product/show/interface/ProductInformationInterface.tsx";
 
 
@@ -18,9 +17,11 @@ const product: ProductListInterface|pData|undefined = undefined;
 const systemDataInitialState = {
   auth : userprofile,
   product : product,
+  environment : "",
   pageRouteData : {
 
-  }
+  },
+  fireBaseKey : ""
 };
 
 
@@ -32,6 +33,10 @@ function systemReducer(state = systemDataInitialState, action:any){
       return { ...state, pageRouteData: action.payload };
     case actionTypes.PRODUCT_DIALOG_DATA:
       return { ...state, product: action.payload };
+    case actionTypes.ENVIRONMENT:
+      return { ...state, environment: action.payload };
+      case actionTypes.FIREBASE_DEVICE_KEY:
+      return { ...state, fireBaseKey: action.payload };
     default:
       return state;
   }

@@ -13,7 +13,9 @@ export interface OptionCardOptions {
   title: string;
   description: string;
   active: boolean,
-  price?: string
+  price?: string,
+  code?:string
+  extra?:any
 }
 interface ListOptionCardProps {
   value: OptionCardOptions | undefined;

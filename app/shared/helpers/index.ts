@@ -1,6 +1,7 @@
 import { Dimensions, PixelRatio, Platform } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 // based on iphone 5s's scale
@@ -8,10 +9,11 @@ const scale = SCREEN_WIDTH / 400;
 
 export function normalize(size: number) {
   const newSize = size * scale;
+
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   }
 }
 
@@ -24,6 +26,13 @@ export function createRows<T>(array: T[], size: number): T[][] {
   return chunkedArray;
 }
 
+
+export function truncateString(str : string, maxLength : number) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + '..';
+  }
+  return str;
+}
 
 
 export const storage = {

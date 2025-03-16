@@ -1,21 +1,21 @@
 import React, {useState} from "react";
 import {Animated, ScrollView, View} from "react-native";
-import Typography from "../../../shared/component/typography";
+import Typography from "@/shared/component/typography";
 import {_styles} from './styles'
-import useDarkMode from "../../../shared/hooks/useDarkMode.tsx";
-import {Data} from "@/shared/page/categories/service/CategoryInterface.tsx";
-import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
-import CategoryService from "../../../shared/page/categories/service/CategoryService";
-import {ProductList} from "../../../service/product/ProductListInterface.tsx";
-import SmallCardProduct from "../../../shared/component/smallCardProduct";
-import HeaderWithIcon from "../../../shared/component/headerBack";
-import {categories, shoppingBag} from "../../../assets/icons";
-import {normalize} from "../../../shared/helpers";
-import WrapperNoScroll from "../../../shared/component/wrapperNoScroll";
+import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
+import {Data} from "@/service/service/CategoryInterface.tsx";
+import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import CategoryService from "@/service/service/CategoryService";
+import {ProductList} from "@/service/product/ProductListInterface.tsx";
+import SmallCardProduct from "@/shared/component/smallCardProduct";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import {categories, shoppingBag} from "@/assets/icons";
+import {normalize} from "@/shared/helpers";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import FlatList = Animated.FlatList;
-import {ButtonOutline} from "../../../shared/component/buttons";
+import {ButtonOutline} from "@/shared/component/buttons";
 import {useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack.tsx";
+import {NavigationProps} from "@/shared/routes/stack.tsx";
 
 export default function Categories() {
     const {isDarkMode} = useDarkMode();
@@ -86,37 +86,43 @@ export default function Categories() {
     return (
         <View style={{flex: 1}}>
             <WrapperNoScroll loading={isCategoryLoading}>
-                <View style={{paddingHorizontal: normalize(24)}}>
-                    <HeaderWithIcon icon={shoppingBag}  onPress={() =>{
-                        if(!isCategoryLoading) {
-                            loadCategory();
-                        }
-                    }} title="Categories" />
-                    <View style={{height: normalize(10)}}/>
-                </View>
-                <FlatList
-                    ListFooterComponent={
-                        <View style={{paddingHorizontal:normalize(15), marginBottom:normalize(30)}}>
-                            <ButtonOutline title={'LORD MORE'} onPress={() => {
-                                loadCategory()
-                            }}/>
-                        </View>
-                    }
-                    numColumns={1}
-                    data={categoryResponseList}
-                    keyExtractor={(item, index) => item.id.toString()+Math.floor(Math.random() * 10).toString()}
-                    renderItem={(item) => {
-                        return  (
-                            <View style={styles.holder}>
-                                {
-                                    categoryItem(item.item?.id, item.item?.name, item.item?.stocks)
-                                }
+                {
+                    isCategoryLoading ?
+                        <></> :
+                        <>
+                            <View style={{paddingHorizontal: normalize(24)}}>
+                                <HeaderWithIcon icon={shoppingBag}  onPress={() =>{
+                                    if(!isCategoryLoading) {
+                                        loadCategory();
+                                    }
+                                }} title="Categories" />
                             </View>
-                        )
+                            <FlatList
+                                ListFooterComponent={
+                                    <View style={{paddingHorizontal:normalize(15), marginBottom:normalize(30)}}>
+                                        <ButtonOutline title={'LORD MORE'} onPress={() => {
+                                            loadCategory()
+                                        }}/>
+                                    </View>
+                                }
+                                numColumns={1}
+                                data={categoryResponseList}
+                                keyExtractor={(item, index) => item.id.toString()+Math.floor(Math.random() * 10).toString()}
+                                renderItem={(item) => {
+                                    return  (
+                                        <View style={styles.holder}>
+                                            {
+                                                categoryItem(item.item?.id, item.item?.name, item.item?.stocks)
+                                            }
+                                        </View>
+                                    )
 
-                    }}>
-                </FlatList>
-                <View style={{height: normalize(80)}}/>
+                                }}>
+                            </FlatList>
+                            <View style={{height: normalize(80)}}/>
+                        </>
+                }
+
             </WrapperNoScroll>
         </View>
     );

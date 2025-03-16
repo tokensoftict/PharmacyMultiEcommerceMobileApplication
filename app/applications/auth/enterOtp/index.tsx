@@ -9,12 +9,11 @@ import TitleAuth from "../../../shared/component/titleAuth";
 import {normalize} from "../../../shared/helpers";
 import {logo} from "../../../assets/images";
 import AuthSessionService from "../../../service/auth/AuthSessionService";
-import {UserProfile} from "../../../service/auth/interfaces/UserProfile";
 import ErrorText from "../../../shared/component/ErrorText";
 import OtpService from "../../../service/auth/OtpService";
 import {CommonActions, useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "../../../shared/routes/stack.tsx";
-import Toast from "react-native-toast-message";
+import Toasts from "@/shared/utils/Toast.tsx";
 import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
 
 
@@ -39,7 +38,7 @@ export default  function EnterOtp() {
         navigation.dispatch(
             CommonActions.reset({
                 index: 0,
-                routes: [{name: "tab" }]
+                routes: [{name: "storeSelector" }]
             }));
     }
 
@@ -53,16 +52,8 @@ export default  function EnterOtp() {
             (new OtpService()).validateOTP(otpCode, userProfile.data.phone).then(function (response) {
                 setIsLoading(false);
                 if (response.data.status === true) {
-                    console.log("Phone Number has been verified successfully");
-                    Toast.show({
-                        type: 'success',
-                        text1: 'Account Verification',
-                        text2: "Phone Number has been verified successfully",
-                        position : "top",
-                        onHide : () => {
-                            navigateAndClearStack();
-                        }
-                    });
+                    Toasts("Phone Number has been verified successfully");
+                    navigateAndClearStack();
                 } else {
                     const error = response.data.error;
                     if(error.hasOwnProperty("otp")){
@@ -85,7 +76,7 @@ export default  function EnterOtp() {
         (new OtpService()).requestForOtp(userProfile.data.phone).then(function (response){
             setIsLoading(false);
             if(response.data.status === true){
-                // toast a message saying otp has been sent to  there phone
+                // Toasts a message saying otp has been sent to  there phone
             }else{
                 setOtpError(response.data.error);
             }

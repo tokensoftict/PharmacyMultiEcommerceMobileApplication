@@ -12,8 +12,8 @@ import {ButtonOutline} from "../../../shared/component/buttons";
 import FlatList = Animated.FlatList;
 import ProductListService from "../../../shared/page/productList/service/ProductListService.tsx";
 import {ProductListInterface} from "../../../service/product/ProductListInterface.tsx";
-import Toast from "react-native-toast-message";
 import CardProduct from "../../../shared/component/cardProduct";
+import Toasts from "@/shared/utils/Toast.tsx";
 
 
 export default function ProductList() {
@@ -50,11 +50,7 @@ export default function ProductList() {
             }
         }, (error) => {
             setIsProductLoading(false);
-            Toast.show({
-                type: 'error',
-                text2: 'Unknown error occurred!',
-                position : "top",
-            });
+            Toasts('Unknown error occurred!')
             navigation.goBack();
         }))
     }

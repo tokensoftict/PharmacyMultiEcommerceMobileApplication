@@ -1,4 +1,4 @@
 
 
 export const currencyType = "₦"
-export const activeOpacity = 0.8
+export const activeOpacity = 0.5

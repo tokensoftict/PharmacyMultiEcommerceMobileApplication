@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import Typography from '../typography';
 import Icon from "../icon";
@@ -28,6 +28,15 @@ export default function Counter({onChange, cant = 1}: CounterProps) {
     onChange(count + 1, TypeChange.plus)
     setCounter(prevState => prevState + 1);
   }
+
+  function onChangeText(number : string) {
+      if(number == "") {
+          number = "1";
+      }
+
+      setCounter(parseInt(number));
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -35,7 +44,12 @@ export default function Counter({onChange, cant = 1}: CounterProps) {
         style={styles.btnReduce}>
         <Icon customStyles={styles.minus} icon={Minus} />
       </TouchableOpacity>
-      <Typography style={styles.value}>{String(count)}</Typography>
+      <TextInput
+          keyboardType="numeric"
+          onChangeText={value => onChangeText(value)}
+          value={count+""}
+          style={styles.input}
+      />
       <TouchableOpacity
         onPress={() => handleChange(TypeChange.plus)}
         style={styles.btnAument}>

@@ -6,13 +6,15 @@ import { palette } from "../../constants/colors";
 
 interface OverlayLoaderProps {
   loading?: boolean
-  title?: string
+  title?: string,
+  height?: number
 }
 export default function OverlayLoader({
   loading,
   title = 'Loading...',
+  height =  useWindowDimensions().height
 }: OverlayLoaderProps) {
-  const {height} = useWindowDimensions();
+
   const styles = _styles(height, loading);
   return (
     <View style={styles.container}>

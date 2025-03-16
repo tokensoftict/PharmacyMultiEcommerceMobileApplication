@@ -6,10 +6,11 @@ const defaultContainer: ViewStyle = {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: normalize(12),
-  borderWidth: 2,
-  borderRadius: normalize(16),
-  marginVertical: normalize(12)
+  padding: normalize(10),
+  borderWidth: 1,
+  backgroundColor : 'white',
+  borderRadius: normalize(5),
+  marginVertical: normalize(2)
 }
 export const _styles = (isDarkMode: boolean, active: boolean) => StyleSheet.create({
   container: {
@@ -35,10 +36,11 @@ export const _styles = (isDarkMode: boolean, active: boolean) => StyleSheet.crea
     tintColor: isDarkMode ? semantic.background.white.w500 : semantic.text.grey
   },
   title: {
-    fontSize: normalize(16),
-    fontWeight: '700'
+    fontSize: normalize(12),
+    fontWeight: '500'
   },
   address: {
+    fontSize: normalize(10),
     color: semantic.text.grey
   },
   containerInfo: {

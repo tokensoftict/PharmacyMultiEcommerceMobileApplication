@@ -15,8 +15,8 @@ import {eyeFilled, eyeOff, lock} from "../../../assets/icons";
 import ErrorText from "../../../shared/component/ErrorText";
 import {Button} from "../../../shared/component/buttons";
 import ResetPasswordService from "../../../service/auth/ResetPasswordService";
-import Toast from 'react-native-toast-message';
 import AuthSessionService from "../../../service/auth/AuthSessionService";
+import Toasts from "@/shared/utils/Toast.tsx";
 
 export default function ResetPassword() {
     const navigation = useNavigation<NavigationProps>();
@@ -67,15 +67,8 @@ export default function ResetPassword() {
                 console.log(response.data);
                 if(response.data.status === true){
                  new AuthSessionService().setPageSessionData("phone", "");
-                 Toast.show({
-                        type: 'success',
-                        text1: 'Password Reset',
-                        text2: 'Your password has been reset successfully 👋 , please login with your new password',
-                        position : "top",
-                        onHide : () => {
-                            backToLoginPage();
-                        }
-                    });
+                 Toasts('Your password has been reset successfully 👋 , please login with your new password');
+
                 }else{
                     const error = response.data.error;
                     if(error.hasOwnProperty("pin")){

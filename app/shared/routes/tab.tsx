@@ -3,10 +3,12 @@ import {
     home as HomeIcon,
     myAccount,
     brand,
-    listCart, more,categories,
+    listCart, more, categories, qrcode,
 } from '../../assets/icons';
 import Cart from "../../shared/page/cart";
 import Categories from "../../shared/page/categories";
+import MyAccount from "../../shared/page/myaccount";
+import QrcodeScreen from "@/shared/page/qrcode";
 
 export default [
     {
@@ -17,15 +19,15 @@ export default [
         component: WholesalesHomePage,
     },
     {
-        id: '3',
-        displayName: 'Categories',
+        id: '2',
+        displayName: 'Category',
         name: 'categories',
         icon: categories,
         component: Categories,
     },
 
     {
-        id: '2',
+        id: '3',
         displayName: 'My Cart',
         name: 'myCart',
         icon: listCart,
@@ -33,17 +35,17 @@ export default [
     },
 
     {
-        id: '3',
-        displayName: 'More',
-        name: 'more',
-        icon: more,
-        component: WholesalesHomePage,
+        id: '4',
+        displayName: 'QR Code',
+        name: 'qrcode',
+        icon: qrcode,
+        component: QrcodeScreen,
     },
     {
-        id: '4',
-        displayName: 'My Account',
-        name: 'profile',
+        id: '5',
+        displayName: 'Account',
+        name: 'myAccount',
         icon: myAccount,
-        component: WholesalesHomePage,
+        component: MyAccount,
     },
 ];

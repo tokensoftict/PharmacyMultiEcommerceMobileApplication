@@ -31,7 +31,17 @@ export interface Items {
 
 export interface Meta {
     noItems: number;
+    totalItemsInCarts_formatted : string
     totalItemsInCarts: string;
+    doorStepDelivery : doorStepDelivery
+}
+
+export interface doorStepDelivery {
+    status : boolean,
+    name : string,
+    amount : string,
+    deliveryDate : string,
+    amount_formatted : string
 }
 
 export interface Data {
