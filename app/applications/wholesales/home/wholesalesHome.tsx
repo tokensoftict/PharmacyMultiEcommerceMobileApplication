@@ -3,8 +3,6 @@ import React, {useState} from "react";
 import Header from "@/shared/component/header";
 import Search from "@/shared/component/search";
 import WholesalesHomeService from "@/service/wholesales/WholesalesHomeService";
-import {useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "@/shared/routes/stack.tsx";
 import {WholesalesHomePageInterface} from "@/service/wholesales/interface/WholesalesHomePageInterface.ts";
 import SpecialOffers from "@/shared/component/specialOffers";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
