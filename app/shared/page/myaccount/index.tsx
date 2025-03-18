@@ -196,7 +196,7 @@ export default function MyAccount() {
                         />
                         <View style={{flexDirection: 'column', justifyContent: 'space-evenly'}}>
                             <Typography style={{fontWeight: '700', fontSize: 16}}>
-                                { userProfile?.data?.firstname}
+                                { userProfile?.data?.firstname + " "+userProfile?.data?.lastname}
                             </Typography>
                             <Typography style={{fontWeight: '500', fontSize: 14}}>
                                 { userProfile?.data?.phone}

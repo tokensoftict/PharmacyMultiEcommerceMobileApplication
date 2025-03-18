@@ -5,8 +5,8 @@ import {design, palette, semantic} from "../../constants/colors";
 export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     width: normalize(176),
-    marginBottom: normalize(12, 'height'),
-    marginTop:normalize(12, 'height'),
+    marginBottom: normalize(12),
+    marginTop:normalize(12),
     marginRight:normalize(5),
     marginLeft:normalize(15),
     backgroundColor: isDarkMode ? semantic.fill.f01 : semantic.fill.f03,
@@ -34,20 +34,20 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   },
   containerImage: {
     width: '100%',
-    height: normalize(115, 'height'),
+    height: normalize(115),
   },
   image: {
     width: '100%',
-    height: normalize(115, 'height')
+    height: normalize(115)
   },
   name: {
     fontWeight: '400',
     color: isDarkMode ? semantic.text.white : semantic.text.black,
-    maxHeight: normalize(40, 'height'),
-    fontSize: normalize(12, 'height'),
+    maxHeight: normalize(40),
+    fontSize: normalize(12),
     alignItems : "center",
-    marginBottom: normalize(4, 'height'),
-    height: normalize(35, 'height'),
+    marginBottom: normalize(4),
+    height: normalize(35),
   },
   category: {
     color: isDarkMode ? semantic.text.white : design.text1.color,

@@ -10,20 +10,27 @@ import {Button} from "@/shared/component/buttons";
 import Typography from "@/shared/component/typography";
 import {styles} from "./styles"
 import ButtonSheet from "@/shared/component/buttonSheet";
-import {browse, mail} from "@/assets/icons";
+import {browse} from "@/assets/icons";
 import Icon from "@/shared/component/icon";
 import SearchDialog from "@/shared/component/product_search";
 import MedReminderService from "@/service/medReminder/MedReminderService";
+import {useNavigation} from "@react-navigation/native";
+import {scheduleNotification} from "@/shared/utils/ScheduleNotification";
 import Toastss from "@/shared/utils/Toast";
+import dayjs from "dayjs";
 
 const MedReminderForm = () => {
+
     const [stock_id, setStockId] = useState("");
     const [drugName, setDrugName] = useState("");
     const [drugNameError, setDrugNameError] = useState("");
     const [loading, setLoading] = useState(false);
     const [medReminder, setMedReminder] = useState({});
+    const navigation = useNavigation();
 
-
+    function goBack() {
+        navigation.goBack();
+    }
     const [normalSchedule, setNormalSchedule] = useState({
         Morning: { selected: false, time: new Date(new Date().setHours(8, 0, 0, 0)) },
         Afternoon: { selected: false, time: new Date(new Date().setHours(12, 0, 0, 0)) },
@@ -63,7 +70,7 @@ const MedReminderForm = () => {
                 time: selectedTime,
             },
         }));
-        console.log(normalSchedule);
+
     };
 
     const toggleTimeSelection = (time) => {
@@ -127,11 +134,20 @@ const MedReminderForm = () => {
     }
 
     const onItemDrugSelected = (item) => {
-        console.log(item);
         setStockId(item.id);
         setDrugName(item.name);
         openSearchDialog();
     }
+
+    async function createNotification() {
+        const date = new Date(Date.now());
+        date.setHours(0);
+        date.setMinutes(32);
+
+
+        await scheduleNotification(12, "Hello Yusuf", "20", "mg", date.getTime(), {"hello" : "wworld"})
+    }
+
 
     function onFormSubmit() {
         let error = false;
@@ -155,7 +171,7 @@ const MedReminderForm = () => {
             error = true;
             setDosageError("Dosage is required");
         } else {
-            formData.append("dosage", stock_id)
+            formData.append("dosage", dosage)
             setDosageError("");
         }
 
@@ -179,11 +195,11 @@ const MedReminderForm = () => {
         if(useInterval === false) {
             let slots = {};
             let  selectedSlots = Object.keys(normalSchedule).map(function(item) {
-               if(normalSchedule[item].selected === true) {
-                   slots[item] =  normalSchedule[item].time.toLocaleString('en-US', { hour: 'numeric', minute : 'numeric',hour12: true });
-                   return {[item] : normalSchedule[item].time.toLocaleString('en-US', { hour: 'numeric', minute : 'numeric',hour12: true })};
-               }
-               return false;
+                if(normalSchedule[item].selected === true) {
+                    slots[item] =  normalSchedule[item].time.toLocaleString('en-US', { hour: 'numeric', minute : 'numeric',hour12: true });
+                    return {[item] : normalSchedule[item].time.toLocaleString('en-US', { hour: 'numeric', minute : 'numeric',hour12: true })};
+                }
+                return false;
             }).filter(function(item) {
                 return item !== false;
             })
@@ -198,17 +214,17 @@ const MedReminderForm = () => {
         } else  {
             if(every === "") {
                 error = true;
-                setEveryError("Every field is required");
+                setEveryError("This field is required");
             } else {
-                formData.append("every", every)
+                formData.append("interval", every)
                 setEveryError("");
             }
 
             if(interval === "") {
                 error = true;
-                setIntervalError("Interval is required");
+                setIntervalError("This is required");
             } else {
-                formData.append("interval", interval)
+                formData.append("every", interval)
                 setIntervalError("");
             }
         }
@@ -224,29 +240,45 @@ const MedReminderForm = () => {
 
         if(error === false) {
             setLoading(true);
-            (new MedReminderService).create(formData).then(response => {
-                console.log(JSON.stringify(response.data));
-                setLoading(false);
-                if(response.data.status === true) {
-                    setMedReminder(response.data.data);
-                    Toastss("Med Reminder has been created successfully.");
-                    setDrugName("");
-                    setStockId("");
-                    setTotalDosageInPackage("");
-                    setDosageError("");
-                    setType("")
-                    setInterval("")
-                    setNormalSchedule({
-                        Morning: { selected: false, time: new Date(new Date().setHours(8, 0, 0, 0)) },
-                        Afternoon: { selected: false, time: new Date(new Date().setHours(12, 0, 0, 0)) },
-                        Evening: { selected: false, time: new Date(new Date().setHours(20, 0, 0, 0)) },
-                        'Mid-Night': { selected: false, time: new Date(new Date().setHours(0, 0, 0, 0)) }
+            (new MedReminderService()).create(formData).then(async (response) => {
+                if (response.data.status === true) {
+                    setMedReminder(response.data.data.medReminder);
+                    // Extract schedules
+                    const schedules = response.data.data.schedules;
+                    // Schedule notifications and store their IDs
+                    Promise.all(
+                        schedules.map(async (schedule) => {
+                          const  notificationId =  await scheduleNotification(
+                                schedule.id,
+                                schedule.drugName,
+                                schedule.dosage,
+                                "mg",
+                                new Date(dayjs(schedule.js_date)).getTime(),
+                                {
+                                    id: schedule.id,
+                                    drugName: schedule.drugName,
+                                    med_reminder_id: schedule.med_reminder_id,
+                                    dosage: schedule.dosage,
+                                    title: schedule.title,
+                                    scheduled_at: schedule.scheduled_at,
+                                    scheduled_at_full: schedule.scheduled_at_full,
+                                }
+                            );
+                            return { [schedule.id]: notificationId };
+                        })
+                    ).then((schedules) => {
+                        console.log(schedules);
+                        setLoading(false);
+                        Toastss("Med Reminder has been created successfully.");
+                        // Navigate back
+                        goBack();
+                    }).finally(() => {
+                        setLoading(false);
                     });
-                    setEvery("");
-                    setStartDateTime(new Date());
-                    setNotes("");
+                } else {
+                    setLoading(false);
                 }
-            })
+            });
         }
 
     }
@@ -289,6 +321,7 @@ const MedReminderForm = () => {
                         label={"Dosage per Intake"}
                         placeholder="e.g., 500mg"
                         value={dosage}
+                        keyboardType="numeric"
                         onChangeText={(dosage) => setDosage(dosage)}
                     />
                     {dosageError !== "" && <Text style={{ color: "red" }}>{dosageError}</Text>}

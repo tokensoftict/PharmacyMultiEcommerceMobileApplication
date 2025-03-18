@@ -18,7 +18,7 @@ interface WrapperProps {
 }
 export default function WrapperNoScrollNoDialogNoSafeArea({loading, overlayLoaderHeight, children}: WrapperProps) {
     return (
-        <View style={{flex : 1}}>
+        <View style={{flex : 1,  backgroundColor: "#f8f9fa",}}>
             <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
             {children}
         </View>

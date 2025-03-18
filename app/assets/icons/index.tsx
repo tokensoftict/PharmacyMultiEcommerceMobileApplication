@@ -70,4 +70,5 @@ export {default as add_circle} from './add_circle.png';
 export {default as list} from './list.png';
 export {default as history} from './history.png';
 export {default as medica} from './medica.png';
+export {default as status} from './status.png';
 

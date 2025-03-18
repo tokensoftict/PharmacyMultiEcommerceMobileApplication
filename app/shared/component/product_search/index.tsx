@@ -28,8 +28,8 @@ export default function SearchDialog({ visible, onClose, onItemSelected = undefi
 
     const meilisearch = new SearchProductService(
         {
-            host : "http://144.126.141.213:7700",
-            apiKey: "olatunji16",
+            host : "http://192.168.0.116:7700",
+            apiKey: "YOUR_MASTER_KEY",
             index :"stocks"
         }
     )

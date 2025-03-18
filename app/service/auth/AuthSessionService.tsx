@@ -1,15 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as action from "@/redux/actions";
 import { store } from "@/redux/store/store";
-import LoginService from "@/service/auth/LoginService.tsx";
 export default class AuthSessionService{
     /**
      * @param data
      */
     setAuthSession(data :any) {
-
         AsyncStorage.setItem("auth", JSON.stringify(data));
         store.dispatch(action.setApplicationData(data))
+    }
+
+    setMedReminderData(data :any) {
+        AsyncStorage.setItem("medReminderData", JSON.stringify(data));
+    }
+
+    getMedReminderData() :any {
+       return AsyncStorage.getItem("medReminderData") ?? []
     }
 
     destroySession() {

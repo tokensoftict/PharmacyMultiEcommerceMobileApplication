@@ -25,6 +25,8 @@ import MedReminderForm from "@/shared/page/medreminder/new-medreminder";
 import ListMedReminder from "@/shared/page/medreminder/list-medreminder";
 import HistoryLogs from "@/shared/page/medreminder/history-logs";
 import RefillTracker from "@/shared/page/medreminder/refill-tracker";
+import ViewReminder from "@/shared/page/medreminder/view-reminder";
+import ViewLogs from "@/shared/page/medreminder/view-logs";
 
 export type RootStackParamList = {
     login: undefined,
@@ -57,6 +59,8 @@ export type RootStackParamList = {
     listMedReminder : undefined,
     historyLogs : undefined,
     refillTracker : undefined,
+    viewLogs : undefined,
+    viewReminder : undefined,
 
 }
 
@@ -200,7 +204,16 @@ const RoutesStack: RouteItem[] = [
         component: RefillTracker,
         private: true
     },
-
+    {
+        path:'viewReminder',
+        component: ViewReminder,
+        private: true
+    },
+    {
+        path:'viewLogs',
+        component: ViewLogs,
+        private: true
+    },
 ];
 
 

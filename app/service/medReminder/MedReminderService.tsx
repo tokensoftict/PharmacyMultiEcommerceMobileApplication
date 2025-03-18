@@ -15,7 +15,6 @@ export default class MedReminderService {
         return this.request.get("med-reminder/list");
     }
 
-
     create(data: any) {
         return this.request.post("med-reminder/create", data);
     }
@@ -34,5 +33,17 @@ export default class MedReminderService {
             return this.request.get("med-reminder/today-history?filter="+filter);
         }
         return this.request.get("med-reminder/today-history");
+    }
+
+    loadHistoryWithFilter(date :string) {
+        return this.request.get("med-reminder/today-history?filter=custom-date&custom-date="+date);
+    }
+
+    loadHistoryForReminder(reminder_id :string | number) {
+        return this.request.get("med-reminder/today-history?filter=reminder-id&reminder-id="+reminder_id);
+    }
+
+    updateHistoryStatus(schedule_id : number | string, data : any) {
+        return this.request.post("med-reminder/"+schedule_id+"/updateHistoryStatus", data);
     }
 }

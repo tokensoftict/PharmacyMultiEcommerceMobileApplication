@@ -6,7 +6,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Animated,
-    RefreshControl, Dimensions,
+    RefreshControl, Dimensions, Alert,
 } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import Icon from "@/shared/component/icon";
@@ -14,12 +14,14 @@ import {add_circle, list, arrowBack, checkIcon, close, drug, notification, histo
 import {palette, semantic} from "@/shared/constants/colors.ts";
 import Typography from "@/shared/component/typography";
 import styles from "./main_styles"
-import {useFocusEffect, useNavigation} from "@react-navigation/native";
+import {CommonActions, useFocusEffect, useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import {MedReminderSchedules} from "@/service/medReminder/interface/MedReminderInterface.tsx";
 import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
 import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrollNoDialogNoSafeArea";
 import Toastss from "@/shared/utils/Toast";
+import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
+import useEffectOnce from "@/shared/hooks/useEffectOnce";
 
 const { width } = Dimensions.get("window");
 
@@ -30,14 +32,14 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const QUICK_ACTIONS = [
     {
         icon: <Icon icon={add_circle} width={28} height={28} tintColor={'white'} />,
-        label: "Add\nMedication",
+        label: "Add\nReminder",
         route: "medReminderForm",
         color:  semantic.background.white,
         gradient: ["#4CAF50", "#2E7D32"] as [string, string],
     },
     {
         icon: <Icon icon={list} width={28} height={28} tintColor={'white'} />,
-        label: "List \nMedication",
+        label: "List \nReminder",
         route: "listMedReminder",
         color: "#1976D2",
         gradient: ["#2196F3", "#1976D2"] as [string, string],
@@ -127,28 +129,30 @@ function CircularProgress({
 export default function MainMenu() {
     const navigation = useNavigation<NavigationProps>();
     const [loading, setLoading] = useState<boolean>(false);
+    const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
     // @ts-ignore
     const [medicationHistory, setMedicationHistory] = useState<MedReminderSchedules[]>([]);
 
     const [progress, setProgress] = useState(0);
     const [totalDoses, setTotalDoses] = useState(0);
     const [completedDoses, setCompletedDoses] = useState(0);
-
+    const {showLoading, hideLoading} = useLoading();
 
     function goBack() {
         navigation.goBack();
     }
 
-    function navigate(path : string)
+    function navigate(path : string, params = {})
     {
         // @ts-ignore
-        navigation.navigate(path);
+        navigation.navigate(path, params);
     }
 
     const loadTodayHistory = useCallback(() => {
         setLoading(true);
         (new MedReminderService()).loadTodayHistory("today-history").then((response) => {
             setLoading(false);
+            setRefreshLoading(false);
             if (response.data.status === true) {
                 setMedicationHistory(response.data.data);
             } else {
@@ -158,7 +162,7 @@ export default function MainMenu() {
             if(response.data?.data?.length > 0){
                 const _totalDoses = response.data.data.length;
                 const _completedDoses = response.data.data.filter(function(data : MedReminderSchedules){
-                    return data.status === "completed";
+                    return  ( data.status  !== "Pending" &&  data.status  !== "Cancelled")
                 }).length;
                 const _progress = (_completedDoses / _totalDoses );
                 setCompletedDoses(_completedDoses);
@@ -169,22 +173,51 @@ export default function MainMenu() {
         });
     }, []);
 
-    // Load history whenever the screen is focused
     useFocusEffect(
         useCallback(() => {
+            // This will run whenever the screen comes into focus
             loadTodayHistory();
         }, [loadTodayHistory])
     );
 
 
+    const makeScheduleHasTaken = function (schedule_id : number | string)
+    {
+        Alert.alert('PS GDC', 'Are you sure you mark this med schedule has taken ?', [
+            {
+                text: 'Cancel',
+                onPress: () => {},
+                style: 'cancel',
+            },
+            {text: 'Yes', onPress: () => {
+                    const updateData = {
+                        status : 'Completed',
+                    };
+                    showLoading("Updating Med Schedule, please wait...");
+                    (new MedReminderService()).updateHistoryStatus(schedule_id, updateData).then((response) => {
+                        if(response.data.status === true){
+                            hideLoading();
+                            Toastss("Med Schedule has been updated successfully.");
+                            loadTodayHistory();
+                        }
+                    })
+                }}
+        ])
+    }
+
+    function refreshLoadingTrigger()
+    {
+        setRefreshLoading(true);
+        loadTodayHistory();
+    }
 
     return (
-        <WrapperNoScrollNoDialogNoSafeArea loading={loading}>
+        <WrapperNoScrollNoDialogNoSafeArea loading={loading} >
             <ScrollView
                 style={styles.container}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
-                    <RefreshControl refreshing={loading ?? false} onRefresh={loadTodayHistory} />
+                    <RefreshControl refreshing={refreshLoading} onRefresh={refreshLoadingTrigger} />
                 }
             >
                 <LinearGradient colors={[palette.main.p500, palette.main.p100]} style={styles.header}>
@@ -229,7 +262,7 @@ export default function MainMenu() {
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
                             <Text style={styles.sectionTitle}>Today's Schedule</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigate('historyLogs')}>
                                 <Text style={styles.seeAllButton}>See All</Text>
                             </TouchableOpacity>
                         </View>
@@ -239,7 +272,7 @@ export default function MainMenu() {
                                 <Text style={styles.emptyStateText}>
                                     No medications scheduled for today
                                 </Text>
-                                <TouchableOpacity style={styles.addMedicationButton}>
+                                <TouchableOpacity onPress={() => navigate('medReminderForm')} style={styles.addMedicationButton}>
                                     <Text style={styles.addMedicationButtonText}>
                                         Add Medication
                                     </Text>
@@ -247,47 +280,50 @@ export default function MainMenu() {
                             </View>
                         ) : (
                             medicationHistory.map((medication) => {
-                                const taken = medication.status !== "Pending";
+                                const taken = (medication.status !== "Pending" && medication.status !== "Cancelled");
                                 return (
-                                    <View key={medication.id} style={styles.doseCard}>
-                                        <View
-                                            style={[
-                                                styles.doseBadge,
-                                                { backgroundColor: `${palette.main.p300}15` },
-                                            ]}
-                                        >
-                                            <Icon icon={medica} width={24} height={24} tintColor="red" />
-                                        </View>
-                                        <View style={styles.doseInfo}>
-                                            <View>
-                                                <Text style={styles.medicineName}>{medication.drugName}</Text>
-                                                <Text style={styles.dosageInfo}>{medication.dosage}mg</Text>
+                                    <TouchableOpacity key={medication.id} style={{flex : 1}}
+                                                      onPress={() => navigate('viewReminder', {schedule : medication})}>
+                                        <View  style={styles.doseCard}>
+                                            <View
+                                                style={[
+                                                    styles.doseBadge,
+                                                    { backgroundColor: `${palette.main.p300}15` },
+                                                ]}
+                                            >
+                                                <Icon icon={medica} width={24} height={24} tintColor="red" />
                                             </View>
-                                            <View style={styles.doseTime}>
-                                                <Icon icon={history} width={24} height={24} tintColor="#666" />
-                                                <Text style={styles.timeText}>{medication.scheduled_at}</Text>
-                                            </View>
-                                        </View>
-                                        {
-                                            taken ? (
-                                                <View style={[styles.takenBadge]}>
-                                                    <Icon icon={checkIcon} width={20} height={20} tintColor="#4CAF50" />
-                                                    <Text style={styles.takenText}>Taken</Text>
+                                            <View style={styles.doseInfo}>
+                                                <View>
+                                                    <Text style={styles.medicineName}>{medication.drugName}</Text>
+                                                    <Text style={styles.dosageInfo}>{medication.dosage}mg</Text>
                                                 </View>
-                                            ) : (
-                                                <TouchableOpacity
-                                                    style={[
-                                                        styles.takeDoseButton,
-                                                        { backgroundColor: palette.main.p100 },
-                                                    ]}
-                                                    onPress={() => {}}
-                                                >
-                                                    <Text style={styles.takeDoseText}>Take</Text>
-                                                </TouchableOpacity>
-                                            )
-                                        }
+                                                <View style={styles.doseTime}>
+                                                    <Icon icon={history} width={24} height={24} tintColor="#666" />
+                                                    <Text style={styles.timeText}>{medication.scheduled_at}</Text>
+                                                </View>
+                                            </View>
+                                            {
+                                                taken ? (
+                                                    <View style={[styles.takenBadge]}>
+                                                        <Icon icon={checkIcon} width={15} height={15}  />
+                                                        <Text style={styles.takenText}>Taken</Text>
+                                                    </View>
+                                                ) : (
+                                                   medication.allowTaken ?  <TouchableOpacity
+                                                       style={[
+                                                           styles.takeDoseButton,
+                                                           { backgroundColor: palette.main.p100 },
+                                                       ]}
+                                                       onPress={() => makeScheduleHasTaken(medication.id)}
+                                                   >
+                                                       <Text style={styles.takeDoseText}>Take</Text>
+                                                   </TouchableOpacity> : <></>
+                                                )
+                                            }
 
-                                    </View>
+                                        </View>
+                                    </TouchableOpacity>
                                 )
                             })
                         )

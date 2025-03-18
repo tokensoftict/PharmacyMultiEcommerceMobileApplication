@@ -1,7 +1,125 @@
 import { StyleSheet } from "react-native";
 import {normalize} from "@/shared/helpers";
-import {semantic} from "@/shared/constants/colors.ts";
+import {labels, palette} from "@/shared/constants/colors.ts";
 
 export const styles = StyleSheet.create({
-
+    header: {
+        flex: 0.5,
+        paddingTop: normalize(55),
+        borderBottomLeftRadius: normalize(15),
+        borderBottomRightRadius: normalize(15),
+        position: "relative",
+    },
+    container: {
+        backgroundColor: "#f8f9fa",
+        flex : 0.7,
+        paddingLeft: normalize(20),
+        paddingRight: normalize(20),
+        position: "absolute",
+        width: "100%",
+        alignSelf: "center",
+        bottom: 0,
+        top: normalize(110),
+        shadowColor: "#000",
+        borderRadius: normalize(10),
+        shadowRadius: normalize(8),
+        elevation: normalize(3),
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.05,
+        paddingHorizontal: normalize(10),
+        paddingVertical: normalize(10),
+    },
+    medName: {
+        fontSize: 15,
+        fontWeight: "600",
+        color: "#333",
+        marginBottom: 4,
+    },
+    medInfo: {
+        flex: 1,
+        justifyContent: "space-between",
+    },
+    reminderInfoPrimary: {
+        fontSize: normalize(14),
+        color: labels.type4.textColor,
+        backgroundColor: labels.type4.background,
+        marginBottom: normalize(4),
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(10),
+    },
+    reminderInfoSuccess: {
+        fontSize: normalize(14),
+        color: labels.type3.textColor,
+        backgroundColor: labels.type3.background,
+        marginBottom: normalize(4),
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(5),
+    },
+    reminderInfoBlue: {
+        fontSize: normalize(14),
+        color: labels.type3.textColor,
+        backgroundColor: labels.type3.background,
+        marginBottom: normalize(4),
+        paddingHorizontal: normalize(1),
+        padding: normalize(2),
+        paddingLeft : normalize(10),
+        paddingRight : normalize(10),
+        borderRadius: normalize(5),
+    },
+    medBadge: {
+        width:  normalize(50),
+        height: normalize(50),
+        borderRadius: normalize(25),
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: normalize(15),
+    },
+    medCard: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "white",
+        borderRadius: normalize(10),
+        padding: normalize(16),
+        marginBottom: normalize(12),
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: normalize(2) },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        elevation: 3,
+    },
+    medTime: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    dateCreated: {
+        marginLeft: 5,
+        color: "#666",
+        fontSize: 14,
+    },
+    headerContent: {
+        flexDirection: 'row',
+        paddingBottom: normalize(10),
+        paddingHorizontal : normalize(15),
+        marginTop : normalize(10)
+    },
+    headerTop: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: normalize(15),
+        fontWeight: '700',
+        color : 'white',
+        width : '90%',
+        textAlign : 'center',
+        justifyContent : "center",
+    },
 });

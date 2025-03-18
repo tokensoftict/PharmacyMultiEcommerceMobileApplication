@@ -11,16 +11,16 @@ const styles = StyleSheet.create({
         fontSize: normalize(15),
         fontWeight: '700',
         color : 'white',
-        width : '80%',
+        width : '90%',
         textAlign : 'center',
         justifyContent : "center",
 
     },
     header: {
-        paddingTop: 50,
-        paddingBottom: 25,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        paddingTop: normalize(50),
+        paddingBottom: normalize(25),
+        borderBottomLeftRadius: normalize(30),
+        borderBottomRightRadius: normalize(30),
     },
     headerContent: {
         flexDirection: 'row',
