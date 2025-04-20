@@ -10,6 +10,7 @@ import Animated, {
 import { Svg, Path } from "react-native-svg";
 import { palette, semantic } from "@/shared/constants/colors.ts";
 import {normalize} from "@/shared/helpers";
+import Typography from "@/shared/component/typography";
 
 const { width } = Dimensions.get("window");
 const SWIPE_THRESHOLD = width * 0.6;
@@ -49,7 +50,7 @@ const SwipeToComplete = ({ swipedAndCompleteOrder }) => {
     return (
         <View style={styles.container}>
             <View style={styles.swipeContainer}>
-                <Text style={styles.label}>Swipe to Complete Order 👉</Text>
+                <Typography style={styles.label}>Swipe to Complete Order 👉</Typography>
 
                 <View style={styles.track}>
                     <Animated.View
@@ -81,7 +82,7 @@ const SwipeToComplete = ({ swipedAndCompleteOrder }) => {
                                 },
                             ]}
                         >
-                            <Text style={styles.buttonText}>☰</Text>
+                            <Typography style={styles.buttonText}>☰</Typography>
                         </Animated.View>
                     </GestureDetector>
                 </View>

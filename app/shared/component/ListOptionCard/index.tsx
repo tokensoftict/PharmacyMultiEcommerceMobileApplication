@@ -61,7 +61,7 @@ export function Option({option, callback}: OptionProps) {
   const {isDarkMode} = useDarkMode()
   const styles = _styles(isDarkMode, option.active)
   return (
-    <TouchableOpacity activeOpacity={activeOpacity} onPress={() => callback ? callback(option) : null} style={styles.container}>
+    <TouchableOpacity key={option.id} activeOpacity={activeOpacity} onPress={() => callback ? callback(option) : null} style={styles.container}>
       <View style={styles.containerInfo}>
         <View style={styles.containerIcon}>
           <Icon customStyles={styles.icon} icon={option.icon} />

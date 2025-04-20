@@ -1,18 +1,25 @@
 import { StyleSheet } from "react-native";
 import { normalize } from "../../helpers";
 import { semantic } from "../../constants/colors.ts";
+import Environment from "@/shared/utils/Environment.tsx";
 
 export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: "space-between",
-    paddingHorizontal: normalize(24)
+    paddingHorizontal: normalize(Environment.isLogin() ? 24 : 10)
   },
   avatar: {
     width: normalize(40),
     height: normalize(40),
     marginRight: normalize(12)
+  },
+  avatarlogo: {
+    width: normalize(60),
+    height: normalize(60),
+    marginRight: normalize(5),
+    resizeMode : 'contain',
   },
   row: {
     flexDirection: 'row',

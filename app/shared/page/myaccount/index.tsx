@@ -1,4 +1,6 @@
 import {
+    brand,
+    categories,
     drug,
     edit,
     eyeFilled,
@@ -6,7 +8,7 @@ import {
     location, logout,
     notification,
     order,
-    security, switch_icon, truckInTracking,
+    security, store, storeprofile, switch_icon, truckInTracking,
     user,
     walletFilled,
 } from '@/assets/icons';
@@ -24,6 +26,8 @@ import Section from "@/shared/component/section";
 import Environment from "@/shared/utils/Environment.tsx";
 import LoginService from "@/service/auth/LoginService.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
+import Toastss from "@/shared/utils/Toast.tsx";
+import {semantic} from "@/shared/constants/colors.ts";
 
 export default function MyAccount() {
     const {navigate} = useNavigation<NavigationProps>();
@@ -89,6 +93,18 @@ export default function MyAccount() {
                 },
                 */
             ] ,
+            mystore:[
+                {
+                    name: 'Create Your Store',
+                    leftIcon: <Icon icon={store} />,
+                    onPress: () => navigate('createWholesalesStore'),
+                },
+                {
+                    name: 'My Store Profile',
+                    leftIcon: <Icon icon={storeprofile} />,
+                    onPress: () => navigate('storeProfile'),
+                },
+            ],
             applicationSettings : [
                 {
                     name: 'Notifications',
@@ -111,11 +127,12 @@ export default function MyAccount() {
                                 style: 'cancel',
                             },
                             {text: 'Yes', onPress: () => {
-                                    new AuthSessionService().setEnvironment("")
                                     CommonActions.reset({
                                         index: 0, // Set the index of the active screen
                                         routes: [{ name: 'storeSelector' }], // Replace with your target screen
                                     })
+                                    new AuthSessionService().removeImpersonateCustomerData();
+                                    new AuthSessionService().setEnvironment("")
                                     navigate('storeSelector')
                                 }}
                         ])
@@ -135,12 +152,15 @@ export default function MyAccount() {
                                     showLoading("Logging out... Please wait...");
                                     new LoginService().logout().then(function (result) {
                                         if (result) {
+                                            hideLoading();
                                             CommonActions.reset({
                                                 index: 0, // Set the index of the active screen
                                                 routes: [{ name: 'login' }], // Replace with your target screen
                                             })
-                                            hideLoading();
                                             navigate('login')
+                                        } else {
+                                            hideLoading();
+                                            Toastss("There was an error login out, please restart the application.")
                                         }
                                     })
                                 }},
@@ -162,9 +182,48 @@ export default function MyAccount() {
             ]
         }
 
-        if(Environment.isWholeSalesEnvironment()) {
+        if(Environment?.isWholeSalesEnvironment()) {
             menuItems.general.splice(2, 1)
+            menuItems.general.push({
+                name: 'Categories',
+                leftIcon: <Icon icon={categories} tintColor={semantic.text.grey} />,
+                onPress: () => navigate('categories'),
+            })
         }
+
+        if(userProfile?.data?.apps?.length === 1){
+            menuItems.applicationSettings.splice(2, 1)
+        }
+
+        if(userProfile?.data?.apps?.length > 1){
+            menuItems.mystore.splice(0, 1)
+
+            if(userProfile?.data?.apps[1].info.status === false){
+                menuItems.mystore[0] = {
+                    name: 'My Store Profile',
+                    leftIcon: <Icon icon={storeprofile} />,
+                    onPress: () => navigate('storePendingApproval'),
+                }
+            } else {
+               if(Environment.isSuperMarketEnvironment()) {
+                   menuItems.mystore.splice(0, 1);
+                   menuItems.general.push({
+                       name: 'Brands',
+                       leftIcon: <Icon icon={brand} tintColor={semantic.text.grey} />,
+                       onPress: () => navigate('brands'),
+                   })
+               }
+            }
+        }
+
+
+        if(Environment?.isSalesRepresentativeEnvironment()) {
+            menuItems.general = [];
+            menuItems.accountSettings = [];
+            menuItems.mystore = [];
+        }
+
+
         // @ts-ignore
         return menuItems[section]
     }
@@ -207,8 +266,22 @@ export default function MyAccount() {
                         <Icon icon={edit} onPress={() => navigate('editProfile')}/>
                     </TouchableOpacity>
                 </View>
-                <Section title="General" elements={getAccountMenu("general")}/>
-                <Section title="Account Settings" elements={getAccountMenu("accountSettings")} />
+
+                {
+                    getAccountMenu('general').length > 0 ?
+                        <Section title="General" elements={getAccountMenu("general")}/>
+                        : <></>
+                }
+
+                {
+                    getAccountMenu("mystore").length > 0 ?
+                    <Section title="Account Settings" elements={getAccountMenu("accountSettings")} />
+                        : <></>
+                }
+
+                {
+                    getAccountMenu("mystore").length > 0 ?  <Section title="My Store" elements={getAccountMenu("mystore")} /> : <></>
+                }
                 <Section title="Application Settings" elements={getAccountMenu("applicationSettings")} />
                 <Section title="Support" elements={getAccountMenu("support")} />
             </View>

@@ -1,6 +1,9 @@
 import Request from "../../network/internet/request.tsx";
 import AuthSessionService from "./AuthSessionService.tsx";
 import {store} from "@/redux/store/store.tsx";
+import {scheduleNotification} from "@/shared/utils/ScheduleNotification.tsx";
+import dayjs from "dayjs";
+import notifee from "@notifee/react-native";
 export default class LoginService
 {
     request : Request
@@ -18,8 +21,25 @@ export default class LoginService
         let parent = this;
         return new Promise(function (resolve : any, reject : any){
             parent.request.post("login", {email : email, password : password, deviceKey : store.getState().systemReducer.fireBaseKey})
-                .then(function (response : any){
+                .then(async function (response : any){
                     if(response.data.status === true){
+                        await Promise.all(
+                            response.data.data.medSchedules.map(async (schedule : any) => {
+                                const  notificationId =  await scheduleNotification(
+                                    schedule.id,
+                                    schedule.drugName,
+                                    schedule.dosage,
+                                    "mg",
+                                    // @ts-ignore
+                                    new Date(dayjs(schedule.js_date)).getTime(),
+                                    schedule,
+                                    "supermarket",
+                                    "VIEW_MED_REMINDER",
+                                );
+                                return { [schedule.id]: notificationId };
+                            })
+                        );
+
                         resolve(parent.prepareUserSession(response.data))
                     }else{
                         resolve(
@@ -36,26 +56,19 @@ export default class LoginService
     }
 
 
-    logout() {
-        let parent = this;
-        return new Promise(function (resolve : any, reject : any){
-            parent.request.get("logout")
-                .then(function (response : any){
-                    console.log(response.toString());
-                    if(response.data.status === true){
-                        resolve(new AuthSessionService().destroySession())
-                    }else{
-                        resolve(
-                            parent.parseError({
-                                error : response.data.error,
-                                message : response.data.message
-                            })
-                        )
-                    }
-                }, function (error) {
-                    reject(error)
-                });
-        })
+    async logout() {
+        const response = await this.request.get("logout");
+        if (response.data.status === true) {
+            await new AuthSessionService().destroySession()
+            const schedulesIDS = response.data.data;
+            await  Promise.all(
+                schedulesIDS.map(async (schedule : any) => {
+                    await notifee.cancelNotification(schedule);
+                })
+            )
+            return true;
+        }
+        return false;
     }
 
 
@@ -64,7 +77,6 @@ export default class LoginService
         return new Promise(function (resolve : any, reject : any){
             parent.request.get("me?deviceKey=" + store.getState().systemReducer.fireBaseKey)
                 .then(function (response : any){
-                    console.log(response)
                     if(response.data.status === true){
                         resolve(parent.prepareUserSession(response.data))
                     }else{
@@ -76,7 +88,6 @@ export default class LoginService
                         )
                     }
                 }, function (error) {
-                    console.log(error);
                     reject(error)
                 });
         });
@@ -88,7 +99,6 @@ export default class LoginService
      */
     parseError(error: any)
     {
-        console.log(error);
         const errorParse = {
             email : false,
             password : false,

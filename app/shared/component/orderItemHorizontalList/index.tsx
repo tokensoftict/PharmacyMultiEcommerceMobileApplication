@@ -62,7 +62,7 @@ export default function OrderItemHorizontalList({product}: ProductList) {
                             <Typography style={{marginTop: normalize(10), fontWeight : '300',fontSize : normalize(9)}}>Quantity: {product?.quantity}</Typography>
                         </View>
                         <TouchableOpacity onPress={() => buyNow(product)} style={styles.viewOrderButton}>
-                            <Text style={styles.buttonText}>Buy Again</Text>
+                            <Typography style={styles.buttonText}>Buy Again</Typography>
                         </TouchableOpacity>
                     </View>
                 </View>

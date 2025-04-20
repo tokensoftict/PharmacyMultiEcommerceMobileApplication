@@ -18,6 +18,7 @@ import {useNavigation} from "@react-navigation/native";
 import {scheduleNotification} from "@/shared/utils/ScheduleNotification";
 import Toastss from "@/shared/utils/Toast";
 import dayjs from "dayjs";
+import AuthSessionService from "@/service/auth/AuthSessionService";
 
 const MedReminderForm = () => {
 
@@ -101,6 +102,10 @@ const MedReminderForm = () => {
 
     const intervalList = [
         {
+            name : "Minutes",
+            id : "minutes"
+        },
+        {
             name : "Hours",
             id : "hours"
         },
@@ -139,14 +144,6 @@ const MedReminderForm = () => {
         openSearchDialog();
     }
 
-    async function createNotification() {
-        const date = new Date(Date.now());
-        date.setHours(0);
-        date.setMinutes(32);
-
-
-        await scheduleNotification(12, "Hello Yusuf", "20", "mg", date.getTime(), {"hello" : "wworld"})
-    }
 
 
     function onFormSubmit() {
@@ -254,20 +251,13 @@ const MedReminderForm = () => {
                                 schedule.dosage,
                                 "mg",
                                 new Date(dayjs(schedule.js_date)).getTime(),
-                                {
-                                    id: schedule.id,
-                                    drugName: schedule.drugName,
-                                    med_reminder_id: schedule.med_reminder_id,
-                                    dosage: schedule.dosage,
-                                    title: schedule.title,
-                                    scheduled_at: schedule.scheduled_at,
-                                    scheduled_at_full: schedule.scheduled_at_full,
-                                }
+                              schedule,
+                              new AuthSessionService().getEnvironment(),
+                              "VIEW_MED_REMINDER",
                             );
                             return { [schedule.id]: notificationId };
                         })
                     ).then((schedules) => {
-                        console.log(schedules);
                         setLoading(false);
                         Toastss("Med Reminder has been created successfully.");
                         // Navigate back
@@ -309,11 +299,11 @@ const MedReminderForm = () => {
                             style={{   borderRadius: 5 }}
                             onPress={() => { openSearchDialog()}}
                         >
-                            <Text style={{ color: "red" }}>Browse Drugs</Text>
+                            <Typography style={{ color: "red" }}>Browse Drugs</Typography>
                         </TouchableOpacity>
                     </View>
 
-                    {drugNameError !== "" && <Text style={{ color: "red" }}>{drugNameError}</Text>}
+                    {drugNameError !== "" && <Typography style={{ color: "red" }}>{drugNameError}</Typography>}
                 </View>
 
                 <View style={{ marginBottom: normalize(24)}}>
@@ -324,7 +314,7 @@ const MedReminderForm = () => {
                         keyboardType="numeric"
                         onChangeText={(dosage) => setDosage(dosage)}
                     />
-                    {dosageError !== "" && <Text style={{ color: "red" }}>{dosageError}</Text>}
+                    {dosageError !== "" && <Typography style={{ color: "red" }}>{dosageError}</Typography>}
                 </View>
 
                 <View style={{ marginBottom: normalize(24)}}>
@@ -336,7 +326,7 @@ const MedReminderForm = () => {
                         value={totalDosageInPackage}
                         onChangeText={(total) => setTotalDosageInPackage(total)}
                     />
-                    {totalDosageInPackageError !== "" && <Text style={{ color: "red" }}>{totalDosageInPackageError}</Text>}
+                    {totalDosageInPackageError !== "" && <Typography style={{ color: "red" }}>{totalDosageInPackageError}</Typography>}
                 </View>
 
 
@@ -352,7 +342,7 @@ const MedReminderForm = () => {
                         onPressIn={() => triggerOpenMedicationTypeDialog(true)}
                     />
 
-                    {typeError !== "" && <Text style={{ color: "red" }}>{typeError}</Text>}
+                    {typeError !== "" && <Typography style={{ color: "red" }}>{typeError}</Typography>}
 
                 </View>
 
@@ -378,7 +368,7 @@ const MedReminderForm = () => {
                                     value={every}
                                     onChangeText={(every) => setEvery(every)}
                                 />
-                                {everyError!=="" && <Text style={{ color: "red" }}>{everyError}</Text>}
+                                {everyError!=="" && <Typography style={{ color: "red" }}>{everyError}</Typography>}
                             </View>
                             <View style={{flex : 0.4, marginBottom: normalize(24)}}>
                                 <Input
@@ -391,14 +381,14 @@ const MedReminderForm = () => {
                                     editable={false}
                                     onPressIn={() => triggerIntervalDialog(true)}
                                 />
-                                {intervalError!=="" && <Text style={{ color: "red" }}>{intervalError}</Text>}
+                                {intervalError!=="" && <Typography style={{ color: "red" }}>{intervalError}</Typography>}
                             </View>
                         </View>
                     </>
                 ) : (
                     <>
                         <View style={{ marginBottom: normalize(24)}}>
-                            <Text style={styles.label}>Select Time Slots</Text>
+                            <Typography style={styles.label}>Select Time Slots</Typography>
                             {Object.keys(normalSchedule).map((time) => (
                                 <View key={time} style={{ display : 'flex', justifyContent : 'space-between', flexDirection :'row', marginBottom: 10 }}>
 
@@ -407,7 +397,7 @@ const MedReminderForm = () => {
                                         style={[styles.timeSlot, normalSchedule[time].selected && styles.selectedTimeSlot]}
                                         onPress={() => toggleTimeSelection(time)}
                                     >
-                                        <Text style={[{  fontSize: 16, color: '#d32f2f'}, normalSchedule[time].selected && {color:semantic.background.white.w500, fontWeight : 'bold',}]}>{time}</Text>
+                                        <Typography style={[{  fontSize: 16, color: '#d32f2f'}, normalSchedule[time].selected && {color:semantic.background.white.w500, fontWeight : 'bold',}]}>{time}</Typography>
                                     </TouchableOpacity>
 
                                     {normalSchedule[time].selected && (
@@ -421,7 +411,7 @@ const MedReminderForm = () => {
                                     )}
                                 </View>
                             ))}
-                            {normalScheduleError !== "" && <Text style={{ color: "red" }}>{normalScheduleError}</Text>}
+                            {normalScheduleError !== "" && <Typography style={{ color: "red" }}>{normalScheduleError}</Typography>}
                         </View>
                     </>
                 )}
@@ -436,7 +426,7 @@ const MedReminderForm = () => {
                         display="compact"
                         onChange={(event, selectedTime) => setStartDateTime(selectedTime)}
                     />
-                    {startDateTimeError !=="" && <Text style={{ color: "red" }}>{startDateTimeError}</Text>}
+                    {startDateTimeError !=="" && <Typography style={{ color: "red" }}>{startDateTimeError}</Typography>}
                 </View>
 
 

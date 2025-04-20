@@ -21,8 +21,8 @@ import Toasts from "@/shared/utils/Toast.tsx";
 export default function Login({ navigation }) {
 
   const [isPasswordShown, setIsPasswordShown] = useState(true);
-  const [email , setEmail] = useState('admin@store.com');
-  const [password , setPassword] = useState('123456');
+  const [email , setEmail] = useState('');
+  const [password , setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -68,8 +68,11 @@ export default function Login({ navigation }) {
           }else{
             Toasts('Login successful, please wait..');
             setTimeout(() => {
-              // @ts-ignore
-              navigation.replace("storeSelector");
+              if(userProfile.data.apps.length === 1){
+                navigation.replace("supermarket");
+              } else {
+                navigation.replace("storeSelector");
+              }
             }, 1000)
           }
         }

@@ -35,3 +35,17 @@ export const setFirebaseDeviceToken = (token: string | null) => (dispatch:any) =
     payload: token,
   })
 }
+
+export const setLaunchPage = (page:string) => (dispatch:any) => {
+  dispatch({
+    type : actionTypes.LAUNCH_PAGE,
+    payload: page,
+  })
+}
+
+export const setImpersonateData = (page:string|boolean) => (dispatch:any) => {
+  dispatch({
+    type : actionTypes.IMPERSONATE_DATA,
+    payload: page,
+  })
+}

@@ -31,7 +31,6 @@ export default class SearchProductService {
 
             return response.hits;
         } catch (error) {
-            console.error(error);
             return [];
         }
     }

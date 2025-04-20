@@ -24,7 +24,6 @@ export default function ButtonSheet({
   return (
     <View>
       <Modal onStartShouldSetResponder={() => {
-        console.log('You pressed the backdrop!');
         return true;
       }}  animationType="slide" transparent={true} visible={dispatch}>
         <View style={styles.centeredView}>

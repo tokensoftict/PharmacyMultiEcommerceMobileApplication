@@ -1,6 +1,7 @@
 import WholesalesRequest from "@/network/internet/WholesalesRequest.tsx";
 import SupermarketRequest from "@/network/internet/SupermarketRequest.tsx";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import SalesRepresentativesRequest from "@/network/internet/SalesRepresentativesRequest.tsx";
 
 export interface EnvironmentRequestInterface {
     post(endpoint: string,  data: any): Promise<any>;
@@ -15,7 +16,7 @@ export default class EnvironmentRequest
     constructor()
     {
         const environment  = new AuthSessionService().getEnvironment();
-        this.request = environment === "wholesales" ? new WholesalesRequest() : new SupermarketRequest();
+        this.request = environment === "wholesales" ? new WholesalesRequest() : (environment === "supermarket" ? new SupermarketRequest() : new SalesRepresentativesRequest());
     }
 
     getRequest() : EnvironmentRequestInterface

@@ -13,6 +13,7 @@ import Dwi from "@/shared/page/checkout/components/selectDeliveryOption/option/d
 import Doi from "@/shared/page/checkout/components/selectDeliveryOption/option/doi.tsx";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
+import Dsd from "@/shared/page/checkout/components/selectDeliveryOption/option/dsd.tsx";
 
 export default function SelectDeliveryOption({ onValidate }: { onValidate: (validateFn: () => Promise<boolean>) => void })  {
   const [deliverySelected, setDeliverySelected] = useState<OptionCardOptions>();
@@ -121,7 +122,7 @@ export default function SelectDeliveryOption({ onValidate }: { onValidate: (vali
                   />
                   <View style={{height:normalize(120)}}/>
                   {
-                    deliverySelected?.code === "Pickup" ?  <PickUpAtStore callback={callBackFromDialogs} deliveryMethod={deliverySelected.id} extra={deliverySelected.extra} showDialog={ deliverySelected?.code === "Pickup"}/> : <></>
+                    deliverySelected?.code === "Pickup" ? <PickUpAtStore callback={callBackFromDialogs} deliveryMethod={deliverySelected.id} extra={deliverySelected.extra} showDialog={ deliverySelected?.code === "Pickup"}/> : <></>
                   }
                   {
                     deliverySelected?.code === "Dwi" ?  <Dwi callback={callBackFromDialogs}  deliveryMethod={deliverySelected.id} extra={deliverySelected.extra} showDialog={ deliverySelected?.code === "Dwi"}/> : <></>
@@ -129,6 +130,9 @@ export default function SelectDeliveryOption({ onValidate }: { onValidate: (vali
 
                   {
                     deliverySelected?.code === "Doi" ?  <Doi callback={callBackFromDialogs} deliveryMethod={deliverySelected.id} extra={deliverySelected.extra} showDialog={ deliverySelected?.code === "Doi"}/> : <></>
+                  }
+                  {
+                      deliverySelected?.code === "Dsd" ? <Dsd callback={callBackFromDialogs} deliveryMethod={deliverySelected.id} extra={deliverySelected.extra} showDialog={ deliverySelected?.code === "Dsd"}/> : <></>
                   }
                 </ScrollView>
               </View>

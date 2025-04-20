@@ -1,6 +1,6 @@
 import notifee, {AndroidImportance, TimestampTrigger, TriggerType} from '@notifee/react-native';
 
-export async function scheduleNotification(notificationId : number, drugName : string, dosage : string , measurement : string, dateTime : string, extra : any) {
+export async function scheduleNotification(notificationId : number, drugName : string, dosage : string , measurement : string, dateTime : string|number, extra : any, environment : string, notificationType : string) {
 
     // Convert dateTime to timestamp
     const timestamp = new Date(dateTime);
@@ -19,7 +19,7 @@ export async function scheduleNotification(notificationId : number, drugName : s
             id: notificationId+"",
             title: `Time to take ${drugName}`,
             body: `Dosage: ${dosage} ${measurement}`,
-            data : {extra : JSON.stringify(extra)},
+            data : {extra : JSON.stringify(extra), environment : environment, notificationType : notificationType},
             android: {
                 channelId: 'drug_alerts',
                 importance: AndroidImportance.HIGH,

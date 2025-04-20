@@ -5,7 +5,7 @@ import {ScrollView, TouchableOpacity, View} from "react-native";
 import HeaderWithIcon from "../../../../component/headerBack";
 import Icon from "@/shared/component/icon";
 import {palette, semantic} from "@/shared/constants/colors";
-import {add, location, close, shoppingBag, white_shopping_cart} from "@/assets/icons";
+import {add, location, close, shoppingBag, white_shopping_cart, trash, add_circle} from "@/assets/icons";
 import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import AddressService from "@/service/account/address/AddressService.tsx";
@@ -16,6 +16,7 @@ import {normalize} from "@/shared/helpers";
 import Typography from "@/shared/component/typography";
 import {Button, ButtonOutline} from "@/shared/component/buttons";
 import Toasts from "@/shared/utils/Toast.tsx";
+import {IconButton} from "react-native-paper";
 
 
 const AddressList = function()
@@ -90,10 +91,7 @@ const AddressList = function()
             <View style={styles.container}>
                 <View style={styles.headerBack}>
                     <HeaderWithIcon title="MY ADDRESS" />
-                    <View style={{flex :0.4}}>
-                        <Button sm title={"New"} onPress={() => {navigation.navigate('newAddress')}} leftIcon={<Icon customStyles={{tintColor: 'white'}} icon={add} />} />
-                    </View>
-
+                    <IconButton style={{marginTop: normalize(-10)}} size={normalize(30)} iconColor={'red'} icon={add_circle} onPress={() => {navigation.navigate('newAddress')}} />
                 </View>
                 {
                     isLoading ? <></>

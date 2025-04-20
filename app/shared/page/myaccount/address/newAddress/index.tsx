@@ -32,12 +32,11 @@ const NewAddress = () => {
 
     const navigation = useNavigation<NavigationProps>();
     const [isLoading, setIsLoading] = useState(false);
+    const [formTitle, setFormTitle] = useState<string>("NEW ADDRESS");
 
     const [states, setStates] = useState<nameOrId[]>();
     const [isStateLoading, setIsStateLoading] = useState(false);
     const [state, setState] = useState<nameOrId>();
-
-    const [formTitle, setFormTitle] = useState<string>("NEW ADDRESS");
 
     const [towns, setTowns] = useState<nameOrId[]>();
     const [isTownLoading, setIsTownLoading] = useState(false);
@@ -45,7 +44,8 @@ const NewAddress = () => {
 
     const [openStateDialog, setOpenStateDialog] = useState(false)
     const [openTownDialog, setOpenTownDialog] = useState(false)
-
+    const [selectedStateError, setSelectedStateError] = useState<string>();
+    const [selectedTownError, setSelectedTownError] = useState<string>();
 
     const [name , setName] = useState<string>("");
     const [addressLine1 , setAddressLine1] = useState<string>("");
@@ -54,10 +54,9 @@ const NewAddress = () => {
 
     const [nameError, setNameError] = useState<string>();
     const [addressLine1Error, setAddressLine1Error] = useState<string>();
-    const [selectedStateError, setSelectedStateError] = useState<string>();
-    const [selectedTownError, setSelectedTownError] = useState<string>();
+
     const route = useRoute();
-    //let addressId: string | number | undefined = undefined;
+
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 
     const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>(false);
@@ -121,6 +120,10 @@ const NewAddress = () => {
     }
 
     function triggerTownDialog(status : boolean){
+        if(status && state?.id === undefined){
+            Toasts("Please select your state first");
+            return;
+        }
         if(status){
             fetchTown();
         }

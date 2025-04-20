@@ -46,17 +46,17 @@ export default function ViewReminder() {
 
 
                     <View style={styles.card}>
-                        <Text style={styles.welcomeText}>{medication?.med_reminder.drug_name}</Text>
-                        <Text style={styles.instructionText}>
+                        <Typography style={styles.welcomeText}>{medication?.med_reminder.drug_name}</Typography>
+                        <Typography style={styles.instructionText}>
                             {medication?.med_reminder.notes}
-                        </Text>
+                        </Typography>
                         <View style={styles.doseTime}>
                             <Icon icon={history} width={24} height={24} tintColor="#666" />
-                            <Text style={styles.timeText}>{medication?.scheduled_at_full}</Text>
+                            <Typography style={styles.timeText}>{medication?.scheduled_at_full}</Typography>
                         </View>
                         <View style={styles.doseTime}>
                             <Icon icon={status} width={24} height={24} tintColor="#666" />
-                            <Text style={styles.timeText}>{medication?.status}</Text>
+                            <Typography style={styles.timeText}>{medication?.status}</Typography>
                         </View>
                         <View style={{height : normalize(20)}}></View>
 

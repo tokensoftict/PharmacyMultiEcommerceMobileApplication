@@ -16,6 +16,7 @@ import CartItemHorizontalList from "@/shared/component/cartItemHorizontalList";
 import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import {currencyType} from "@/shared/constants/global";
 import {semantic} from "@/shared/constants/colors";
+import Environment from "@/shared/utils/Environment.tsx";
 
 
 
@@ -72,7 +73,7 @@ export default function Cart() {
     Alert.alert('Shopping Cart', 'Are you sure you want to clear all the item(s)?', [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: () => {},
         style: 'cancel',
       },
       {text: 'Yes', onPress: () => {
@@ -109,7 +110,7 @@ export default function Cart() {
                               />
                             </ScrollView>
                           </View>
-                          <View style={{ height: normalize(265), backgroundColor : semantic.alert.danger.d100}}>
+                          <View style={{ height: normalize(265 - (Environment.isSuperMarketEnvironment() ? 55 : 0) ), backgroundColor : semantic.alert.danger.d100}}>
                             <View style={{ paddingHorizontal:normalize(12), borderStyle:"solid",  flexDirection: 'row', alignItems: 'center', marginTop: normalize(20),  justifyContent : 'space-between'}}>
                               <View style={{flexDirection:"column"}}>
                                 <Typography style={{fontWeight :'500'}}>Order Total</Typography>

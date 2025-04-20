@@ -9,11 +9,9 @@ superMarketAxiosInstance.interceptors.request.use( async function (request) {
     request.baseURL = 'http://supermarket.mystore.test:8001/api/v1/';
     request.headers['Content-Type'] = 'multipart/form-data';
 
-
     const authSession = new AuthSessionService();
 
     const userSession: UserProfile = await authSession.getAuthSession();
-
     if (userSession.loginStatus) {
         const token = userSession.data?.token;
         if(token) {
@@ -48,7 +46,6 @@ superMarketAxiosInstance.interceptors.request.use( async function (request) {
 
 superMarketAxiosInstance.interceptors.response.use((response) => response, (error) => {
     // whatever you want to do with the error\
-    console.log(error);
     switch (error.response.status) {
         case 422:
             return Promise.resolve({

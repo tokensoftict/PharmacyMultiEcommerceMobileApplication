@@ -11,7 +11,6 @@ axiosInstance.interceptors.request.use( async function (request) {
     const authSession = new AuthSessionService();
 
     const userSession: UserProfile = await authSession.getAuthSession();
-
     if (userSession.loginStatus) {
         const token = userSession.data?.token;
         if(token) {
@@ -40,14 +39,12 @@ axiosInstance.interceptors.request.use( async function (request) {
 
     return request;
 }, function (error) {
-    console.log(error.toString());
     return Promise.reject(error);
 });
 
 
 axiosInstance.interceptors.response.use((response) => response, (error) => {
     // whatever you want to do with the error\
-console.log(error.toString());
     switch (error.response.status) {
         case 422:
             return Promise.resolve({

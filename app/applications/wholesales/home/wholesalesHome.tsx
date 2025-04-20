@@ -7,6 +7,8 @@ import {WholesalesHomePageInterface} from "@/service/wholesales/interface/Wholes
 import SpecialOffers from "@/shared/component/specialOffers";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 import HorizontalProductList from "@/shared/component/HorizontalProductList";
+import Environment from "@/shared/utils/Environment.tsx";
+import ImpersonateHeader from "@/shared/component/impersonateHeader";
 
 
 export default function WholesalesHomePage() {
@@ -28,7 +30,9 @@ export default function WholesalesHomePage() {
 
     return (
         <Wrapper loading={isLoading} onRefresh={loadHomePage}>
-            <Header/>
+            {
+                Environment.checkForImpersonateCustomerData() ? <ImpersonateHeader/> :  <Header/>
+            }
 
                 <Search placeholder={"Search Products..."} onChange={() => {
                 }} value={undefined}/>

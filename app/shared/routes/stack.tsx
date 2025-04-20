@@ -27,8 +27,19 @@ import HistoryLogs from "@/shared/page/medreminder/history-logs";
 import RefillTracker from "@/shared/page/medreminder/refill-tracker";
 import ViewReminder from "@/shared/page/medreminder/view-reminder";
 import ViewLogs from "@/shared/page/medreminder/view-logs";
+import WholesalesNavigation from "@/applications/wholesales/WholesalesNavigation.tsx";
+import CreateWholesales from "@/applications/wholesales/create";
+import StorePendingApproval from "applications/wholesales/storependingapprovalpage";
+import {StoreProfile} from "@/applications/wholesales/storeprofile";
+import SupermarketNavigation from "@/applications/supermarket/SupermarketNavigation";
+import Categories from "@/shared/page/categories";
+import Brands from "@/shared/page/brands";
+import SalesRepresentativeNavigation from "@/applications/salesrepresentative/salesRepresentativeNavigation.tsx";
 
 export type RootStackParamList = {
+    wholesales:undefined,
+    supermarket:undefined,
+    sales_representative:undefined,
     login: undefined,
     createAccount: undefined,
     enterOTP: undefined,
@@ -61,7 +72,11 @@ export type RootStackParamList = {
     refillTracker : undefined,
     viewLogs : undefined,
     viewReminder : undefined,
-
+    createWholesalesStore : undefined,
+    storePendingApproval:undefined,
+    storeProfile:undefined,
+    brands:undefined,
+    categories:undefined,
 }
 
 export type RouteItem = {
@@ -78,6 +93,26 @@ export type RouteProps<T extends keyof RootStackParamList> = RouteProp<
 export type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const RoutesStack: RouteItem[] = [
+    {
+        path: 'wholesales',
+        component: WholesalesNavigation,
+        private : false,
+    },
+    {
+        path: 'createWholesalesStore',
+        component: CreateWholesales,
+        private : false,
+    },
+    {
+        path: 'supermarket',
+        component: SupermarketNavigation,
+        private : false,
+    },
+    {
+        path: 'sales_representative',
+        component: SalesRepresentativeNavigation,
+        private : false,
+    },
     {
         path: 'login',
         component: Login,
@@ -212,6 +247,26 @@ const RoutesStack: RouteItem[] = [
     {
         path:'viewLogs',
         component: ViewLogs,
+        private: true
+    },
+    {
+        path:'storePendingApproval',
+        component: StorePendingApproval,
+        private: true
+    },
+    {
+        path:'storeProfile',
+        component: StoreProfile,
+        private: true
+    },
+    {
+        path:'brands',
+        component: Brands,
+        private: true
+    },
+    {
+        path:'categories',
+        component: Categories,
         private: true
     },
 ];

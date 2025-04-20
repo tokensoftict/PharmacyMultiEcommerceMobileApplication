@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
 import {normalize} from "@/shared/helpers";
+import Typography from "@/shared/component/typography";
 
 // @ts-ignore
 export default function SplashScreen({ navigation }) {
@@ -20,8 +21,8 @@ export default function SplashScreen({ navigation }) {
                 loop
                 style={styles.lottie}
             />
-            <Text style={styles.title}>Welcome to Medication Reminder</Text>
-            <Text style={styles.subtitle}>Stay on track with your medications</Text>
+            <Typography style={styles.title}>Welcome to Medication Reminder</Typography>
+            <Typography style={styles.subtitle}>Stay on track with your medications</Typography>
         </View>
     );
 }

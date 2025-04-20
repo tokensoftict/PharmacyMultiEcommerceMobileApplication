@@ -17,6 +17,8 @@ import Toastss from "@/shared/utils/Toast.tsx";
 import {CommonActions, useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import Typography from "@/shared/component/typography";
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -26,6 +28,7 @@ const CheckoutStepper = () => {
     const validationRefs = useRef({}); // Store validation functions
     const {isDarkMode} = useDarkMode();
     const [modalVisible, setModalVisible] = useState(false);
+    const [order, setOrder] = useState({});
     // @ts-ignore
     const styles = new _styles(isDarkMode);
     const checkOutService = new CheckoutService();
@@ -72,6 +75,7 @@ const CheckoutStepper = () => {
             hideLoading();
             if(response.data.status === true) {
                 const orderDetails = response.data.data;
+                setOrder(orderDetails);
                 setModalVisible(true);
             } else {
                 Toastss(response.data.message);
@@ -92,9 +96,25 @@ const CheckoutStepper = () => {
     function closeModal()
     {
         setModalVisible(false);
-        resetNavigation('tab');
+        resetNavigation(new AuthSessionService().getEnvironment());
     }
 
+
+    function onViewOrder() {
+        setModalVisible(false);
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [
+                    {
+                        name: "showOrder",
+                        // @ts-ignore
+                        params: { orderId : order?.id }, // ✅ Passing parameters
+                    },
+                ],
+            })
+        );
+    }
 
     const renderStepContent = () => {
         return ( <Animated.View
@@ -142,7 +162,7 @@ const CheckoutStepper = () => {
 
     const renderStepHeader = (stepNumber : number, title: string,  isActive : boolean) => (
         <View style={styles.stepHeader} key={stepNumber}>
-            <Text style={[styles.stepTitle, isActive && styles.stepTitleActive]}>{title}</Text>
+            <Typography style={[styles.stepTitle, isActive && styles.stepTitleActive]}>{title}</Typography>
             <View style={[styles.stepLine, isActive && styles.stepLineActive]} />
         </View>
     );
@@ -174,7 +194,7 @@ const CheckoutStepper = () => {
                                 </TouchableOpacity>
                             )}
                             <TouchableOpacity style={styles.buttonPrimary} onPress={nextStep}>
-                                <Text style={styles.buttonPrimaryText}>{step === 4 ? 'Finish   ' : 'NEXT  '}</Text>
+                                <Typography style={styles.buttonPrimaryText}>{step === 4 ? 'Finish   ' : 'NEXT  '}</Typography>
                                 {
                                     step === 4
                                         ?  <></>
@@ -188,10 +208,8 @@ const CheckoutStepper = () => {
             </View>
             <OrderSuccessDialog
                 visible={modalVisible}
-                onClose={() => closeModal()}
-                onViewOrder={() => {
-                    setModalVisible(false);
-                }}
+                onClose={() => closeModal}
+                onViewOrder={() => onViewOrder}
             />
         </View>
     );

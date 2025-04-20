@@ -71,4 +71,9 @@ export {default as list} from './list.png';
 export {default as history} from './history.png';
 export {default as medica} from './medica.png';
 export {default as status} from './status.png';
+export {default as store} from './store.png';
+export {default as storeprofile} from './storeprofile.png';
+export {default as upload_file} from './upload_file.png';
+export {default as file} from './file.png';
+export {default as dashboard} from './dashboard.png';
 

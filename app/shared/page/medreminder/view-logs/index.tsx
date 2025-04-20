@@ -2,9 +2,19 @@ import React, {useCallback, useState} from 'react';
 import {styles} from "./styles"
 import LinearGradient from "react-native-linear-gradient";
 import {palette} from "@/shared/constants/colors.ts";
-import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Alert, FlatList, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import Icon from "@/shared/component/icon";
-import {arrowBack, checkIcon, drug, history, medica} from "@/assets/icons";
+import {
+    arrowBack,
+    check,
+    checkIcon,
+    close,
+    drug,
+    history,
+    medica,
+    shoppingBag,
+    white_shopping_cart
+} from "@/assets/icons";
 import Typography from "@/shared/component/typography";
 import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrollNoDialogNoSafeArea";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
@@ -12,9 +22,14 @@ import {NavigationProps} from "@/shared/routes/stack.tsx";
 import {MedReminderInterface, MedReminderSchedules} from "@/service/medReminder/interface/MedReminderInterface.tsx";
 import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
 import Toastss from "@/shared/utils/Toast.tsx";
-import formatDate from "@/shared/utils/DateFormatter.ts";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
-import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import ButtonSheet from "@/shared/component/buttonSheet";
+import {normalize} from "@/shared/helpers";
+import {Button, ButtonOutline} from "@/shared/component/buttons";
+import {scheduleNotification} from "@/shared/utils/ScheduleNotification.tsx";
+import dayjs from "dayjs";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import Environment from "@/shared/utils/Environment.tsx";
 
 
 export default function ViewLogs() {
@@ -23,10 +38,19 @@ export default function ViewLogs() {
     const [refreshLoading, setRefreshLoading] = useState<boolean>(false);
     const [medication, setMedication] = useState<MedReminderInterface>();
     const [medicationHistory, setMedicationHistory] = useState<MedReminderSchedules[]>([]);
+    const [openApproveMedReminderDialog, setApproveMedReminderDialog] = useState(false);
     const {showLoading, hideLoading} = useLoading();
+    const [approveLoading, setApproveLoading] = useState(false);
+    const [notificationData, setNotificationData] = useState({});
     const route = useRoute();
     function goBack() {
-        navigation.goBack();
+        new AuthSessionService().removeLaunchPage();
+        if(navigation.canGoBack()) {
+            navigation.goBack();
+        } else {
+            navigation.replace(new AuthSessionService().getEnvironment());
+        }
+
     }
 
 
@@ -37,7 +61,6 @@ export default function ViewLogs() {
     }
 
     const loadTodayHistory = useCallback((medication : MedReminderInterface) => {
-        console.log(medication);
         setLoading(true);
         // @ts-ignore
         (new MedReminderService()).loadHistoryForReminder(medication?.id).then((response) => {
@@ -56,17 +79,22 @@ export default function ViewLogs() {
     useFocusEffect(
         useCallback(() => {
             // This will run whenever the screen comes into focus
+            const notificationData = Environment.getNotificationData();
             // @ts-ignore
-            const medReminder = route.params?.medReminder;
+            const medReminder = route.params?.medReminder ?? notificationData;
             setMedication(medReminder);
             loadTodayHistory(medReminder);
+            if(notificationData) {
+                setNotificationData(notificationData);
+                triggerApproveMedReminder(true);
+            }
         }, [])
     );
 
 
     function refreshLoadingTrigger()
     {  // @ts-ignore
-        const medReminder = route.params?.medReminder;
+        const medReminder = route.params?.medReminder ?? getNotificationData();
         setRefreshLoading(true);
         loadTodayHistory(medReminder);
     }
@@ -89,12 +117,56 @@ export default function ViewLogs() {
                             hideLoading();
                             Toastss("Med Schedule has been updated successfully.");
                             // @ts-ignore
-                            const medReminder = route.params?.medReminder;
+                            const medReminder = route.params?.medReminder ?? getNotificationData();
                             loadTodayHistory(medReminder);
                         }
                     })
                 }}
         ])
+    }
+
+    function triggerApproveMedReminder(status : boolean){
+        setApproveMedReminderDialog(status);
+    }
+
+    function approveMedReminder(){
+        setApproveLoading(true);
+        (new MedReminderService()).show(medication?.id ?? "").then((response) => {
+            if (response.data.status === true) {
+                // Extract schedules
+                const schedules = response.data.data.schedules;
+                // Schedule notifications and store their IDs
+                Promise.all(
+                    schedules.map(async (schedule : any) => {
+                        const  notificationId =  await scheduleNotification(
+                            schedule.id,
+                            schedule.drugName,
+                            schedule.dosage,
+                            "mg",
+                            // @ts-ignore
+                            new Date(dayjs(schedule.js_date)).getTime(),
+                            schedule,
+                            new AuthSessionService().getEnvironment(),
+                            "VIEW_MED_REMINDER",
+                        );
+                        return { [schedule.id]: notificationId };
+                    })
+                ).then((schedules) => {
+                    setApproveLoading(false);
+                    Toastss("Medication Reminder has been scheduled successfully.");
+                    setApproveMedReminderDialog(false);
+                    // Navigate back
+                }).finally(() => {
+                    setApproveLoading(false);
+                }).catch(() => {
+                    setApproveLoading(false);
+                    Toastss("There was an error creating schedules, please try again.");
+                    setApproveMedReminderDialog(true);
+                });
+            } else {
+                setApproveLoading(false);
+            }
+        });
     }
 
     return (
@@ -133,19 +205,19 @@ export default function ViewLogs() {
                                             </View>
                                             <View style={styles.doseInfo}>
                                                 <View>
-                                                    <Text style={styles.medicineName}>{medication.drugName}</Text>
-                                                    <Text style={styles.dosageInfo}>{medication.dosage}mg</Text>
+                                                    <Typography style={styles.medicineName}>{medication.drugName}</Typography>
+                                                    <Typography style={styles.dosageInfo}>{medication.dosage}mg</Typography>
                                                 </View>
                                                 <View style={styles.doseTime}>
                                                     <Icon icon={history} width={24} height={24} tintColor="#666" />
-                                                    <Text style={styles.timeText}>{medication.scheduled_at}</Text>
+                                                    <Typography style={styles.timeText}>{medication.scheduled_at}</Typography>
                                                 </View>
                                             </View>
                                             {
                                                 taken ? (
                                                     <View style={[styles.takenBadge]}>
                                                         <Icon icon={checkIcon} width={15} height={15}  />
-                                                        <Text style={styles.takenText}>Taken</Text>
+                                                        <Typography style={styles.takenText}>Taken</Typography>
                                                     </View>
                                                 ) : (
                                                     (
@@ -156,7 +228,7 @@ export default function ViewLogs() {
                                                             ]}
                                                             onPress={() => makeScheduleHasTaken(medication.id)}
                                                         >
-                                                            <Text style={styles.takeDoseText}>Take</Text>
+                                                            <Typography style={styles.takeDoseText}>Take</Typography>
                                                         </TouchableOpacity> : <></>
                                                     )
                                                 )
@@ -170,6 +242,33 @@ export default function ViewLogs() {
                     </ScrollView>
                 </View>
             </View>
+            <ButtonSheet onClose={() => triggerApproveMedReminder(false)}  dispatch={openApproveMedReminderDialog} height={normalize(250)}>
+                {
+                    <View style={{padding: normalize(24)}}>
+                        <TouchableOpacity onPress={() => triggerApproveMedReminder(false)} style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Typography style={{fontWeight: '700', width :'100%', fontSize: normalize(18), marginBottom: normalize(10), textAlign: 'center'}}>{
+                                // @ts-ignore
+                                notificationData?.title ?? ""}</Typography>
+                        </TouchableOpacity>
+
+                        <Typography style={{fontWeight: '700', width :'100%', fontSize: normalize(15), marginTop: normalize(10), textAlign: 'center'}}>{
+                            // @ts-ignore
+                            notificationData?.body ?? ""}</Typography>
+
+                        <View style={styles.buttonsHolder}>
+                            <View style={{flex :0.45}}>
+                                <ButtonOutline onPress={() => triggerApproveMedReminder(false)} leftIcon={<Icon customStyles={{tintColor: 'red'}} icon={close} />} title="Reject" />
+                            </View>
+                            <View style={{flex :0.5}}>
+                                <Button loading={approveLoading} disabled={approveLoading} onPress={() => approveMedReminder()} leftIcon={<Icon customStyles={{tintColor: 'white'}} icon={check} />} title="Approve" />
+                            </View>
+                        </View>
+                        <View style={{height: normalize(24)}}></View>
+                    </View>
+
+                }
+
+            </ButtonSheet>
         </WrapperNoScrollNoDialogNoSafeArea>
     );
 

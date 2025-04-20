@@ -16,6 +16,7 @@ import Toastss from "@/shared/utils/Toast.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
 import ButtonSheet from "@/shared/component/buttonSheet";
 import {normalize} from "@/shared/helpers";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 
 export default function ViewReminder() {
     const [loading, setLoading] = useState(false);
@@ -28,15 +29,30 @@ export default function ViewReminder() {
     const {showLoading, hideLoading} = useLoading();
     const [openIntervalDialog, setOpenIntervalDialog] = useState(false);
     const [interval, setInterval] = useState("");
+    const [useNotification, setUseNotification] = useState<boolean>(false);
 
     function goBack() {
-        navigation.goBack();
+        if(navigation.canGoBack()) {
+            navigation.goBack();
+        } else {
+            setTimeout(() =>{
+                navigation.replace(new AuthSessionService().getEnvironment())
+            }, 1200);
+        }
+
     }
 
 
     useEffectOnce(function(){
+        const authService = new AuthSessionService();
         // @ts-ignore
-        const med = route.params?.schedule;
+        let med = route.params?.schedule;
+        if(!med) {
+            const startUpPage = JSON.parse(authService.getLaunchPage());
+            med = startUpPage['extraData'];
+            med.allowTaken = true;
+            setUseNotification(true);
+        }
         setTaken(!(med.status !== "Pending" && med.status !== "Cancelled"))
         setMedication(med);
     },[]);
@@ -135,22 +151,22 @@ export default function ViewReminder() {
                 </Animatable.View>
 
                 <View style={styles.infoBox}>
-                    <Text style={styles.dosage}>Dosage: {medication?.dosage}</Text>
-                    <Text style={styles.time}>⏰ Time: {medication?.scheduled_at}</Text>
-                    <Text style={styles.titleMed}>{medication?.title}</Text>
-                    <Text style={styles.notes}>{medication?.med_reminder.notes}</Text>
+                    <Typography style={styles.dosage}>Dosage: {medication?.dosage}</Typography>
+                    <Typography style={styles.time}>⏰ Time: {medication?.scheduled_at}</Typography>
+                    <Typography style={styles.titleMed}>{medication?.title}</Typography>
+                    <Typography style={styles.notes}>{medication?.med_reminder.notes}</Typography>
                 </View>
 
                 {
                     (taken && medication?.allowTaken) ?
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.snoozeButton} onPress={() => triggerIntervalDialog(true)}>
-                                <Text style={styles.buttonText}>Snooze</Text>
+                                <Typography style={styles.buttonText}>Snooze</Typography>
                             </TouchableOpacity>
 
                             <Animatable.View animation="bounce" iterationCount="infinite" duration={2000}>
                                 <TouchableOpacity style={styles.takeButton} onPress={() => {makeScheduleHasTaken(medication?.id)}}>
-                                    <Text style={styles.buttonText}>Take Medicine</Text>
+                                    <Typography style={styles.buttonText}>Take Medicine</Typography>
                                 </TouchableOpacity>
                             </Animatable.View>
                         </View>

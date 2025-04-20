@@ -14,6 +14,7 @@ import Counter from "@/shared/component/counter";
 import {useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
+import Toastss from "@/shared/utils/Toast.tsx";
 // Import your normalize function
 
 interface ProductList {
@@ -39,27 +40,36 @@ const ProductDialog = ({visible, product}:ProductList) => {
 
     function buyNow()
     {
-        setBuyNowLoading(true);
-        cartService.add(product?.id, buyNowQuantity).then((response) => {
-            setBuyNowLoading(false);
-            if(response.data.status === true){
-                onClose();
-                navigateTo();
-            }
-        })
-
+        // @ts-ignore
+        if(parseInt(product?.max == "0" ? product?.quantity : product?.max) >= addToCartQuantity) {
+            setBuyNowLoading(true);
+            cartService.add(product?.id, buyNowQuantity).then((response) => {
+                setBuyNowLoading(false);
+                if (response.data.status === true) {
+                    onClose();
+                    navigateTo();
+                }
+            })
+        }else {
+            Toastss("Insufficient quantity, Total available quantity is "+product?.quantity);
+        }
     }
 
     function addToCart()
     {
-        setAddToCartLoading(true);
-        cartService.add(product?.id, addToCartQuantity).then((response) => {
-            if(response.data.status === true) {
-                Toasts('Item has been added to cart Successfully!');
-                onClose()
-            }
-            setAddToCartLoading(false);
-        })
+// @ts-ignore
+        if(parseInt(product?.quantity) >= addToCartQuantity) {
+            setAddToCartLoading(true);
+            cartService.add(product?.id, addToCartQuantity).then((response) => {
+                if (response.data.status === true) {
+                    Toasts('Item has been added to cart Successfully!');
+                    onClose()
+                }
+                setAddToCartLoading(false);
+            })
+        } else {
+            Toastss("Insufficient quantity, Total available quantity is "+product?.quantity);
+        }
 
     }
 
@@ -77,41 +87,41 @@ const ProductDialog = ({visible, product}:ProductList) => {
                 <View style={styles.modalContainer}>
                     {/* Cancel Button */}
                     <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-                        <Text style={styles.cancelButtonText}>X</Text>
+                        <Typography style={styles.cancelButtonText}>X</Typography>
                     </TouchableOpacity>
 
                     {/* Product Image */}
                     <Image source={{ uri: product?.image }} style={styles.productImage} />
 
                     {/* Product Details */}
-                    <Text style={styles.productName}>{product?.name}</Text>
-                    <Text style={styles.productPrice}>
+                    <Typography style={styles.productName}>{product?.name}</Typography>
+                    <Typography style={styles.productPrice}>
                         {product?.special ? (
                             <>
-                                <Text style={styles.promoPrice}>{currencyType} {product?.special} </Text>
-                                <Text style={styles.originalPrice}>{currencyType} {product?.price}</Text>
+                                <Typography style={styles.promoPrice}>{currencyType} {product?.special} </Typography>
+                                <Typography style={styles.originalPrice}>{currencyType} {product?.price}</Typography>
                             </>
                         ) : (
                             currencyType+' '+product?.price
                         )}
-                    </Text>
+                    </Typography>
                     {  (Environment.isWholeSalesEnvironment() &&  product?.doorstep )  ?
-                    <Text style={styles.doorstep}>
+                    <Typography style={styles.doorstep}>
                         + Door Delivery: {product?.doorstep}
-                    </Text>
+                    </Typography>
                     : <></>
                     }
                     <View style={{flex : 1, flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between', width : '100%', paddingHorizontal : normalize(30)}}>
-                        <Text style={styles.productCategory}>Category: {'N/A'}</Text>
-                        <Text style={styles.productQuantity}>{product?.quantity} Available</Text>
+                        <Typography style={styles.productCategory}>Category: {'N/A'}</Typography>
+                        <Typography style={styles.productQuantity}>{product?.quantity} Available</Typography>
                     </View>
 
                     <View style={{flex : 1, flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between', width : '100%', paddingHorizontal : normalize(30)}}>
                         { product?.expiry_date ?
-                            <Text style={styles.productExpiry}>Expiry: {product?.expiry_date}</Text>
+                            <Typography style={styles.productExpiry}>Expiry: {product?.expiry_date}</Typography>
                             : <></>
                         }
-                    <Text style={styles.productCarton}>Carton: {product?.carton}</Text>
+                    <Typography style={styles.productCarton}>Carton: {product?.carton}</Typography>
                     </View>
 
 
@@ -126,13 +136,13 @@ const ProductDialog = ({visible, product}:ProductList) => {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity disabled={addToCartLoading}  style={styles.addToCartButton} onPress={addToCart}>
                             {
-                                addToCartLoading ? <ActivityIndicator color={semantic.background.white.w500} /> :  <Text style={styles.buttonText}>Add to Cart</Text>
+                                addToCartLoading ? <ActivityIndicator color={semantic.background.white.w500} /> :  <Typography style={styles.buttonText}>Add to Cart</Typography>
                             }
 
                         </TouchableOpacity>
                         <TouchableOpacity disabled={buyNowLoading}  style={styles.buyNowButton} onPress={buyNow}>
                             {
-                                buyNowLoading ? <ActivityIndicator color={palette.main.p500} /> :  <Text style={styles.buttonText2}>Buy Now</Text>
+                                buyNowLoading ? <ActivityIndicator color={palette.main.p500} /> :  <Typography style={styles.buttonText2}>Buy Now</Typography>
                             }
 
                         </TouchableOpacity>

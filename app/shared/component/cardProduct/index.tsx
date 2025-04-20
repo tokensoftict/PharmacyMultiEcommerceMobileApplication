@@ -48,11 +48,18 @@ export default function CardProduct({product}: ProductList) {
                     :
                     <Typography style={styles.price}>{currencyType} {product.price}</Typography>
             }
-                <TouchableOpacity style={styles.addToCart} onPress={() => {
-                    store.dispatch(action.setProductDialogData(product))
-                }}>
-                    <Icon width={15} height={15} tintColor={semantic.background.white.w500}  icon={white_shopping_cart} />
-                </TouchableOpacity>
+
+                {
+                    Environment.isLogin() ?
+                        <TouchableOpacity style={styles.addToCart} onPress={() => {
+                            store.dispatch(action.setProductDialogData(product))
+                        }}>
+                            <Icon width={15} height={15} tintColor={semantic.background.white.w500}  icon={white_shopping_cart} />
+                        </TouchableOpacity>
+                        : <></>
+                }
+
+
         </View>
             {
                 (Environment.isWholeSalesEnvironment() &&  product?.doorstep ) ?

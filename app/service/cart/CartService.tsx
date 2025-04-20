@@ -1,5 +1,7 @@
 import AuthSessionService from "../../service/auth/AuthSessionService";
 import EnvironmentRequest, {EnvironmentRequestInterface} from "@/network/internet/EnvironmentRequest.tsx";
+import Environment from "@/shared/utils/Environment.tsx";
+import Toasts from "@/shared/utils/Toast.tsx";
 
 
 export default class CartService {
@@ -13,7 +15,16 @@ export default class CartService {
     }
 
     add(productId: number|undefined , quantity: number) {
-        return this.request.post("cart/add-item", {stock_id : productId, quantity : quantity});
+        if(Environment.isLogin()) {
+            return this.request.post("cart/add-item", {stock_id : productId, quantity : quantity});
+        }
+        Toasts('Please login to add item to cart..')
+        return   Promise.resolve({
+            data : {
+                status : false,
+                error : "Unknown error occurred, Please try again"
+            }
+        })
     }
 
     remove(productId: number) {

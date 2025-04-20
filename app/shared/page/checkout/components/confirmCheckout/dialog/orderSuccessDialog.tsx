@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Vibration, StyleSheet } from "react-nativ
 import LottieView from "lottie-react-native";
 import SoundPlayer from 'react-native-sound-player'
 import ModalComponent from "react-native-modal";
+import Typography from "@/shared/component/typography";
 
 // @ts-ignore
 const OrderSuccessDialog = ({ visible, onClose, onViewOrder }) => {
@@ -18,7 +19,7 @@ const OrderSuccessDialog = ({ visible, onClose, onViewOrder }) => {
             try {
                 SoundPlayer.playAsset(require("@/assets/success.mp3"))
             } catch (e) {
-                console.log(`cannot play the sound file`, e)
+
             }
 
             // Vibrate the phone
@@ -39,18 +40,18 @@ const OrderSuccessDialog = ({ visible, onClose, onViewOrder }) => {
                 />
 
 
-                <Text style={styles.emoji}>🎉😊</Text>
+                <Typography style={styles.emoji}>🎉😊</Typography>
 
 
-                <Text style={styles.text}>Order Placed Successfully!</Text>
+                <Typography style={styles.text}>Order Placed Successfully!</Typography>
 
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.viewOrderButton} onPress={onViewOrder}>
-                        <Text style={styles.buttonText}>View Order</Text>
+                    <TouchableOpacity style={styles.viewOrderButton} onPress={onViewOrder()}>
+                        <Typography style={styles.buttonText}>View Order</Typography>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                        <Text style={styles.buttonText}>Close</Text>
+                    <TouchableOpacity style={styles.closeButton} onPress={onClose()}>
+                        <Typography style={styles.buttonText}>Close</Typography>
                     </TouchableOpacity>
                 </View>
             </View>

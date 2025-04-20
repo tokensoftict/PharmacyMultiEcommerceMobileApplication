@@ -20,6 +20,11 @@ wholesalesAxiosInstance.interceptors.request.use( async function (request) {
         }
     }
 
+    if(authSession.getImpersonateCustomerData() !== false) {
+        const customerBeenImpersonated = authSession.getImpersonateCustomerData();
+        request.headers['impersonation-wholesales-id'] = customerBeenImpersonated.id;
+    }
+
     request.transformRequest = [
         function (data) {
             let form_data = new FormData();
@@ -39,7 +44,6 @@ wholesalesAxiosInstance.interceptors.request.use( async function (request) {
     ];
 
 
-    console.log(request.baseURL+request.url);
 
     return request;
 }, function (error) {

@@ -15,6 +15,10 @@ export default class MedReminderService {
         return this.request.get("med-reminder/list");
     }
 
+    show(id: number | string) {
+        return this.request.get("med-reminder/"+id+"/show");
+    }
+
     create(data: any) {
         return this.request.post("med-reminder/create", data);
     }

@@ -33,7 +33,12 @@ export default  function EnterOtp({ navigation }) {
     }, []);
 
     const navigateAndClearStack = () => {
-        navigation.replace("storeSelector")
+        const app = userProfile.data.apps;
+        if(app.length === 1) {
+            navigation.replace("supermarket");
+        } else {
+            navigation.replace("storeSelector")
+        }
     }
 
     function doValidateOTP() {
@@ -99,7 +104,6 @@ export default  function EnterOtp({ navigation }) {
 
                 <View style={styles.form}>
                     <OtpForm valueOtp={{}} changeOtpField={(otp) => {}} onOtpCodeCompleted={(code) =>{
-                        console.log(code);
                         setOtpCode(code);
                     }}/>
                     {otpError !== '' ? <ErrorText>{otpError}</ErrorText> : ''}

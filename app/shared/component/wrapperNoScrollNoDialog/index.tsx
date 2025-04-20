@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Platform, SafeAreaView, ScrollView, View} from 'react-native';
 import OverlayLoader from "../overlayLoader";
-import CustomStatusBar from "../customStatusBar";
 import {StatusBarStyle} from 'react-native/Libraries/Components/StatusBar/StatusBar';
 import {normalize} from '../../helpers';
 import useDarkMode from '../../hooks/useDarkMode.tsx';
@@ -34,9 +33,9 @@ export default function WrapperNoScrollNoDialog({
             }}>
                 <View style={{height: normalize(10)}}/>
                 <View>
-                <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
-                {children}
-            </View>
+                    <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
+                    {children}
+                </View>
                 {Platform.OS === 'ios' && <View style={{height: normalize(20)}} />}
             </SafeAreaView>
         </SafeAreaProvider>

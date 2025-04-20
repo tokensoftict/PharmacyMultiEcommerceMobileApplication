@@ -9,6 +9,7 @@ const { width } = Dimensions.get("window");
 const appImages: Record<string, any> = {
     "wholesales": require("@/assets/images/wholesales.jpg"),
     "supermarket": require("@/assets/images/supermarket.jpg"),
+    "sales representative" : require("@/assets/images/sales_representative.jpg"),
 };
 
 // @ts-ignore
@@ -43,7 +44,7 @@ const StoreSelectionScreen = ({ navigation }) => {
         if(store === "wholesales" && !status ) {
             navigation.navigate("storePendingApproval");
         } else {
-           navigation.replace(store)
+            navigation.replace(store)
         }
     }
 
@@ -69,15 +70,15 @@ const StoreSelectionScreen = ({ navigation }) => {
                         }}
                     >
 
-                    <TouchableOpacity onPress={() => selectStore(store.id, store.status)} style={styles.storeButton}>
-                    <Image source={appImages[store.name]} style={styles.storeImage} resizeMode="contain" />
-                    <Typography style={styles.storeText}>{store.name}</Typography>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => selectStore(store.id, store.status)} style={styles.storeButton}>
+                            <Image source={appImages[store.name]} style={styles.storeImage} resizeMode="contain" />
+                            <Typography style={styles.storeText}>{store.name}</Typography>
+                        </TouchableOpacity>
                     </Animated.View>
-                    ))}
-</View>
-</View>
-);
+                ))}
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

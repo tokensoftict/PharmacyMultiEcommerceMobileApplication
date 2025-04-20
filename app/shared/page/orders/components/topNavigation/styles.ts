@@ -13,7 +13,6 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
     borderRadius: normalize(5),
     backgroundColor: isDarkMode ? semantic.fill.f01 : semantic.fill.f04,
     flex: 1,
-    marginTop: normalize(18),
   },
   tab: {
     paddingVertical: normalize(10),

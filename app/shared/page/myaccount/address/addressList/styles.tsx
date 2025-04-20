@@ -13,11 +13,11 @@ export const _styles = (isDarkMode: boolean) =>
             height: normalize(32),
         },
         headerBack: {
-            paddingHorizontal: normalize(15),
-            marginBottom: normalize(10),
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            paddingHorizontal: normalize(10),
+            display : 'flex',
+            flexDirection : 'row',
+            justifyContent : 'space-between',
+            paddingBottom: normalize(20),
         },
         formContainer: {
             position: 'absolute',

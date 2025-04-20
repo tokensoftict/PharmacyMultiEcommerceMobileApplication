@@ -1,5 +1,4 @@
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
-import Wrapper from "@/shared/component/wrapper";
 import React, {useState} from "react";
 import OrderService from "@/service/order/OrderService.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
@@ -13,9 +12,10 @@ import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import {styles} from "./styles";
 import Typography from "@/shared/component/typography";
 import {currencyType} from "@/shared/constants/global.ts";
-import {Order, Product} from "@/service/order/interface/OrderListInterface.tsx";
-import CartItemHorizontalList from "@/shared/component/cartItemHorizontalList";
+import {Order} from "@/service/order/interface/OrderListInterface.tsx";
 import OrderItemHorizontalList from "@/shared/component/orderItemHorizontalList";
+import Environment from "@/shared/utils/Environment.tsx";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 
 
 export default function ShowOrder()
@@ -27,11 +27,16 @@ export default function ShowOrder()
     const [order, setOrder] = useState<Order>();
 
     useEffectOnce(function(){
+        const notificationData = Environment.getNotificationData();
         // @ts-ignore
-        const orderId = route.params?.orderId;
+        const orderId = route.params?.orderId ?? notificationData['orderId'];
         if(!orderId) {
             Toasts('Unknown error occurred!');
-            navigation.goBack();
+            if(navigation.canGoBack()) {
+                navigation.goBack();
+            } else {
+                navigation.replace(new AuthSessionService().getEnvironment());
+            }
         }
 
         setIsLoading(true)

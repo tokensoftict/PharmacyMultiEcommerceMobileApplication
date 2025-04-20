@@ -10,6 +10,8 @@ import { semantic } from "../../../../../shared/constants/colors";
 import {ProductListInterface} from "@/service/product/ProductListInterface.tsx";
 import WishlistService from "@/service/wishlist/WishlistService.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
+import Environment from "@/shared/utils/Environment.tsx";
+import {normalize} from "@/shared/helpers";
 
 interface header {
     title: string|undefined,
@@ -36,9 +38,11 @@ export default function Header({title, product} : header) {
                 {title}
             </Typography>
 
-            <TouchableOpacity>
-                <Icon icon={like} onPress={() => addProductWishList(product)} />
-            </TouchableOpacity>
+            {
+                Environment.isLogin() ? <TouchableOpacity>
+                    <Icon icon={like} onPress={() => addProductWishList(product)} />
+                </TouchableOpacity> : <View style={{height : normalize(20)}}></View>
+            }
         </View>
     )
 }

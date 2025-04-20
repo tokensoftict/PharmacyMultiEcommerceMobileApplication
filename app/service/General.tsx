@@ -7,6 +7,7 @@ export interface responseInterface {
 
 export interface nameOrId {
     id: number;
+    image?: string;
     name: string;
 }
 

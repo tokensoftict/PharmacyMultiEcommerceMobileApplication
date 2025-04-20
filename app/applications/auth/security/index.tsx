@@ -150,6 +150,9 @@ export default function ChangePassword() {
                         <Button title="Change Password" loading={isLoading} disabled={isLoading}  onPress={doPasswordReset}  loadingText="Resetting Your Password Please wait.." />
                     </View>
 
+                    <View style={styles.formControl}>
+                        <Button title="Delete My Account" loading={isLoading} disabled={isLoading}  onPress={doPasswordReset}  loadingText="Resetting Your Password Please wait.." />
+                    </View>
 
                 </View>
 

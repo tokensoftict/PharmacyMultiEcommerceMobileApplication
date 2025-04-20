@@ -52,7 +52,7 @@ export default function SmallCardProduct({product}: ProductList) {
               */}
         </View>
             {
-                Environment.isWholeSalesEnvironment() ?
+                (Environment.isWholeSalesEnvironment()  &&  product?.doorstep) ?
                 <Typography style={styles.doorStep}>+ {currencyType} {product.doorstep}</Typography> :
                     <></>
             }

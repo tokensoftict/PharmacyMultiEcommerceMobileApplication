@@ -21,7 +21,9 @@ const systemDataInitialState = {
   pageRouteData : {
 
   },
-  fireBaseKey : ""
+  fireBaseKey : "",
+  launchPage : "",
+  impersonateData : false
 };
 
 
@@ -37,6 +39,10 @@ function systemReducer(state = systemDataInitialState, action:any){
       return { ...state, environment: action.payload };
       case actionTypes.FIREBASE_DEVICE_KEY:
       return { ...state, fireBaseKey: action.payload };
+    case actionTypes.LAUNCH_PAGE:
+      return { ...state, launchPage: action.payload };
+    case actionTypes.IMPERSONATE_DATA:
+      return {...state, impersonateData: action.payload };
     default:
       return state;
   }

@@ -3,9 +3,9 @@ import {Animated, ScrollView, View} from "react-native";
 import Typography from "@/shared/component/typography";
 import {_styles} from './styles'
 import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
-import {Data} from "@/service/service/CategoryInterface.tsx";
+import {Data} from "@/service/category/CategoryInterface.tsx";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
-import CategoryService from "@/service/service/CategoryService";
+import CategoryService from "@/service/category/CategoryService";
 import {ProductList} from "@/service/product/ProductListInterface.tsx";
 import SmallCardProduct from "@/shared/component/smallCardProduct";
 import HeaderWithIcon from "@/shared/component/headerBack";
@@ -72,6 +72,7 @@ export default function Categories() {
                     {
                         stocks.map((stock) => {
                             return (
+                                // @ts-ignore
                                 <SmallCardProduct key={stock.id} product={stock}/>
                             )
                         })
@@ -91,11 +92,11 @@ export default function Categories() {
                         <></> :
                         <>
                             <View style={{paddingHorizontal: normalize(24)}}>
-                                <HeaderWithIcon icon={shoppingBag}  onPress={() =>{
+                                <HeaderWithIcon icon={categories}  onPress={() =>{
                                     if(!isCategoryLoading) {
                                         loadCategory();
                                     }
-                                }} title="Categories" />
+                                }} title="CATEGORIES" />
                             </View>
                             <FlatList
                                 ListFooterComponent={

@@ -12,8 +12,8 @@ export default class OrderService {
         this.authSessionService = new AuthSessionService();
     }
 
-    list() {
-        return this.request.get("order/lists");
+    list(orderType : string) {
+        return this.request.get("order/lists?orderType="+orderType);
     }
 
     get(orderId : any) {

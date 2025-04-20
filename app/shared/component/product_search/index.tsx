@@ -18,6 +18,7 @@ import SearchProductService from "@/service/product/SearchProductService.tsx";
 import {useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import Typography from "@/shared/component/typography";
+// @ts-ignore
 export default function SearchDialog({ visible, onClose, onItemSelected = undefined }) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -65,11 +66,10 @@ export default function SearchDialog({ visible, onClose, onItemSelected = undefi
             try {
                 // Replace with your actual API endpoint
                 const data = await meilisearch.query(text)
-                console.log(data);
                 // @ts-ignore
                 setResults(data); // Ensure the API returns an array of objects like [{ id, name }]
             } catch (error) {
-                console.error("Error fetching search results:", error);
+
             }
 
             setLoading(false);
@@ -110,11 +110,18 @@ export default function SearchDialog({ visible, onClose, onItemSelected = undefi
                         <FlatList
                             data={results}
                             showsVerticalScrollIndicator={false}
-                            keyExtractor={(item) => item?.id.toString()}
+                            keyExtractor={(item) =>
+                                // @ts-ignore
+                                item?.id.toString()}
                             renderItem={({ item }) => (
-                                <TouchableOpacity activeOpacity={activeOpacity} onPress={() => onItemSelected ? onItemSelected(item) : navigateTo(item.id)}>
+                                <TouchableOpacity activeOpacity={activeOpacity} onPress={() =>
+                                    // @ts-ignore
+                                    onItemSelected ? onItemSelected(item) : navigateTo(item.id)}>
                                     <View style={{ padding: normalize(15), backgroundColor: "#fff", borderRadius: 5 }}>
-                                        <Typography numberOfLines={1} ellipsizeMode={'tail'} style={{ fontWeight:'500', fontSize: normalize(12) }}>{item.name}</Typography>
+                                        <Typography numberOfLines={1} ellipsizeMode={'tail'} style={{ fontWeight:'500', fontSize: normalize(12) }}>{
+                                            // @ts-ignore
+                                            item.name
+                                        }</Typography>
                                     </View>
                                 </TouchableOpacity>
                             )}

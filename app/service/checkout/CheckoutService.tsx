@@ -52,4 +52,16 @@ export default class CheckoutService {
     {
         return this.request.get("checkout/confirm_payment");
     }
+
+    getDoorStepDelivery()  {
+       return this.request.get("checkout/door_step_delivery_analysis");
+    }
+
+    applyCouponCode(code: string) {
+        return this.request.post("checkout/apply_coupon", {code : code});
+    }
+
+    removeCouponOrVoucher() {
+        return this.request.get("checkout/remove_coupon");
+    }
 }

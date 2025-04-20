@@ -11,7 +11,7 @@ export enum TypeChange {
 }
 
 interface CounterProps {
-  onChange: (value: number, typeOperation: number) => void
+  onChange: (value: number, typeOperation: number | string) => void
   cant?: number
 }
 

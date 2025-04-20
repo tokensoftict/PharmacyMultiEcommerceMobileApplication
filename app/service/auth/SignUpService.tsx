@@ -26,7 +26,6 @@ export default class SignUpService {
                 deviceKey : store.getState().systemReducer.fireBaseKey
             })
                 .then(function (response : any){
-                    console.log(response.toString());
                     if(response.data.status === true){
                         resolve(parent.loginService.prepareUserSession(response.data))
                     }else{

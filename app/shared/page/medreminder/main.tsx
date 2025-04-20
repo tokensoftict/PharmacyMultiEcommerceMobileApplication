@@ -93,12 +93,12 @@ function CircularProgress({
     return (
         <View style={styles.progressContainer}>
             <View style={styles.progressTextContainer}>
-                <Text style={styles.progressPercentage}>
+                <Typography style={styles.progressPercentage}>
                     {Math.round(progress * 100)}%
-                </Text>
-                <Text style={styles.progressDetails}>
+                </Typography>
+                <Typography style={styles.progressDetails}>
                     {completedDoses} of {totalDoses} doses
-                </Text>
+                </Typography>
             </View>
             <Svg width={size} height={size} style={styles.progressRing}>
                 <Circle
@@ -239,7 +239,7 @@ export default function MainMenu() {
 
                 <View style={styles.content}>
                     <View style={styles.quickActionsContainer}>
-                        <Text style={styles.sectionTitle}>Quick Actions</Text>
+                        <Typography style={styles.sectionTitle}>Quick Actions</Typography>
                         <View style={styles.quickActionsGrid}>
                             {QUICK_ACTIONS.map((action) => (
                                 <TouchableOpacity key={action.route} onPress={() => navigate(action.route)} style={styles.actionButton}>
@@ -251,7 +251,7 @@ export default function MainMenu() {
                                             <View style={styles.actionIcon}>
                                                 { action.icon }
                                             </View>
-                                            <Text style={styles.actionLabel}>{action.label}</Text>
+                                            <Typography style={styles.actionLabel}>{action.label}</Typography>
                                         </View>
                                     </LinearGradient>
                                 </TouchableOpacity>
@@ -261,21 +261,21 @@ export default function MainMenu() {
 
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
-                            <Text style={styles.sectionTitle}>Today's Schedule</Text>
+                            <Typography style={styles.sectionTitle}>Today's Schedule</Typography>
                             <TouchableOpacity onPress={() => navigate('historyLogs')}>
-                                <Text style={styles.seeAllButton}>See All</Text>
+                                <Typography style={styles.seeAllButton}>See All</Typography>
                             </TouchableOpacity>
                         </View>
                         {medicationHistory.length === 0 ? (
                             <View style={styles.emptyState}>
                                 <Icon icon={drug} width={48} height={48} tintColor="#ccc" />
-                                <Text style={styles.emptyStateText}>
+                                <Typography style={styles.emptyStateText}>
                                     No medications scheduled for today
-                                </Text>
+                                </Typography>
                                 <TouchableOpacity onPress={() => navigate('medReminderForm')} style={styles.addMedicationButton}>
-                                    <Text style={styles.addMedicationButtonText}>
+                                    <Typography style={styles.addMedicationButtonText}>
                                         Add Medication
-                                    </Text>
+                                    </Typography>
                                 </TouchableOpacity>
                             </View>
                         ) : (
@@ -295,19 +295,19 @@ export default function MainMenu() {
                                             </View>
                                             <View style={styles.doseInfo}>
                                                 <View>
-                                                    <Text style={styles.medicineName}>{medication.drugName}</Text>
-                                                    <Text style={styles.dosageInfo}>{medication.dosage}mg</Text>
+                                                    <Typography style={styles.medicineName}>{medication.drugName}</Typography>
+                                                    <Typography style={styles.dosageInfo}>{medication.dosage}mg</Typography>
                                                 </View>
                                                 <View style={styles.doseTime}>
                                                     <Icon icon={history} width={24} height={24} tintColor="#666" />
-                                                    <Text style={styles.timeText}>{medication.scheduled_at}</Text>
+                                                    <Typography style={styles.timeText}>{medication.scheduled_at}</Typography>
                                                 </View>
                                             </View>
                                             {
                                                 taken ? (
                                                     <View style={[styles.takenBadge]}>
                                                         <Icon icon={checkIcon} width={15} height={15}  />
-                                                        <Text style={styles.takenText}>Taken</Text>
+                                                        <Typography style={styles.takenText}>Taken</Typography>
                                                     </View>
                                                 ) : (
                                                    medication.allowTaken ?  <TouchableOpacity
@@ -317,7 +317,7 @@ export default function MainMenu() {
                                                        ]}
                                                        onPress={() => makeScheduleHasTaken(medication.id)}
                                                    >
-                                                       <Text style={styles.takeDoseText}>Take</Text>
+                                                       <Typography style={styles.takeDoseText}>Take</Typography>
                                                    </TouchableOpacity> : <></>
                                                 )
                                             }

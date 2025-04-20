@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: "#f8f9fa",
-        flex : 0.4,
+        flex : 0.8,
         position: "absolute",
         height: "100%",
         width: "100%",
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
         marginTop: normalize(20),
         paddingHorizontal: 20,
         flexDirection: 'column',
-        flex : 0.72
+        flex : 0.83
     },
     sectionHeader: {
         flexDirection: "row",
@@ -160,5 +160,11 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: 14,
         marginLeft: 4,
+    },
+    buttonsHolder: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: normalize(15),
     },
 });

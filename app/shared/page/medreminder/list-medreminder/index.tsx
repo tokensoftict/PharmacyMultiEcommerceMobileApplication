@@ -84,15 +84,15 @@ export default function ListMedReminder() {
                                             </View>
                                             <View style={styles.medInfo}>
                                                 <View>
-                                                    <Text style={styles.medName}>{med.drug_name}</Text>
+                                                    <Typography style={styles.medName}>{med.drug_name}</Typography>
                                                     <View style={{flex : 1, flexDirection : 'row', justifyContent : 'space-around', marginTop: normalize(5), marginBottom:normalize(5)}}>
-                                                        <Text style={styles.reminderInfoPrimary}>{med.total_dosage_in_package}mg in Package</Text>
-                                                        <Text style={styles.reminderInfoSuccess}>{med.total_dosage_taken}mg Taken</Text>
+                                                        <Typography style={styles.reminderInfoPrimary}>{med.total_dosage_in_package}mg in Package</Typography>
+                                                        <Typography style={styles.reminderInfoSuccess}>{med.total_dosage_taken}mg Taken</Typography>
                                                     </View>
                                                 </View>
                                                 <View style={styles.medTime}>
                                                     <Icon icon={history} width={24} height={24} tintColor="#666" />
-                                                    <Text style={styles.dateCreated}>{med.date_create}</Text>
+                                                    <Typography style={styles.dateCreated}>{med.date_create}</Typography>
                                                 </View>
                                             </View>
                                         </View>

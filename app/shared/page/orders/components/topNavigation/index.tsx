@@ -5,12 +5,12 @@ import Typography from "@/shared/component/typography";
 import { activeOpacity } from "@/shared/constants/global";
 import useDarkMode from "@/shared/hooks/useDarkMode";
 
-interface TopNavigationProps {
+export interface TopNavigationProps {
   id: number,
   name: string,
   active: boolean,
 }
-export default function TopNavigation() {
+export default function TopNavigation({onChange} : any) {
   const [tabs, setTabs] = useState<TopNavigationProps[]>([
     {
       id: 1,
@@ -34,7 +34,9 @@ export default function TopNavigation() {
     setTabs(tabs.map(option => ({
       ...option,
       active: option.id === tabSelected.id
-    })));
+    }))
+    );
+    onChange(tabSelected);
   }
   const styles = _styles(isDarkMode)
   return (

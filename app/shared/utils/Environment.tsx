@@ -8,8 +8,34 @@ function isSuperMarketEnvironment(): boolean {
     return new AuthSessionService().getEnvironment() === "supermarket";
 }
 
+function isSalesRepresentativeEnvironment(): boolean {
+    return new AuthSessionService().getEnvironment() === "sales_representative";
+}
+
+function isLogin(): boolean {
+    return new AuthSessionService().getAuthSession().loginStatus === true;
+}
+
+function getNotificationData() {
+    const notification = new AuthSessionService().getLaunchPage();
+    if(notification === "") return false
+    const startUpPage = JSON.parse(new AuthSessionService().getLaunchPage());
+    if(!startUpPage) return false;
+    const med = startUpPage['extraData'];
+    if(med) return med;
+    return false;
+}
+
+function checkForImpersonateCustomerData() {
+    return new AuthSessionService().getImpersonateCustomerData();
+}
+
 
 export default {
     isWholeSalesEnvironment : isWholeSalesEnvironment,
     isSuperMarketEnvironment : isSuperMarketEnvironment,
+    isSalesRepresentativeEnvironment : isSalesRepresentativeEnvironment,
+    getNotificationData : getNotificationData,
+    isLogin : isLogin,
+    checkForImpersonateCustomerData : checkForImpersonateCustomerData,
 }

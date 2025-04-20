@@ -2,12 +2,30 @@ import WholesalesHomePage from "@/applications/wholesales/home/wholesalesHome";
 import {
     home as HomeIcon,
     myAccount,
-    listCart, more, categories, qrcode,
+    listCart, categories, qrcode, brand,
 } from '@/assets/icons';
 import Cart from "@/shared/page/cart";
-import Categories from "@/shared/page/categories";
 import MyAccount from "@/shared/page/myaccount";
 import QrcodeScreen from "@/shared/page/qrcode";
+import Brands from "@/shared/page/brands";
+import Login from "@/applications/auth/login";
+import Environment from "@/shared/utils/Environment.tsx";
+import {useNavigation} from "@react-navigation/native";
+
+
+// @ts-ignore
+const RequireLogin = ({ children, fallback }) => {
+    const isLoggedIn = Environment.isLogin(); // You can replace this with a useAuth hook if needed
+    return isLoggedIn ? children : fallback;
+};
+
+// @ts-ignore
+const withAuth = (Component : any) => () => (
+    <RequireLogin fallback={<Login navigation={useNavigation()} />}>
+        <Component />
+    </RequireLogin>
+);
+
 
 export default [
     {
@@ -19,10 +37,10 @@ export default [
     },
     {
         id: '2',
-        displayName: 'Category',
-        name: 'categories',
-        icon: categories,
-        component: Categories,
+        displayName: 'Brands',
+        name: 'brands',
+        icon: brand,
+        component: Brands,
     },
 
     {
@@ -30,7 +48,7 @@ export default [
         displayName: 'My Cart',
         name: 'myCart',
         icon: listCart,
-        component: Cart,
+        component: withAuth(Cart),
     },
 
     {
@@ -38,13 +56,13 @@ export default [
         displayName: 'QR Code',
         name: 'qrcode',
         icon: qrcode,
-        component: QrcodeScreen,
+        component: withAuth(QrcodeScreen),
     },
     {
         id: '5',
         displayName: 'Account',
         name: 'myAccount',
         icon: myAccount,
-        component: MyAccount,
+        component: withAuth(MyAccount),
     },
 ];

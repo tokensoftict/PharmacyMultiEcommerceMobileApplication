@@ -5,7 +5,7 @@ import CustomStatusBar from "../customStatusBar";
 import {StatusBarStyle} from 'react-native/Libraries/Components/StatusBar/StatusBar';
 import {normalize} from '../../helpers';
 import useDarkMode from '../../hooks/useDarkMode.tsx';
-import {semantic} from '../../constants/colors';
+import {palette, semantic} from '../../constants/colors';
 import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
 import {store} from "../../../redux/store/store.tsx";
 import AddToCartDialog from "../../../shared/component/addToCartDialog";
@@ -38,15 +38,18 @@ export default function WrapperNoScroll({
     }, []);
 
     return (
+
         <SafeAreaProvider>
             <SafeAreaView style={{
                 flex: 1,
                 backgroundColor : semantic.background.white.w101,
             }}>
-                <View style={{height: normalize(10)}}/>
-                <AddToCartDialog product={addToCartProduct}/>
-                <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
-               {children}
+                <View style={{ backgroundColor : semantic.background.white.w101, flex : 1, width : '100%', height : '100%'}}>
+                    <View style={{height: normalize(25)}}/>
+                    <AddToCartDialog product={addToCartProduct}/>
+                    <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
+                    {children}
+                </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );

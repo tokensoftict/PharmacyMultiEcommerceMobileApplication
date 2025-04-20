@@ -138,7 +138,7 @@ export default function HistoryLogs() {
                     />
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>{date}</Text>
+                        <Typography style={styles.sectionTitle}>{date}</Typography>
                     </View>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
@@ -149,13 +149,13 @@ export default function HistoryLogs() {
                     {medicationHistory.length === 0 ? (
                         <View style={styles.emptyState}>
                             <Icon icon={drug} width={48} height={48} tintColor="#ccc" />
-                            <Text style={styles.emptyStateText}>
+                            <Typography style={styles.emptyStateText}>
                                 No medications scheduled for today
-                            </Text>
+                            </Typography>
                             <TouchableOpacity onPress={() => navigate('medReminderForm')} style={styles.addMedicationButton}>
-                                <Text style={styles.addMedicationButtonText}>
+                                <Typography style={styles.addMedicationButtonText}>
                                     Add Medication
-                                </Text>
+                                </Typography>
                             </TouchableOpacity>
                         </View>
                     ) : (
@@ -175,19 +175,19 @@ export default function HistoryLogs() {
                                         </View>
                                         <View style={styles.doseInfo}>
                                             <View>
-                                                <Text style={styles.medicineName}>{medication.drugName}</Text>
-                                                <Text style={styles.dosageInfo}>{medication.dosage}mg</Text>
+                                                <Typography style={styles.medicineName}>{medication.drugName}</Typography>
+                                                <Typography style={styles.dosageInfo}>{medication.dosage}mg</Typography>
                                             </View>
                                             <View style={styles.doseTime}>
                                                 <Icon icon={history} width={24} height={24} tintColor="#666" />
-                                                <Text style={styles.timeText}>{medication.scheduled_at}</Text>
+                                                <Typography style={styles.timeText}>{medication.scheduled_at}</Typography>
                                             </View>
                                         </View>
                                         {
                                             taken ? (
                                                 <View style={[styles.takenBadge]}>
                                                     <Icon icon={checkIcon} width={15} height={15}  />
-                                                    <Text style={styles.takenText}>Taken</Text>
+                                                    <Typography style={styles.takenText}>Taken</Typography>
                                                 </View>
                                             ) : (
                                                 (
@@ -198,7 +198,7 @@ export default function HistoryLogs() {
                                                         ]}
                                                         onPress={() => makeScheduleHasTaken(medication.id)}
                                                     >
-                                                        <Text style={styles.takeDoseText}>Take</Text>
+                                                        <Typography style={styles.takeDoseText}>Take</Typography>
                                                     </TouchableOpacity> : <></>
                                                 )
                                             )

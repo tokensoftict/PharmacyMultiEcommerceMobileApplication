@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { normalize } from "../../../shared/helpers";
-import { palette } from "../../../shared/constants/colors";
+import {palette, semantic} from "../../../shared/constants/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -31,5 +31,12 @@ export const styles = StyleSheet.create({
     color: palette.main.p500,
     fontWeight: '700',
     fontSize: normalize(16)
-  }
+  },
+  item: {
+    paddingVertical: normalize(12),
+    fontSize: 18,
+    borderBottomWidth : normalize(1),
+    borderStyle : 'solid',
+    borderColor : semantic.text.borderColor
+  },
 })

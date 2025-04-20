@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { View, Modal, ActivityIndicator, Platform, Text } from "react-native";
 // @ts-ignore
-import ProgressDialog from "react-native-progress-dialog"; // Android
+import ProgressDialog from "react-native-progress-dialog";
+import Typography from "@/shared/component/typography"; // Android
 
 // Define the type for the loading context
 interface LoadingContextType {
@@ -39,7 +40,7 @@ export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ child
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
                         <View style={{ padding: 20, backgroundColor: "#fff", borderRadius: 10 }}>
                             <ActivityIndicator size="large" color="#007AFF" />
-                            <Text onPress={() => hideLoading()} style={{ marginTop: 10 }}>{loadingText}</Text>
+                            <Typography onPress={() => hideLoading()} style={{ marginTop: 10 }}>{loadingText}</Typography>
                         </View>
                     </View>
                 </Modal>

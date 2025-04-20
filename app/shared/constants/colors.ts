@@ -92,7 +92,7 @@ export const labels = {
   },
   type4 : {
     background : "#ffcc80",
-    textColor: '#e65100',
+    textColor: '#b00020',
   }
 }
 

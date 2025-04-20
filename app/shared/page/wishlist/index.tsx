@@ -15,8 +15,6 @@ import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import List from "@/shared/component/list";
 import {semantic} from "@/shared/constants/colors.ts";
 import Typography from "@/shared/component/typography";
-import {currencyType} from "@/shared/constants/global.ts";
-import {Button, ButtonOutline} from "@/shared/component/buttons";
 import {IconButton} from "react-native-paper";
 
 
@@ -46,7 +44,7 @@ export default function Wishlist() {
         Alert.alert('PS GDC', 'Are you sure you want to remove '+product.name+" from your wishlist?", [
             {
                 text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
+                onPress: () => {},
                 style: 'cancel',
             },
             {text: 'Yes', onPress: () => {
@@ -64,7 +62,7 @@ export default function Wishlist() {
         Alert.alert('PS GDC', 'Are you sure you want to clear all the item(s)?', [
             {
                 text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
+                onPress: () => {},
                 style: 'cancel',
             },
             {text: 'Yes', onPress: () => {
@@ -84,7 +82,6 @@ export default function Wishlist() {
             setIsLoading(false);
             if(response.data.status === true) {
                 setWishlistItemList(response.data)
-                console.log(response.data);
             }else {
                 setIsLoading(response.data.message);
             }

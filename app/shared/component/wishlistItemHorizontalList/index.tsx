@@ -32,7 +32,7 @@ export default function WishlistItemHorizontalList({product, onRemoveItem}: Prod
         <View style={styles.container}>
             <View style={styles.actionsHeader}>
                 <TouchableOpacity style={styles.viewOrderButton}>
-                    <Text style={styles.buttonText}>Add to Cart</Text>
+                    <Typography style={styles.buttonText}>Add to Cart</Typography>
                 </TouchableOpacity>
                 <IconButton size={normalize(20)} iconColor={'red'} icon={trash} onPress={() =>onRemoveItem(product)} />
             </View>
