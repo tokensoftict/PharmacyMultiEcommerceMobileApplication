@@ -1,13 +1,12 @@
-import WholesalesHomePage from "../../applications/wholesales/home/wholesalesHome";
+import WholesalesHomePage from "@/applications/wholesales/home/wholesalesHome";
 import {
     home as HomeIcon,
     myAccount,
-    brand,
     listCart, more, categories, qrcode,
-} from '../../assets/icons';
-import Cart from "../../shared/page/cart";
-import Categories from "../../shared/page/categories";
-import MyAccount from "../../shared/page/myaccount";
+} from '@/assets/icons';
+import Cart from "@/shared/page/cart";
+import Categories from "@/shared/page/categories";
+import MyAccount from "@/shared/page/myaccount";
 import QrcodeScreen from "@/shared/page/qrcode";
 
 export default [

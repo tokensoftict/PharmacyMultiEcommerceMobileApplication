@@ -1,22 +1,32 @@
 import React, { useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, Animated, Easing, StyleSheet, Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import Typography from "@/shared/component/typography";
 
 const { width } = Dimensions.get("window");
 
-const stores = [
-    { id: "wholesales", name: "Pharmacy", image: require("@/assets/images/wholesales.jpg") },
-    { id: "supermarket", name: "Supermarket", image: require("@/assets/images/supermarket.jpg") },
-];
 
+const appImages: Record<string, any> = {
+    "wholesales": require("@/assets/images/wholesales.jpg"),
+    "supermarket": require("@/assets/images/supermarket.jpg"),
+};
 
 // @ts-ignore
 const StoreSelectionScreen = ({ navigation }) => {
-    const animations = useRef(stores.map(() => new Animated.Value(0))).current;
+    const userProfile =  (new AuthSessionService().getAuthSession()).data;
+    const userApps = userProfile.apps.map(function(app : any){
+        return {
+            id: app.name,
+            name: app.name,
+            image: app.name,
+            status: app.info.status,
+        };
+
+    });
+    const animations = useRef(userApps.map(() => new Animated.Value(0))).current;
 
     useEffect(() => {
-        const animatedSequences = animations.map((anim, index) =>
+        const animatedSequences = animations.map((anim: any, index:any) =>
             Animated.timing(anim, {
                 toValue: 1,
                 duration: 800,
@@ -28,17 +38,21 @@ const StoreSelectionScreen = ({ navigation }) => {
         Animated.stagger(150, animatedSequences).start();
     }, []);
 
-    function selectStore(store: string) {
+    function selectStore(store: string, status : boolean) {
         new AuthSessionService().setEnvironment(store)
-        navigation.replace("tab")
+        if(store === "wholesales" && !status ) {
+            navigation.navigate("storePendingApproval");
+        } else {
+           navigation.replace(store)
+        }
     }
 
     return (
         <View style={styles.container}>
             <Image source={require("@/assets/images/logo.png")} style={styles.logo} resizeMode="contain" />
-            <Text style={styles.title}>Explore & Enter Your Marketplace</Text>
+            <Typography style={styles.title}>Explore & Enter Your Marketplace</Typography>
             <View style={styles.storeContainer}>
-                {stores.map((store, index) => (
+                {userApps.map((store : any, index : any) => (
                     <Animated.View
                         key={store.id}
                         style={{
@@ -55,9 +69,9 @@ const StoreSelectionScreen = ({ navigation }) => {
                         }}
                     >
 
-                    <TouchableOpacity onPress={() => selectStore(store.id)} style={styles.storeButton}>
-                    <Image source={store.image} style={styles.storeImage} resizeMode="contain" />
-                    <Text style={styles.storeText}>{store.name}</Text>
+                    <TouchableOpacity onPress={() => selectStore(store.id, store.status)} style={styles.storeButton}>
+                    <Image source={appImages[store.name]} style={styles.storeImage} resizeMode="contain" />
+                    <Typography style={styles.storeText}>{store.name}</Typography>
                     </TouchableOpacity>
                     </Animated.View>
                     ))}
