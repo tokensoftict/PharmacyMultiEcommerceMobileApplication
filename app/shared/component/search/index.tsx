@@ -3,8 +3,7 @@ import {styles} from "./style"
 import Icon from "@/shared/component/icon";
 import {filter, search} from "@/assets/icons";
 import Input from "@/shared/component/input";
-import {ImageBackground, TouchableOpacity, View} from "react-native";
-import {search_background} from "@/assets/images";
+import {TouchableOpacity, View} from "react-native";
 import SearchDialog from "@/shared/component/product_search";
 
 
@@ -23,8 +22,7 @@ export default function Search({onChange, value, placeholder}:SearchProps) {
 
     return (
         <View style={styles.container}>
-            <ImageBackground style={styles.image} source={search_background} resizeMode="stretch">
-                <TouchableOpacity onPress={openSearchDialog} style={styles.containerSearch}>
+                <TouchableOpacity onPress={openSearchDialog}>
                     <Input
                         leftIcon={<Icon icon={search} onPress={openSearchDialog} />}
                         rightIcon={<Icon icon={filter} onPress={openSearchDialog} />}
@@ -33,7 +31,6 @@ export default function Search({onChange, value, placeholder}:SearchProps) {
                         placeholder={placeholder}
                     />
                 </TouchableOpacity>
-            </ImageBackground>
             <SearchDialog visible={isVisible} onClose={openSearchDialog}/>
         </View>
     );

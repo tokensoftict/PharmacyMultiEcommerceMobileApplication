@@ -16,4 +16,8 @@ export default class BrandService {
         return this.request.get("general/product_manufacturers?page="+page);
     }
 
+    getBrandList() {
+        return this.request.get("general/manufacturers");
+    }
+
 }

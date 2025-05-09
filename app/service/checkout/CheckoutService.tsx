@@ -48,10 +48,20 @@ export default class CheckoutService {
         return this.request.post("checkout/remove_order_total", {order_total_id : order_total_id});
     }
 
-    completeOrder()
+    completeOrder(reference? : string)
     {
-        return this.request.get("checkout/confirm_payment");
+        if(reference) {
+            return this.request.get("checkout/confirm_payment?reference=" + reference);
+        } else {
+            return this.request.get("checkout/confirm_payment");
+        }
     }
+
+
+    getPayStackTransactionData() {
+        return this.request.get("checkout/create_transaction_log");
+    }
+
 
     getDoorStepDelivery()  {
        return this.request.get("checkout/door_step_delivery_analysis");

@@ -10,9 +10,9 @@ const StoreApproved = ({ navigation } : any) => {
             <Image source={require("@/assets/images/store-approved.jpg")} style={styles.image} />
 
             {/* Success Message */}
-            <Typography style={styles.title}>🎉 Your Store is Approved!</Typography>
+            <Typography style={styles.title}>🎉 Your Business as been Approved!</Typography>
             <Typography style={styles.subtitle}>
-                Congratulations! Your store has been successfully approved. You can now start selling and enjoy wholesale benefits.
+                Congratulations! Your Business has been successfully approved. You can now start selling and enjoy wholesale benefits.
             </Typography>
 
             {/* Proceed Button */}

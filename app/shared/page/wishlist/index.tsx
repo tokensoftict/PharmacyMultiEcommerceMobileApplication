@@ -10,12 +10,12 @@ import WishlistService from "@/service/wishlist/WishlistService.tsx";
 import CartService from "@/service/cart/CartService.tsx";
 import {normalize} from "@/shared/helpers";
 import HeaderWithIcon from "@/shared/component/headerBack";
-import {emptyCart, homeLike, homeLikeDark, trash} from "@/assets/icons";
+import {emptyCart} from "@/assets/icons";
 import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import List from "@/shared/component/list";
 import {semantic} from "@/shared/constants/colors.ts";
 import Typography from "@/shared/component/typography";
-import {IconButton} from "react-native-paper";
+import {Button} from "@/shared/component/buttons";
 
 
 export default function Wishlist() {
@@ -23,10 +23,12 @@ export default function Wishlist() {
     const {navigate} = useNavigation<NavigationProps>()
     const [selectedProductToRemove, setSelectedProductToRemove] = useState({})
     const [openDeleteItem, setOpenDeleteItem] = useState(false)
-    const [cartErrorList, setCartErrorList] = useState("Your Wishlist is empty!")
+    const [cartErrorList, setCartErrorList] = useState("Your wishlist is empty for now 💫 Start adding items you love!")
 
     const [isLoading, setIsLoading] = useState(false);
     const [wishlistItemList, setWishlistItemList] = useState<WishlistInterface>();
+
+    const navigation = useNavigation<NavigationProps>();
 
     function toggleOpenDeleteItem() {
         setOpenDeleteItem(!openDeleteItem);
@@ -102,10 +104,7 @@ export default function Wishlist() {
     return (
         <View style={{flex: 1}}>
             <WrapperNoScroll loading={isLoading}>
-                <View style={{paddingHorizontal: normalize(24), display : 'flex', flexDirection : 'row', justifyContent : 'space-between', paddingBottom: normalize(20)}}>
-                    <HeaderWithIcon   onPress={loadWishItems} title="MY WISHLIST" />
-                    <IconButton size={normalize(20)} iconColor={'red'} icon={trash} onPress={() =>clearWishlistItems()} />
-                </View>
+                <HeaderWithIcon   onPress={loadWishItems} title="MY WISHLIST" />
                 {
                     isLoading ? <></> :
                         <>
@@ -125,13 +124,15 @@ export default function Wishlist() {
                                         </View>
                                     </>
                                     :
-                                    <View style={{width : '100%', justifyContent : 'center' ,alignItems : 'center', flex: 1}}>
-                                        <Image resizeMode={'contain'} style={{ width:'60%', height:220,  flexDirection: 'row',}} source={emptyCart}/>
-                                        <Typography style={{ fontSize: normalize(13),
-                                            fontWeight: '500',
-                                            color: isDarkMode ? semantic.text.white : semantic.text.black,
-                                        }}>{cartErrorList}</Typography>
+                                    <View style={{ flex: 1,
+                                        paddingHorizontal: normalize(15),
+                                        justifyContent: 'center',}}>
+                                        <Typography style={{textAlign : 'center',alignSelf : 'center',fontWeight : 'regular', fontSize : normalize(16)}}>{cartErrorList}</Typography>
+                                        <View style={{paddingHorizontal : normalize(120), marginTop : normalize(10)}}>
+                                            <Button title="Go Back" onPress={() =>navigation.goBack() }/>
+                                        </View>
                                     </View>
+
                             }
 
                         </>

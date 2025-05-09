@@ -28,7 +28,7 @@ export default function SmallCardProduct({product}: ProductList) {
   return (
     <TouchableOpacity onPress={navigateTo} style={styles.container}>
         <View style={styles.containerImage}>
-          <Image style={styles.image} resizeMode="center" source={{uri: product.image}} />
+          <Image style={styles.image} resizeMode="contain" source={{uri: product.image}} />
         </View>
 
         <View style={{marginTop: normalize(12), paddingLeft:normalize(10)}}>

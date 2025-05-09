@@ -5,10 +5,11 @@ import {palette, semantic} from "../../../shared/constants/colors";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: normalize(24)
+    paddingHorizontal: normalize(24),
+    marginTop: normalize(5),
   },
   form: {
-    marginTop: normalize(32)
+    marginTop: normalize(20)
   },
   formControl: {
     marginBottom: normalize(24)

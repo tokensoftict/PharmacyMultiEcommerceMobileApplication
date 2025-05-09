@@ -63,16 +63,7 @@ export default function ShowOrder()
 
     return (
         <WrapperNoScroll loading={isLoading}>
-            <View style={{
-                paddingHorizontal: normalize(20),
-                height: normalize(40),
-                backgroundColor : semantic.background.white.w101,
-                borderBottomWidth : 1,
-                borderBottomColor : semantic.alert.danger.d500,
-                borderStyle : "solid"
-            }}>
-                <HeaderWithIcon  title={"ORDER DETAILS"} />
-            </View>
+            <HeaderWithIcon  title={"ORDER DETAILS"} />
             {
                 isLoading ? <></> :  <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>

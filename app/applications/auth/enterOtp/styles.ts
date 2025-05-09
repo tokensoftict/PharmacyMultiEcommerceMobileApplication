@@ -6,7 +6,7 @@ import { palette } from "../../../shared/constants/colors";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: normalize(24),
+    paddingHorizontal: normalize(32),
   },
   containerEmail: {
     alignItems: 'center',
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     justifyContent : "space-between"
   },
   form: {
-    marginBottom: normalize(193)
+    marginBottom: normalize(80)
   },
   containerBtns: {
     flexDirection: 'row',

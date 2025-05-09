@@ -1,5 +1,5 @@
-import {Dimensions, StyleSheet} from "react-native";
-import {palette, semantic} from "@/shared/constants/colors.ts";
+import {Dimensions, Platform, StyleSheet} from "react-native";
+import {design, palette, semantic} from "@/shared/constants/colors.ts";
 import {normalize} from "@/shared/helpers";
 
 
@@ -9,25 +9,25 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500,
+        backgroundColor: semantic.background.white.w500 ,
     },
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor :isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500,
+        backgroundColor : semantic.background.white.w500 ,
         alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingHorizontal: normalize(0),
+        paddingVertical: normalize(10),
 
     },
     stepHeader: {
         flex: 1,
         alignItems: 'center',
-        marginHorizontal: 5,
+        marginHorizontal: normalize(5),
         backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500,
     },
     stepTitle: {
-        fontSize: 12,
+        fontSize: normalize(12),
         fontWeight: 'normal',
         color: '#AAAAAA', // Grey for inactive steps
         textAlign: 'center',
@@ -36,51 +36,51 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         color: '#FF0000', // Red for active step
     },
     stepDescription: {
-        fontSize: 12,
+        fontSize: normalize(12),
         color: '#666666',
-        marginTop: 5,
+        marginTop: normalize(5),
         textAlign: 'center',
     },
     stepLine: {
-        height: 2,
+        height: normalize(2),
         width: '100%',
         backgroundColor: '#DDDDDD',
-        marginTop: 10,
+        marginTop: normalize(10),
         borderRadius: 3,
     },
     stepLineActive: {
-        backgroundColor: '#FF0000',
+        backgroundColor: design.text1.background,
     },
     content: {
         flex: 1,
         height: '100%',
-        backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w100,
+        backgroundColor: semantic.background.white.w100,
         overflow: 'hidden',
     },
     stepsContainer: {
         flexDirection: 'row',
-        backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w100,
+        backgroundColor: semantic.background.white.w100 ,
         height: '100%',
-        width: SCREEN_WIDTH * 4,
+        width: SCREEN_WIDTH * normalize(4),
         overflow: 'hidden',
     },
     step: {
         width: SCREEN_WIDTH,
-        paddingHorizontal: 20,
+        paddingHorizontal: normalize(20),
 
     },
     label: {
-        fontSize: 16,
-        marginBottom: 8,
+        fontSize: normalize(16),
+        marginBottom: normalize(8),
         color: '#333333',
     },
     input: {
-        height: 40,
+        height: normalize(40),
         borderColor: '#DDDDDD',
-        borderWidth: 1,
-        borderRadius: 4,
-        marginBottom: 20,
-        paddingHorizontal: 10,
+        borderWidth: normalize(1),
+        borderRadius: normalize(4),
+        marginBottom: normalize(20),
+        paddingHorizontal: normalize(10),
         backgroundColor: '#FAFAFA',
     },
     navigation: {
@@ -88,7 +88,7 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         paddingBottom: normalize(25),
         marginBottom: normalize(10),
         position: 'absolute',
-        bottom: normalize(-20),
+        bottom: Platform.OS === 'ios' ? normalize(-28) : normalize(-38),
         left: 0,
         right: 0,
         backgroundColor: '#FFFFFF',
@@ -98,8 +98,8 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         // iOS Shadow
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 10,
-        shadowRadius: 6,
+        shadowOpacity: normalize(10),
+        shadowRadius: normalize(6),
 
         // Android Shadow
         elevation: 5,
@@ -109,7 +109,7 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         display: 'flex',
         flexDirection : 'row',
         backgroundColor: '#FF0000',
-        padding: 18,
+        padding: normalize(18),
         flex: 1,
         textAlign : 'center',
         alignItems: 'center',
@@ -120,7 +120,7 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         backgroundColor: palette.main.p100,
         borderWidth: 1,
         borderColor: palette.main.p500,
-        padding: 15,
+        padding: normalize(15),
         flex: 0.2,
         alignItems: 'center',
     },
@@ -129,19 +129,19 @@ export const _styles = (isDarkMode: boolean, width: number) => StyleSheet.create
         backgroundColor: palette.main.p100,
         borderWidth: 1,
         borderColor: palette.main.p500,
-        padding: 15,
+        padding: normalize(15),
         flex: 0.2,
         alignItems: 'center',
     },
     buttonPrimaryText: {
         color: '#FFFFFF',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: normalize(16),
     },
     buttonSecondaryText: {
         color: '#FF0000',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: normalize(16),
     },
 
 

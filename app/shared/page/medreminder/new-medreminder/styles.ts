@@ -5,33 +5,29 @@ import {semantic} from "@/shared/constants/colors.ts";
 export const styles = StyleSheet.create({
 
     label: {
-        fontSize: 16,
+        fontSize: normalize(16),
         fontWeight: '600',
-        marginBottom: 10,
+        marginBottom: normalize(10),
         color: '#333',
     },
     timeSlot: {
-        padding: 10,
-        borderRadius: 8,
-        borderWidth: 1,
+        borderRadius: normalize(8),
+        borderWidth: normalize(1),
         borderColor: '#d32f2f',
-        marginBottom: 10,
+        marginBottom: normalize(10),
         alignItems: 'center',
-        flex: 0.5,
+        width : '50%'
     },
     selectedTimeSlot: {
         backgroundColor: '#d32f2f',
-        flex: 1,
     },
     timeSlotText: {
-        fontSize: 16,
+        fontSize: normalize(13),
         color: '#d32f2f',
     },
     item: {
-        paddingVertical: normalize(12),
-        fontSize: 18,
-        borderBottomWidth : normalize(1),
+        fontSize: normalize(18),
         borderStyle : 'solid',
-        borderColor : semantic.text.borderColor
+        paddingVertical: normalize(7),
     },
 })

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {ActivityIndicator, ScrollView, TouchableOpacity, View} from "react-native";
-import {creditCardPlus, truckInTracking} from "@/assets/icons";
+import {creditCardPlus} from "@/assets/icons";
 import ListOptionCard, {OptionCardOptions} from "@/shared/component/ListOptionCard";
 import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
 import {useFocusEffect} from "@react-navigation/native";
@@ -10,6 +10,7 @@ import Toastss from "@/shared/utils/Toast.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
+import SubHeader from "@/shared/component/subHeader";
 
 export default function SelectPaymentOption({ onValidate }: { onValidate: (validateFn: () => Promise<boolean>) => void })  {
   const [paymentSelected, setPaymentSelected] = useState<OptionCardOptions>();
@@ -27,6 +28,7 @@ export default function SelectPaymentOption({ onValidate }: { onValidate: (valid
   );
 
   useEffect(() => {
+    // @ts-ignore
     onValidate(async function validateAddress(){
       if (!paymentSelected?.id) {
         Toastss("Please select your preferred method payment");
@@ -40,7 +42,7 @@ export default function SelectPaymentOption({ onValidate }: { onValidate: (valid
       }
       hideLoading();
 
-      return true;
+      return paymentSelected?.id;
     }); // Validation passes if an address is selected
   }, [paymentSelected]);
 
@@ -78,9 +80,7 @@ export default function SelectPaymentOption({ onValidate }: { onValidate: (valid
         flex: 1,
         backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w100,
       }}>
-        <View style={{paddingVertical: normalize(15)}}>
-          <HeaderWithIcon icon={creditCardPlus}   title="SELECT PAYMENT METHOD" />
-        </View>
+        <SubHeader icon={creditCardPlus}   title="SELECT PAYMENT METHOD" />
 
         {
           isCheckOutPaymentLoading

@@ -21,6 +21,9 @@ interface InputProps {
   label?: string | undefined;
   onPressIn?: ((e: NativeSyntheticEvent<NativeTouchEvent>) => void) | undefined;
   inputRef?: any
+  autoFocus?: boolean | undefined;
+  focusable?: boolean | undefined;
+  onSubmitEditing?: any;
 }
 
 export default function Input({
@@ -37,9 +40,13 @@ export default function Input({
   label,
   onPressIn,
   inputRef,
+  autoFocus,
+  onSubmitEditing,
+  focusable
 }: InputProps) {
   const [isFocus, setFocus] = useState(false);
   const {isDarkMode} = useDarkMode()
+  // @ts-ignore
   const styles = _styles(isFocus, isDarkMode, multiline);
   return (
     <View style={{width : '100%'}}>
@@ -52,15 +59,20 @@ export default function Input({
           multiline={multiline}
           onChangeText={onChangeText}
           value={value}
+          autoFocus={autoFocus}
           maxLength={maxLength}
           keyboardType={keyboardType}
           editable={editable}
+          autoCorrect={false}
           // @ts-ignore
           placeholder={placeholder}
           secureTextEntry={secureTextEntry}
           onFocus={() => setFocus(true)}
           placeholderTextColor={semantic.text.grey}
           style={styles.input}
+          onSubmitEditing={onSubmitEditing}
+          focusable={focusable}
+          autoCapitalize={'none'}
         />
         {rightIcon && rightIcon}
       </View>

@@ -12,6 +12,8 @@ import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrol
 import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
 import {MedReminderInterface} from "@/service/medReminder/interface/MedReminderInterface.tsx";
 import {normalize} from "@/shared/helpers";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 
 
@@ -83,15 +85,8 @@ export default function RefillTracker() {
     };
 
     return (
-        <WrapperNoScrollNoDialogNoSafeArea loading={loading}>
-            <LinearGradient colors={[palette.main.p500, palette.main.p100]} style={styles.header}>
-                <View style={styles.headerContent}>
-                    <TouchableOpacity onPress={goBack}>
-                        <Icon  icon={arrowBack} tintColor={'white'} />
-                    </TouchableOpacity>
-                    <Typography style={styles.title}>Refill Tracker</Typography>
-                </View>
-            </LinearGradient>
+        <WrapperNoScroll loading={loading}>
+            <HeaderWithIcon title={'REFILL TRACKER'}/>
             <View style={styles.container}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -160,7 +155,7 @@ export default function RefillTracker() {
                     }
                 </ScrollView>
             </View>
-        </WrapperNoScrollNoDialogNoSafeArea>
+        </WrapperNoScroll>
     );
 
 }

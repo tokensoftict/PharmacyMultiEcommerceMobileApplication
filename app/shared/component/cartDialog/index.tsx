@@ -1,5 +1,14 @@
 import React, {useState} from 'react';
-import {View, Text, Modal, Image, TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+    View,
+    Text,
+    Modal,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    ActivityIndicator,
+    KeyboardAvoidingView, Platform
+} from 'react-native';
 import {normalize} from "@/shared/helpers";
 import {currencyType} from "@/shared/constants/global.ts";
 import {design, labels, palette, semantic} from "@/shared/constants/colors.ts";
@@ -15,7 +24,7 @@ import {useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
 import Toastss from "@/shared/utils/Toast.tsx";
-// Import your normalize function
+
 
 interface ProductList {
     visible : boolean;
@@ -83,14 +92,15 @@ const ProductDialog = ({visible, product}:ProductList) => {
             visible={visible}
             animationType="fade"
         >
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <View style={styles.overlay}>
                 <View style={styles.modalContainer}>
-                    {/* Cancel Button */}
+
                     <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
                         <Typography style={styles.cancelButtonText}>X</Typography>
                     </TouchableOpacity>
 
-                    {/* Product Image */}
+
                     <Image source={{ uri: product?.image }} style={styles.productImage} />
 
                     {/* Product Details */}
@@ -149,6 +159,7 @@ const ProductDialog = ({visible, product}:ProductList) => {
                     </View>
                 </View>
             </View>
+            </KeyboardAvoidingView>
         </Modal>
     );
 };

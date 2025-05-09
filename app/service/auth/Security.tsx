@@ -27,4 +27,16 @@ export default class Security
             )
 
     }
+
+
+    deleteMyAccount(user_id: string | number)
+    {
+        return this.request.get("delete-my-account?user_id=" + user_id)
+    }
+
+    restoreMyAccount(user_id: string | number)
+    {
+        return this.request.get("restore-my-account?user_id=" + user_id)
+    }
+    
 }

@@ -1,19 +1,20 @@
 import React, {useState} from "react";
-import {Animated, ScrollView, View} from "react-native";
-import useDarkMode from "../../../shared/hooks/useDarkMode.tsx";
+import {Animated, View} from "react-native";
+import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
 import {_styles} from "./styles";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack";
-import Header from "../../../shared/page/product/components/header";
-import WrapperNoScroll from "../../../shared/component/wrapperNoScroll";
-import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
-import {normalize} from "../../../shared/helpers";
-import {ButtonOutline} from "../../../shared/component/buttons";
+import {NavigationProps} from "@/shared/routes/stack";
+import Header from "@/shared/page/product/components/header";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import {normalize} from "@/shared/helpers";
+import {ButtonOutline} from "@/shared/component/buttons";
 import FlatList = Animated.FlatList;
-import ProductListService from "../../../shared/page/productList/service/ProductListService.tsx";
-import {ProductListInterface} from "../../../service/product/ProductListInterface.tsx";
-import CardProduct from "../../../shared/component/cardProduct";
+import ProductListService from "@/shared/page/productList/service/ProductListService.tsx";
+import {ProductListInterface} from "@/service/product/ProductListInterface.tsx";
+import CardProduct from "@/shared/component/cardProduct";
 import Toasts from "@/shared/utils/Toast.tsx";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 
 export default function ProductList() {
@@ -23,6 +24,7 @@ export default function ProductList() {
     const navigation = useNavigation<NavigationProps>();
     const [isProductLoading, setIsProductLoading] = useState(false);
     const [pageNumber, setPageNumber] =useState(1);
+    const [lastPage, setLastPage] = useState(3);
     const [title , setTitle] = useState("");
     const [listId , setListId] = useState();
     const [endpoint , setEndPoint] = useState("");
@@ -46,7 +48,15 @@ export default function ProductList() {
         (new ProductListService().getProduct(link, pageNumber).then((response) => {
             setIsProductLoading(false);
             if(response.data.status === true) {
-                setProductList(response.data.data);
+                setLastPage(response.data.meta.last_page);
+                setPageNumber((existingPageNumber) => {
+                    if(existingPageNumber == 1) return 2;
+                    return (existingPageNumber + 1)
+                });
+
+                setProductList((existingProduct) => {
+                    return [...existingProduct, ...response.data.data];
+                });
             }
         }, (error) => {
             setIsProductLoading(false);
@@ -57,11 +67,10 @@ export default function ProductList() {
 
     return (
         <WrapperNoScroll loading={isProductLoading}>
-            <View style={styles.containerHeader}>
-                <Header title={title} />
-                <View style={{height: normalize(10)}}/>
-            </View>
+            <HeaderWithIcon title={title} />
             <FlatList
+                showsVerticalScrollIndicator={false}
+                removeClippedSubviews={false}
                 numColumns={2}
                 data={productList}
                 // @ts-ignore
@@ -71,12 +80,13 @@ export default function ProductList() {
                         <CardProduct key={item.item.id} product={item.item} />
                     )
                 }}
-                ListFooterComponent={
-                    <View style={{paddingHorizontal:normalize(15), marginBottom:normalize(30)}}>
-                        <ButtonOutline title={'LORD MORE'} onPress={() => {
-                        }}/>
-                    </View>
-                }
+                onEndReached={() => {
+                    if (!isProductLoading) {
+                        // @ts-ignore
+                        loadProduct(route.params?.endpoint);
+                    }
+                }}
+                onEndReachedThreshold={0.5}
             >
             </FlatList>
 

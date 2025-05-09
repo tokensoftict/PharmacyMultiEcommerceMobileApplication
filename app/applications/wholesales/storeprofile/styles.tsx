@@ -1,71 +1,97 @@
-import { StyleSheet } from "react-native";
-import { normalize } from "@/shared/helpers";
+import {StyleSheet} from "react-native";
+import {normalize} from "@/shared/helpers";
+const primaryColor = '#d32f2f';
 
 export const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        backgroundColor: '#f8f9fa',
-        alignItems: 'center',
-        paddingBottom: normalize(30),
+    overlay: {
+        backgroundColor: '#fefefe',
+        height: '100%',
+    },
+    modalContainer: {
+        backgroundColor: '#fefefe',
+        borderTopLeftRadius: normalize(24),
+        borderTopRightRadius: normalize(24),
     },
     header: {
-        width: '100%',
-        backgroundColor: '#ff6600',
-        paddingVertical: normalize(30),
+        backgroundColor: primaryColor,
+        paddingTop: normalize(80),
+        paddingBottom: normalize(20),
         alignItems: 'center',
-        borderBottomLeftRadius: normalize(20),
-        borderBottomRightRadius: normalize(20),
+        borderTopLeftRadius: normalize(24),
+        borderTopRightRadius: normalize(24),
     },
-    storeName: {
-        fontSize: normalize(26),
+    closeBtn: {
+        position: 'absolute',
+        left: normalize(20),
+        top: normalize(55),
+        zIndex: normalize(10),
+    },
+    avatar: {
+        width: normalize(80),
+        height: normalize(80),
+        borderRadius: normalize(40),
+        borderColor: '#fff',
+        borderWidth: normalize(2),
+        marginBottom: normalize(8),
+    },
+    customerName: {
+        fontSize: normalize(20),
         fontWeight: 'bold',
         color: '#fff',
     },
-    storeTagline: {
-        fontSize: normalize(16),
-        color: '#fff',
-        marginTop: normalize(5),
+    customerTag: {
+        fontSize: normalize(14),
+        color: '#f1f1f1',
+    },
+    contentContainer: {
+        padding: normalize(16),
     },
     card: {
         backgroundColor: '#fff',
-        padding: normalize(20),
-        marginTop: normalize(20),
-        width: '90%',
         borderRadius: normalize(16),
+        padding: normalize(16),
+        marginBottom: normalize(16),
         shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: normalize(10),
-        elevation: 5,
+        shadowOpacity: 0.08,
+        shadowOffset: { width: normalize(0), height: normalize(3) },
+        shadowRadius: normalize(6),
+        elevation: normalize(4),
     },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: normalize(8),
+    cardTitle: {
+        fontSize: normalize(16),
+        fontWeight: 'bold',
+        marginBottom: normalize(10),
+        color: primaryColor,
     },
     label: {
-        fontSize: normalize(16),
-        fontWeight: '600',
-        color: '#333',
+        color: '#666',
+        marginTop: normalize(10),
     },
     value: {
-        fontSize: normalize(16),
-        fontWeight: '500',
-        color: '#666',
+        fontSize: normalize(15),
+        color: '#333',
     },
-    ctaButton: {
-        marginTop: normalize(30),
-        backgroundColor: '#ff6600',
-        paddingVertical: normalize(14),
-        paddingHorizontal: normalize(40),
-        borderRadius: normalize(30),
-        shadowColor: '#ff6600',
-        shadowOpacity: 0.4,
-        shadowRadius: normalize(10),
-        elevation: 5,
+    fancyButtonWrapper: {
+        marginTop: normalize(10),
     },
-    ctaText: {
-        fontSize: normalize(18),
-        fontWeight: 'bold',
+    fancyButtonText: {
         color: '#fff',
+        fontWeight: 'bold',
+        fontSize: normalize(16),
+    },
+    fancyButtonShadowWrapper: {
+        borderRadius: normalize(50),
+        backgroundColor: '#ff4b2b',
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowOffset: { width: normalize(0), height: normalize(4) },
+        shadowRadius: normalize(8),
+        elevation: normalize(6), //
+    },
+    fancyButton: {
+        paddingVertical: normalize(14),
+        borderRadius: normalize(50),
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });

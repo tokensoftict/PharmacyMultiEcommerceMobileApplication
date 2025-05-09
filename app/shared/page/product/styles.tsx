@@ -45,6 +45,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: normalize(15),
+        marginBottom: normalize(20),
     },
     name: {
         fontSize: normalize(15),
@@ -109,8 +110,9 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
         fontSize: normalize(10),
         marginVertical: normalize(8),
         position: 'absolute',
-        top: normalize(20),
+        top: normalize(15),
         right: 0,
+        zIndex: 2,
     },
     cartonStyle: {
         color: labels.type2.textColor,

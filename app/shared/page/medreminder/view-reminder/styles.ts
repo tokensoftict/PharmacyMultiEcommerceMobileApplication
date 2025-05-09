@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from "react-native";
+import {Dimensions, Platform, StyleSheet} from "react-native";
 import {normalize} from "@/shared/helpers";
 import {semantic} from "@/shared/constants/colors.ts";
 
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create(
             flexDirection: 'row',
             paddingBottom: normalize(10),
             paddingHorizontal : normalize(15),
-            marginTop : normalize(10)
+            marginTop : Platform.OS === "android" ? normalize(-40) : normalize(10)
         },
         notes: {
             fontSize: normalize(13),

@@ -49,5 +49,9 @@ export default class AddressService {
         return this.request.post(`address/${id}/update`, data);
     }
 
+
+    notifications() {
+        return this.request.get("general/notifications");
+    }
     /**. Address Crud Operation State here  **/
 }

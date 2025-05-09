@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
-import Wrapper from '../../../shared/component/wrapper';
-import HeaderWithIcon from '../../../shared/component/headerBack';
-import Icon from '../../../shared/component/icon';
-import {edit, mail, phone, user} from '../../../assets/icons';
-import Input from '../../../shared/component/input';
-import {Button} from '../../../shared/component/buttons';
+import {Image, ScrollView, TouchableOpacity, View} from 'react-native';
+import Wrapper from '@/shared/component/wrapper';
+import HeaderWithIcon from '@/shared/component/headerBack';
+import Icon from '@/shared/component/icon';
+import {mail, phone, user} from '../../../assets/icons';
+import Input from '@/shared/component/input';
+import {Button} from '@/shared/component/buttons';
 import {_styles} from './styles.ts';
-import AuthSessionService from "../../../service/auth/AuthSessionService";
-import ErrorText from "../../../shared/component/ErrorText";
+import AuthSessionService from "@/service/auth/AuthSessionService";
+import ErrorText from "@/shared/component/ErrorText";
 import Toasts from "@/shared/utils/Toast.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 const EditProfile = () => {
 
@@ -17,10 +18,18 @@ const EditProfile = () => {
 
   const [firstname , setFirstName] = useState(userProfile.data.firstname);
   const [lastname , setLastName] = useState(userProfile.data.lastname);
+  const [email , setEmail] = useState(userProfile.data.email);
+  const [phoneNumber , setPhoneNumber] = useState(userProfile.data.phone);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [firstNameError , setFirstNameError] = useState('');
   const [lastNameError , setLastNameError] = useState('');
+  const [emailError , setEmailError] = useState('');
+  const [phoneNumberError , setPhoneNumberError] = useState('');
+
+
+
 
   const [messageError, setMessageError] = useState('');
 
@@ -50,34 +59,50 @@ const EditProfile = () => {
   }
 
   return (
-      <Wrapper>
-        <View style={_styles.container}>
-          <HeaderWithIcon title="Edit Profile" />
-          <View style={_styles.imageContainer}>
-            <Image
-                style={_styles.image}
-                source={{uri: userProfile.data.image}}
-            />
+      <WrapperNoScroll>
+        <HeaderWithIcon title="Edit Profile" />
+        <ScrollView>
+          <View style={_styles.container}>
+            <View style={_styles.imageContainer}>
+              <Image
+                  style={_styles.image}
+                  source={{uri: userProfile.data.image}}
+              />
+              {/*
             <TouchableOpacity style={_styles.editImage}>
               <Icon icon={edit} />
             </TouchableOpacity>
-          </View>
-          <View style={_styles.formContainer}>
-            <View style={_styles.formControl}>
-              <Input label="First Name"   value={firstname} leftIcon={<Icon icon={user} />} placeholder="Enter Your First Name"/>
-              {firstNameError !== '' ? <ErrorText>{firstNameError}</ErrorText> : ''}
+            */}
+            </View>
+            <View style={_styles.formContainer}>
+              <View style={_styles.formControl}>
+                <Input label="First Name"   value={firstname} onChangeText={(firstname) => setFirstName(firstname)} leftIcon={<Icon icon={user} />} placeholder="First Name"/>
+                {firstNameError !== '' ? <ErrorText>{firstNameError}</ErrorText> : ''}
+              </View>
+              <View style={_styles.formControl}>
+                <Input label="Last Name" onChangeText={(lastname) => setLastName(lastname)}   value={lastname} leftIcon={<Icon icon={user} />} placeholder="Last Name"/>
+                {lastNameError !== '' ? <ErrorText>{lastNameError}</ErrorText> : ''}
+              </View>
+
+              <View style={_styles.formControl}>
+                <Input editable={false} label="Email Address" onChangeText={(email) => setEmail(email)}  value={email} leftIcon={<Icon icon={mail} />} placeholder="Email Address"/>
+                {emailError !== '' ? <ErrorText>{emailError}</ErrorText> : ''}
+              </View>
+
+
+              <View style={_styles.formControl}>
+                <Input editable={false} label="Phone Number" onChangeText={(phone) => setPhoneNumber(phone)}  value={phoneNumber} leftIcon={<Icon icon={phone} />} placeholder="Phone Number"/>
+                {emailError !== '' ? <ErrorText>{emailError}</ErrorText> : ''}
+              </View>
+
             </View>
             <View style={_styles.formControl}>
-              <Input label="Last Name"   value={lastname} leftIcon={<Icon icon={user} />} placeholder="Enter Your Last Name"/>
-              {lastNameError !== '' ? <ErrorText>{lastNameError}</ErrorText> : ''}
+              {messageError !== '' ?  <ErrorText textAlign={'center'} style={{marginBottom: 10}}>{messageError}</ErrorText> : <View/>}
+              <Button title="Update Profile" disabled={isLoading} loading={isLoading} loadingText={"Update Profile"} onPress={doProfileUpdate} />
             </View>
           </View>
-          <View style={_styles.formControl}>
-            {messageError !== '' ?  <ErrorText textAlign={'center'} style={{marginBottom: 10}}>{messageError}</ErrorText> : <View/>}
-            <Button title="Update Profile" disabled={isLoading} loading={isLoading} loadingText={"Update Profile"} onPress={doProfileUpdate} />
-          </View>
-        </View>
-      </Wrapper>
+        </ScrollView>
+      </WrapperNoScroll>
   );
 };
 

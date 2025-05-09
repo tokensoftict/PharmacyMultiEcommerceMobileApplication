@@ -27,7 +27,17 @@ export default class SignUpService {
             })
                 .then(function (response : any){
                     if(response.data.status === true){
-                        resolve(parent.loginService.prepareUserSession(response.data))
+                        if((response?.data?.data?.trashed ?? false)){
+                            parent.authSessionService.setTrashedUserData(response?.data?.data?.user)
+                            resolve({
+                                status : true,
+                                trashed : true,
+                                user : response?.data?.data?.user,
+                                message : "Login Successful"
+                            })
+                        } else {
+                            resolve(parent.loginService.prepareSignupSession(response.data))
+                        }
                     }else{
                         resolve(
                             parent.parseError(response.data)

@@ -1,12 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import {styles} from "./styles"
-import LinearGradient from "react-native-linear-gradient";
 import {palette} from "@/shared/constants/colors.ts";
 import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import Icon from "@/shared/component/icon";
-import {arrowBack, checkIcon, drug, history, medica} from "@/assets/icons";
+import {checkIcon, drug, history, medica} from "@/assets/icons";
 import Typography from "@/shared/component/typography";
-import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrollNoDialogNoSafeArea";
 import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import {Calendar} from "react-native-calendars";
@@ -15,8 +13,9 @@ import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
 import Toastss from "@/shared/utils/Toast.tsx";
 import {normalize} from "@/shared/helpers";
 import formatDate from "@/shared/utils/DateFormatter.ts";
-import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 
 export default function HistoryLogs() {
@@ -104,15 +103,8 @@ export default function HistoryLogs() {
     }
 
     return (
-        <WrapperNoScrollNoDialogNoSafeArea loading={loading}>
-            <LinearGradient colors={[palette.main.p500, palette.main.p100]} style={styles.header}>
-                <View style={styles.headerContent}>
-                    <TouchableOpacity onPress={goBack}>
-                        <Icon  icon={arrowBack} tintColor={'white'} />
-                    </TouchableOpacity>
-                    <Typography style={styles.title}>History Logs</Typography>
-                </View>
-            </LinearGradient>
+        <WrapperNoScroll loading={loading}>
+           <HeaderWithIcon title={"HISTORY LOGS"}/>
             <View style={styles.container}>
                 <Calendar
                     style={{
@@ -214,7 +206,7 @@ export default function HistoryLogs() {
                     </ScrollView>
                 </View>
             </View>
-        </WrapperNoScrollNoDialogNoSafeArea>
+        </WrapperNoScroll>
     );
 
 }

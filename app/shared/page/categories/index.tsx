@@ -21,6 +21,7 @@ export default function Categories() {
     const {isDarkMode} = useDarkMode();
     const styles = _styles(isDarkMode);
     let hasReachTheEnd = false;
+    const [lastPage, setLastPage] = useState(3);
     const navigation = useNavigation<NavigationProps>();
     const [isCategoryLoading, setIsCategoryLoading] = useState(false);
     const [categoryResponseList, setCategoryResponseList] = useState<Data[]>([]);
@@ -38,6 +39,7 @@ export default function Categories() {
     }
 
     function loadCategory () {
+        if(pageNumber >= lastPage) return ;
         setIsCategoryLoading(true);
         (new CategoryService()).getCategories(pageNumber).then((response) => {
             setIsCategoryLoading(false);
@@ -85,47 +87,34 @@ export default function Categories() {
 
 
     return (
+        <WrapperNoScroll loading={isCategoryLoading}>
         <View style={{flex: 1}}>
-            <WrapperNoScroll loading={isCategoryLoading}>
-                {
-                    isCategoryLoading ?
-                        <></> :
-                        <>
-                            <View style={{paddingHorizontal: normalize(24)}}>
-                                <HeaderWithIcon icon={categories}  onPress={() =>{
-                                    if(!isCategoryLoading) {
-                                        loadCategory();
-                                    }
-                                }} title="CATEGORIES" />
-                            </View>
-                            <FlatList
-                                ListFooterComponent={
-                                    <View style={{paddingHorizontal:normalize(15), marginBottom:normalize(30)}}>
-                                        <ButtonOutline title={'LORD MORE'} onPress={() => {
-                                            loadCategory()
-                                        }}/>
-                                    </View>
-                                }
-                                numColumns={1}
-                                data={categoryResponseList}
-                                keyExtractor={(item, index) => item.id.toString()+Math.floor(Math.random() * 10).toString()}
-                                renderItem={(item) => {
-                                    return  (
-                                        <View style={styles.holder}>
-                                            {
-                                                categoryItem(item.item?.id, item.item?.name, item.item?.stocks)
-                                            }
-                                        </View>
-                                    )
+            <HeaderWithIcon  title="CATEGORIES" />
+            <FlatList
+               showsVerticalScrollIndicator={false}
+               removeClippedSubviews={false}
+                numColumns={1}
+                onEndReached={() => {
+                    if (!isCategoryLoading) {
+                        loadCategory()
+                    }
+                }}
+                onEndReachedThreshold={0.5}
+                data={categoryResponseList}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={(item) => {
+                    return  (
+                        <View style={styles.holder}>
+                            {
+                                categoryItem(item.item?.id, item.item?.name, item.item?.stocks)
+                            }
+                        </View>
+                    )
 
-                                }}>
-                            </FlatList>
-                            <View style={{height: normalize(80)}}/>
-                        </>
-                }
-
-            </WrapperNoScroll>
+                }}>
+            </FlatList>
         </View>
+        </WrapperNoScroll>
     );
 
 }

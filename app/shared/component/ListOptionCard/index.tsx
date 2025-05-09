@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import Typography from "../typography";
+import {Dimensions, TouchableOpacity, View} from "react-native";
+import Typography from "@/shared/component/typography";
 import { _styles } from "./styles";
-import useDarkMode from "../../hooks/useDarkMode.tsx";
-import Icon from "../icon";
-import Radio from "../radio";
+import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
+import Icon from "@/shared/component/icon";
+import Radio from "@/shared/component/radio";
 import { activeOpacity, currencyType } from "../../constants/global";
+import RenderHtml from 'react-native-render-html';
 
 export interface OptionCardOptions {
   id: string;
@@ -68,7 +69,12 @@ export function Option({option, callback}: OptionProps) {
         </View>
         <View style={{flex: 0.9}}>
           <Typography style={styles.title}>{option.title}</Typography>
-          <Typography style={styles.address}>{option.description}</Typography>
+          <RenderHtml
+              contentWidth={Dimensions.get("window").width}
+              source={{
+                html : option.description
+              }}
+          />
         </View>
       </View>
       <View style={styles.row}>

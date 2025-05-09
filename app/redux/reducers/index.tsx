@@ -23,7 +23,8 @@ const systemDataInitialState = {
   },
   fireBaseKey : "",
   launchPage : "",
-  impersonateData : false
+  impersonateData : false,
+  trashedUserData : false,
 };
 
 
@@ -37,12 +38,14 @@ function systemReducer(state = systemDataInitialState, action:any){
       return { ...state, product: action.payload };
     case actionTypes.ENVIRONMENT:
       return { ...state, environment: action.payload };
-      case actionTypes.FIREBASE_DEVICE_KEY:
+    case actionTypes.FIREBASE_DEVICE_KEY:
       return { ...state, fireBaseKey: action.payload };
     case actionTypes.LAUNCH_PAGE:
       return { ...state, launchPage: action.payload };
     case actionTypes.IMPERSONATE_DATA:
       return {...state, impersonateData: action.payload };
+    case actionTypes.TRASHED_USER:
+      return {...state, trashedUserData: action.payload };
     default:
       return state;
   }

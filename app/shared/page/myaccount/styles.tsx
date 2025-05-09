@@ -1,11 +1,14 @@
 
 import {normalize} from '../../../shared/helpers';
 import {StyleSheet} from 'react-native';
+import {semantic} from "@/shared/constants/colors.ts";
 
 export const styles = StyleSheet.create({
     container: {
         paddingHorizontal: normalize(30),
         flexDirection: 'column',
+        flex: 1,
+        backgroundColor: semantic.background.white.w500,
     },
     profileText: {
         flexDirection: 'row',

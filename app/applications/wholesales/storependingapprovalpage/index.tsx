@@ -12,10 +12,10 @@ const StorePendingApproval = () => {
         <View style={styles.container}>
             <Image source={require("@/assets/images/store-waiting.jpg")} style={styles.image} />
 
-            <Typography style={styles.title}>Your Store is Under Review! 🚀</Typography>
+            <Typography style={styles.title}>Your Business is Under Review! 🚀</Typography>
 
             <Typography style={styles.description}>
-                Our team is currently reviewing your store. Once approved, you’ll receive a notification and can start purchasing goods at wholesale prices.
+                Our team is currently reviewing your Business. Once approved, you’ll receive a notification and can start purchasing goods at wholesale prices.
             </Typography>
 
             {/* Animated Loader */}

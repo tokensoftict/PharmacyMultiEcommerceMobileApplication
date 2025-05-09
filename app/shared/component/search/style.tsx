@@ -4,19 +4,7 @@ import { normalize } from "../../helpers";
 
 export const styles = StyleSheet.create({
     container:{
-        marginTop:normalize(20),
-    },
-    containerSearch: {
-        ...Platform.select({
-            ios: {
-                paddingHorizontal: normalize(24),
-                marginVertical: normalize(14),
-            },
-            android: {
-                paddingHorizontal: normalize(15),
-                marginVertical: normalize(14),
-            }
-        }),
+        width:"100%",
     },
     image: {
         flex: 1,

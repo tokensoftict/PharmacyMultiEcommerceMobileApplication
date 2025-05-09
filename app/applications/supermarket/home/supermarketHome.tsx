@@ -1,17 +1,19 @@
-import Wrapper from "@/shared/component/wrapper";
+
 import React, {useState} from "react";
-import Header from "@/shared/component/header";
-import Search from "@/shared/component/search";
 import SupermarketHomeService from "@/service/supermarket/SupermarketHomeService";
-import {WholesalesHomePageInterface} from "@/service/wholesales/interface/WholesalesHomePageInterface.ts";
-import SpecialOffers from "@/shared/component/specialOffers";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import {homeBuild} from "@/service/wholesales/interface/WholesalesHomePageInterface.ts";
+import CollapsableHeader from "@/shared/elements/CollapsableHeader";
+import {View} from "react-native";
+import TopBrands from "@/shared/elements/TopBrands";
 import HorizontalProductList from "@/shared/component/HorizontalProductList";
+import FlashDeals from "@/shared/elements/FlashDeals";
+import ImageSlider from "@/shared/elements/ImageSlider";
 
 
 export default function SupermarketHome() {
     const [isLoading, setIsLoading] = useState(false);
-    const [homePageData, setHomePageData] = useState<WholesalesHomePageInterface>();
+    const [homePageData, setHomePageData] = useState<homeBuild[]>([]);
     const supermarketHomeService = new SupermarketHomeService();
     useEffectOnce(function(){
         loadHomePage();
@@ -21,31 +23,41 @@ export default function SupermarketHome() {
         setIsLoading(true)
         supermarketHomeService.loadHomePage().then(function(response){
             setIsLoading(false)
-            setHomePageData(response.data)
+            setHomePageData(response.data.data);
         }, function (error){setIsLoading(false)})
     }
 
-
     return (
-        <Wrapper loading={isLoading} onRefresh={loadHomePage}>
-            <Header/>
-
-                <Search placeholder={"Search Products..."} onChange={() => {
-                }} value={undefined}/>
-
+        <CollapsableHeader headerText={"SUPERMARKET AND PHARMACY"} headerSubtitle={"Shop for groceries, household essentials, medicines, and much more—all in one convenient place"} loading={isLoading} onRefresh={loadHomePage}>
+            <View style={{ width: '100%', height: '100%' }}>
                 {
-                    homePageData?.data?.banners  ?
-                        <SpecialOffers  banners={homePageData.data.banners}/> :
-                        <></>
+                    homePageData.map((item, index) => {
+                        const key = `${item.type}-${index}`;
+                        if (item.component === 'topBrands') {
+                            return (
+                                <TopBrands key={index} categories={item.data.brands} title={item.data.label} />
+                            );
+                        } else if (item.component === 'Horizontal_List') {
+                            return (
+                                <HorizontalProductList key={key} title={item.label ?? ""} productList={item.data} id={item.data.id} moreRoute={item.seeAll ?? ""} />
+                            );
+                        }else if (item.component === 'FlashDeals') {
+                            return (
+                                <FlashDeals key={key} title={item.label} deals={item.data} />
+                            );
+                        }
+                        else if (item.component === 'ImageSlider') {
+                            return (
+                                <ImageSlider key={key} sliders={item.data} />
+                            );
+                        }
+                        else {
+                            return <React.Fragment key={key} />;
+                        }
+                    })
                 }
-                {
-                    homePageData?.data?.productLists ?
-                        homePageData?.data?.productLists.map(productList => (
-                            <HorizontalProductList key={productList.id} title={productList.label} productList={productList.products} serverURL={productList.label} moreRoute={productList.label}/>
-                        )) :
-                        <></>
-                }
-        </Wrapper>
+            </View>
+        </CollapsableHeader>
     );
 
 }

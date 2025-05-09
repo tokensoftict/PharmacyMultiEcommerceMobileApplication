@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import {_styles} from './styles'
 import Header from "./components/header";
 import useDarkMode from "@/shared/hooks/useDarkMode";
 import Typography from "@/shared/component/typography";
 import Icon from "@/shared/component/icon";
 import {star,  shoppingBag, white_shopping_cart} from "@/assets/icons";
-import Counter from "../../../shared/component/counter";
+import Counter from "@/shared/component/counter";
 import { currencyType } from "@/shared/constants/global.ts";
 import {Button, ButtonOutline} from "@/shared/component/buttons";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import { NavigationProps } from "../../routes/stack";
+import { NavigationProps } from "@/shared/routes/stack";
 import useEffectOnce from "@/shared/hooks/useEffectOnce";
 import ProductService from "@/service/product/show/ProductService";
 import {ProductInformationInterface, Data} from "@/service/product/show/interface/ProductInformationInterface";
@@ -19,6 +19,7 @@ import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import CartService from "@/service/cart/CartService.tsx";
 import Toastss from "@/shared/utils/Toast.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 export default function DetailProduct() {
     const navigation = useNavigation<NavigationProps>();
@@ -87,19 +88,20 @@ export default function DetailProduct() {
             })
         } else {
             // @ts-ignore
-            Toastss("Insufficient quantity, Total available quantity is "+productInformation?.quantity);
+            Toastss("Insufficient quantity, Total available quantity to order is "+ productInformation?.data.quantity);
         }
     }
 
 
+
     return (
         <WrapperNoScroll loading={isLoading}>
-            <View style={styles.containerHeader}>
-                <Header product={productInformation?.data} title={productInformation?.data.name} />
-            </View>
+            <HeaderWithIcon  title={productInformation?.data.name}/>
+
             <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                 {
-                    (productInformation?.data.sachet && Environment.isSuperMarketEnvironment()) ? <Typography style={styles.sachetStyle}>This product is sold as individual sachets.</Typography> : <></>
+                    // @ts-ignore
+                    (productInformation?.data.box > 1 && Environment.isSuperMarketEnvironment()) ? <Typography style={styles.sachetStyle}>This Product is sold as individual sachets.</Typography> : <></>
                 }
                 <View style={styles.containerImage}>
                     <Image resizeMode="contain" style={styles.image} source={{uri: productInformation?.data.image}} />
@@ -151,13 +153,18 @@ export default function DetailProduct() {
 
                 <View style={styles.separator} />
 
-                <View style={styles.containerDescription}>
-                    <Typography style={styles.descriptionTitle}>Description</Typography>
+                {
+                    productInformation?.data.description.length === 0 ? <></> :
 
-                    <Typography style={styles.description} >
-                        {productInformation?.data.description}
-                    </Typography>
-                </View>
+                        <View style={styles.containerDescription}>
+                            <Typography style={styles.descriptionTitle}>Description</Typography>
+
+                            <Typography style={styles.description} >
+                                {productInformation?.data.description}
+                            </Typography>
+                        </View>
+                }
+
             </ScrollView>
             <View style={styles.containerFooter}>
                 <View style={styles.quantityHolder}>

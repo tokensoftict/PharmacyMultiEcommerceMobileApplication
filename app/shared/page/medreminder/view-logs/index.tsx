@@ -9,11 +9,8 @@ import {
     check,
     checkIcon,
     close,
-    drug,
     history,
     medica,
-    shoppingBag,
-    white_shopping_cart
 } from "@/assets/icons";
 import Typography from "@/shared/component/typography";
 import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrollNoDialogNoSafeArea";
@@ -30,6 +27,8 @@ import {scheduleNotification} from "@/shared/utils/ScheduleNotification.tsx";
 import dayjs from "dayjs";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 
 export default function ViewLogs() {
@@ -170,15 +169,8 @@ export default function ViewLogs() {
     }
 
     return (
-        <WrapperNoScrollNoDialogNoSafeArea loading={loading}>
-            <LinearGradient colors={[palette.main.p500, palette.main.p100]} style={styles.header}>
-                <View style={styles.headerContent}>
-                    <TouchableOpacity onPress={goBack}>
-                        <Icon  icon={arrowBack} tintColor={'white'} />
-                    </TouchableOpacity>
-                    <Typography style={styles.title}>{medication?.drug_name}</Typography>
-                </View>
-            </LinearGradient>
+        <WrapperNoScroll loading={loading}>
+            <HeaderWithIcon title={medication?.drug_name}/>
             <View style={styles.container}>
                 <View style={styles.section}>
 
@@ -269,7 +261,7 @@ export default function ViewLogs() {
                 }
 
             </ButtonSheet>
-        </WrapperNoScrollNoDialogNoSafeArea>
+        </WrapperNoScroll>
     );
 
 }

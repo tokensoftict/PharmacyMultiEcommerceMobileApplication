@@ -17,23 +17,17 @@ import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import {currencyType} from "@/shared/constants/global";
 import {semantic} from "@/shared/constants/colors";
 import Environment from "@/shared/utils/Environment.tsx";
+import UpdateCartDialog from "@/shared/component/updateCartDialog";
 
 
 
 export default function Cart() {
-  const {isDarkMode} = useDarkMode()
   const {navigate} = useNavigation<NavigationProps>()
-  const [selectedProductToRemove, setSelectedProductToRemove] = useState({})
-  const [openDeleteItem, setOpenDeleteItem] = useState(false)
   const [cartErrorList, setCartErrorList] = useState("Your Shopping Cart is empty!")
-
-
   const [isLoading, setIsLoading] = useState(false);
   const [cartItemList, setCartItemList] = useState<CartInterface>();
-
-  function toggleOpenDeleteItem() {
-    setOpenDeleteItem(!openDeleteItem);
-  }
+  const [openCartModal, setOpenCartModal] = useState(false);
+  const [cartItemSelected, setCartItemSelected] = useState();
 
   useFocusEffect(
       useCallback(() => {
@@ -49,7 +43,7 @@ export default function Cart() {
       if(response.data.status === true) {
         setCartItemList(response.data)
       }else {
-        setIsLoading(response.data.message);
+        setCartErrorList(response.data.message);
       }
     }, (error) => {
       setIsLoading(false);
@@ -57,14 +51,18 @@ export default function Cart() {
     })
   }
 
-  function removeFormCart(product: any) {
-    setSelectedProductToRemove(product)
-    toggleOpenDeleteItem()
+  const cartDialogOpen = (status: boolean) => {
+      setOpenCartModal(status);
+  }
+
+  const onItemClick = (item : any) => {
+      cartDialogOpen(true);
+      setCartItemSelected(item);
   }
 
   function renderItem(item: any, key: number) {
     return <View style={{marginBottom: 20, flex: 1}} key={key}>
-      <CartItemHorizontalList product={item} />
+      <CartItemHorizontalList product={item} onPress={onItemClick} />
     </View>
   }
 
@@ -90,9 +88,7 @@ export default function Cart() {
   return (
       <View style={{flex: 1}}>
         <WrapperNoScroll loading={isLoading}>
-          <View style={{paddingHorizontal: normalize(24)}}>
             <HeaderWithIcon icon={shoppingBag}  onPress={loadCartItems} title="SHOPPING CART" />
-          </View>
           {
             isLoading ? <></> :
                 <>
@@ -110,7 +106,7 @@ export default function Cart() {
                               />
                             </ScrollView>
                           </View>
-                          <View style={{ height: normalize(265 - (Environment.isSuperMarketEnvironment() ? 55 : 0) ), backgroundColor : semantic.alert.danger.d100}}>
+                          <View style={{ height: normalize(265 - (Environment.isSuperMarketEnvironment() ? normalize(38) : ( cartItemList?.data.meta?.doorStepDelivery ? 0 : normalize(38))) ), backgroundColor : semantic.alert.danger.d100}}>
                             <View style={{ paddingHorizontal:normalize(12), borderStyle:"solid",  flexDirection: 'row', alignItems: 'center', marginTop: normalize(20),  justifyContent : 'space-between'}}>
                               <View style={{flexDirection:"column"}}>
                                 <Typography style={{fontWeight :'500'}}>Order Total</Typography>
@@ -156,6 +152,7 @@ export default function Cart() {
                 </>
           }
         </WrapperNoScroll>
+        <UpdateCartDialog onCartUpdated={loadCartItems} product={cartItemSelected} visible={openCartModal} onClose={cartDialogOpen}/>
       </View>
   )
 }

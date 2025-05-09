@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {FlatList, ScrollView, Switch, Text, TouchableOpacity, View} from 'react-native';
-import DateTimePicker from "@react-native-community/datetimepicker";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import {palette, semantic} from "@/shared/constants/colors";
@@ -19,6 +18,7 @@ import {scheduleNotification} from "@/shared/utils/ScheduleNotification";
 import Toastss from "@/shared/utils/Toast";
 import dayjs from "dayjs";
 import AuthSessionService from "@/service/auth/AuthSessionService";
+import CustomDatePicker from "@/shared/component/CustomDatePicker";
 
 const MedReminderForm = () => {
 
@@ -63,7 +63,7 @@ const MedReminderForm = () => {
 
     const [useInterval, setUseInterval] = useState(false);
 
-    const setTime = (time, event, selectedTime) => {
+    const setTime = (time, selectedTime) => {
         setNormalSchedule((prevState) => ({
             ...prevState,
             [time]: {
@@ -275,14 +275,7 @@ const MedReminderForm = () => {
 
     return (
         <WrapperNoScroll>
-            <View style={{
-                backgroundColor : semantic.background.white.w101,
-                paddingHorizontal: normalize(15),
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-            }}>
-                <HeaderWithIcon  title={"NEW MED REMINDER"} /></View>
+            <HeaderWithIcon  title={"NEW MED REMINDER"} />
             <ScrollView showsVerticalScrollIndicator={false} style={{ padding: 20, backgroundColor: semantic.background.white.w300 }}>
 
                 <View style={{ flex: 1, flexDirection: "column", marginBottom: normalize(10) }}>
@@ -331,16 +324,17 @@ const MedReminderForm = () => {
 
 
                 <View style={{ marginBottom: normalize(24)}}>
-                    <Input
-                        label={"Medication Type"}
-                        style={{ borderWidth: 1, padding: 8, marginBottom: 10 }}
-                        placeholder="e.g One-time"
-                        keyboardType="default"
-                        value={type}
-                        onChangeText={(type) => setType(type)}
-                        editable={false}
-                        onPressIn={() => triggerOpenMedicationTypeDialog(true)}
-                    />
+                    <TouchableOpacity onPressIn={() => triggerOpenMedicationTypeDialog(true)}>
+                        <Input
+                            label={"Medication Type"}
+                            style={{ borderWidth: 1, padding: 8, marginBottom: 10 }}
+                            placeholder="e.g One-time"
+                            value={type}
+                            editable={false}
+                            onChangeText={(type) => setType(type)}
+                        />
+                    </TouchableOpacity>
+
 
                     {typeError !== "" && <Typography style={{ color: "red" }}>{typeError}</Typography>}
 
@@ -371,16 +365,17 @@ const MedReminderForm = () => {
                                 {everyError!=="" && <Typography style={{ color: "red" }}>{everyError}</Typography>}
                             </View>
                             <View style={{flex : 0.4, marginBottom: normalize(24)}}>
+                                <TouchableOpacity onPressIn={() => triggerIntervalDialog(true)}>
                                 <Input
                                     label={"Interval"}
                                     style={{ borderWidth: 1, padding: 8, marginBottom: 10 }}
                                     placeholder="e.g hours"
-                                    keyboardType="default"
                                     value={interval}
                                     onChangeText={(interval) => setInterval(interval)}
                                     editable={false}
                                     onPressIn={() => triggerIntervalDialog(true)}
                                 />
+                                </TouchableOpacity>
                                 {intervalError!=="" && <Typography style={{ color: "red" }}>{intervalError}</Typography>}
                             </View>
                         </View>
@@ -390,25 +385,29 @@ const MedReminderForm = () => {
                         <View style={{ marginBottom: normalize(24)}}>
                             <Typography style={styles.label}>Select Time Slots</Typography>
                             {Object.keys(normalSchedule).map((time) => (
-                                <View key={time} style={{ display : 'flex', justifyContent : 'space-between', flexDirection :'row', marginBottom: 10 }}>
+                                <View key={time} style={{ display : 'flex', justifyContent : 'space-between', flexDirection :'row' }}>
 
                                     <TouchableOpacity
                                         key={time}
                                         style={[styles.timeSlot, normalSchedule[time].selected && styles.selectedTimeSlot]}
                                         onPress={() => toggleTimeSelection(time)}
                                     >
-                                        <Typography style={[{  fontSize: 16, color: '#d32f2f'}, normalSchedule[time].selected && {color:semantic.background.white.w500, fontWeight : 'bold',}]}>{time}</Typography>
+                                        <Typography style={[{ paddingVertical : normalize(10),  fontSize: normalize(13), color: '#d32f2f'}, normalSchedule[time].selected && {color:semantic.background.white.w500, fontWeight : 'bold'}]}>{time}</Typography>
                                     </TouchableOpacity>
 
-                                    {normalSchedule[time].selected && (
-                                        <DateTimePicker
-                                            style={{flex: 1, marginBottom:normalize(10)}}
-                                            value={normalSchedule[time].time}
-                                            mode="time"
-                                            display="default"
-                                            onChange={(event, selectedTime) => setTime(time, event, selectedTime)}
-                                        />
-                                    )}
+
+                                        {normalSchedule[time].selected && (
+                                         <CustomDatePicker
+                                             style={{ width:'100%', marginTop: normalize(-30)}}
+                                             value={normalSchedule[time].time}
+                                             mode="time"
+                                             time={time}
+                                             display="default"
+                                             onChange={(selectedTime, time) =>setTime(time, selectedTime)}
+                                         />
+                                     )}
+
+
                                 </View>
                             ))}
                             {normalScheduleError !== "" && <Typography style={{ color: "red" }}>{normalScheduleError}</Typography>}
@@ -419,16 +418,15 @@ const MedReminderForm = () => {
 
                 <View style={{ marginBottom: normalize(24)}}>
                     <Typography style={styles.label}>Start Date And Time</Typography>
-                    <DateTimePicker
-                        style={{ alignSelf: 'left' }} // This helps on Android
+                    <CustomDatePicker
+                        style={{ alignSelf: 'left' }}
                         value={startDateTime}
                         mode="datetime"
                         display="compact"
-                        onChange={(event, selectedTime) => setStartDateTime(selectedTime)}
+                        onChange={(selectedTime) => setStartDateTime(selectedTime)}
                     />
                     {startDateTimeError !=="" && <Typography style={{ color: "red" }}>{startDateTimeError}</Typography>}
                 </View>
-
 
                 <View style={{ marginBottom: normalize(24)}}>
                     <Input

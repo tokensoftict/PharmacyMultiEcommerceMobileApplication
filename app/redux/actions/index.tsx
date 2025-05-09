@@ -49,3 +49,10 @@ export const setImpersonateData = (page:string|boolean) => (dispatch:any) => {
     payload: page,
   })
 }
+
+export const setTrashedUserData = (page:string|boolean) => (dispatch:any) => {
+  dispatch({
+    type : actionTypes.TRASHED_USER,
+    payload: page,
+  })
+}

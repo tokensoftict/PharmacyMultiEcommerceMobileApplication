@@ -23,34 +23,49 @@ export default class LoginService
             parent.request.post("login", {email : email, password : password, deviceKey : store.getState().systemReducer.fireBaseKey})
                 .then(async function (response : any){
                     if(response.data.status === true){
-                        await Promise.all(
-                            response.data.data.medSchedules.map(async (schedule : any) => {
-                                const  notificationId =  await scheduleNotification(
-                                    schedule.id,
-                                    schedule.drugName,
-                                    schedule.dosage,
-                                    "mg",
-                                    // @ts-ignore
-                                    new Date(dayjs(schedule.js_date)).getTime(),
-                                    schedule,
-                                    "supermarket",
-                                    "VIEW_MED_REMINDER",
-                                );
-                                return { [schedule.id]: notificationId };
+                        if((response?.data?.data?.trashed ?? false)){
+                            parent.authSessionService.setTrashedUserData(response?.data?.data?.user)
+                            resolve({
+                                status : true,
+                                trashed : true,
+                                user : response?.data?.data?.user,
+                                message : "Login Successful"
                             })
-                        );
-
-                        resolve(parent.prepareUserSession(response.data))
+                        } else {
+                            if(response?.data?.data?.phone_verified_status === false){
+                                resolve(parent.prepareSignupSession(response.data));
+                            } else {
+                                await Promise.all(
+                                    response.data.data.medSchedules.map(async (schedule: any) => {
+                                        const notificationId = await scheduleNotification(
+                                            schedule.id,
+                                            schedule.drugName,
+                                            schedule.dosage,
+                                            "mg",
+                                            // @ts-ignore
+                                            new Date(dayjs(schedule.js_date)).getTime(),
+                                            schedule,
+                                            "supermarket",
+                                            "VIEW_MED_REMINDER",
+                                        );
+                                        return {[schedule.id]: notificationId};
+                                    })
+                                );
+                                resolve(parent.prepareUserSession(response.data));
+                            }
+                        }
                     }else{
                         resolve(
                             parent.parseError({
+                                status : false,
                                 error : response.data.error,
                                 message : response.data.message
                             })
                         )
                     }
                 }, function (error) {
-                    reject(error)
+                    console.log(error);
+                    reject({status : false, message: "Oops! Something went wrong with the connection, please try again"});
                 });
         });
     }
@@ -58,14 +73,16 @@ export default class LoginService
 
     async logout() {
         const response = await this.request.get("logout");
-        if (response.data.status === true) {
+        if (response.data.status === true || response?.data.error === "Unauthenticated. Please login to continue.") {
             await new AuthSessionService().destroySession()
-            const schedulesIDS = response.data.data;
-            await  Promise.all(
-                schedulesIDS.map(async (schedule : any) => {
-                    await notifee.cancelNotification(schedule);
-                })
-            )
+            const schedulesIDS = response.data.data ?? [];
+            if(schedulesIDS.length > 0){
+                await  Promise.all(
+                    schedulesIDS.map(async (schedule : any) => {
+                        await notifee.cancelNotification(schedule);
+                    })
+                )
+            }
             return true;
         }
         return false;
@@ -127,6 +144,15 @@ export default class LoginService
     prepareUserSession(response: any) : object{
         response['loginStatus'] = true;
         this.authSessionService.setAuthSession(response);
+        return {
+            status : true,
+            message : "Login Successful"
+        }
+    }
+
+    prepareSignupSession(response: any) : object{
+        response['loginStatus'] = true;
+        this.authSessionService.setTempSession(response);
         return {
             status : true,
             message : "Login Successful"

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import Typography from "../typography";
-import { currencyType } from "../../constants/global";
+import { currencyType } from "@/shared/constants/global";
 import {_styles} from './styles'
-import useDarkMode from "../../hooks/useDarkMode.tsx";
+import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
 import { useNavigation } from "@react-navigation/native";
 
 import Counter from "../counter";
-import Icon from "../icon";
-import {trash} from "../../../assets/icons";
 import {NavigationProps} from "@/shared/routes/stack";
 import {ProductListInterface} from "@/service/product/ProductListInterface";
-import {normalize} from "../../../shared/helpers";
+import {normalize} from "@/shared/helpers";
 import Environment from "@/shared/utils/Environment.tsx";
 
 interface ProductList {

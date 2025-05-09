@@ -1,10 +1,36 @@
-import {Platform, StyleSheet} from 'react-native';
-import {normalize} from '../../../shared/helpers';
-import {semantic} from '../../../shared/constants/colors';
-
+import {Dimensions, StyleSheet} from 'react-native';
+import {normalize} from '@/shared/helpers';
+import {semantic} from '@/shared/constants/colors';
+const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
     container: {
-        marginTop: normalize(14),
+
+    },
+    sectionHeaderContainer: {
+        width: width,
+        height: normalize(50),
+        paddingVertical: normalize(12),
+        paddingHorizontal: normalize(16),
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    sectionHeaderImage: {
+        resizeMode: 'cover',
+        borderRadius: 0,
+        alignSelf: 'center',
+    },
+    sectionHeaderText: {
+        color: '#fff',
+        fontSize: normalize(14),
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
+    sectionHeaderSubText: {
+        color: '#fff',
+        fontSize: normalize(10),
+        fontWeight: 'bold',
+        alignSelf: 'center',
     },
     divider: {
         marginRight: normalize(10),
@@ -25,16 +51,7 @@ export const styles = StyleSheet.create({
     },
     titleSection: {
         fontSize: normalize(18),
-        ...Platform.select({
-            ios: {
-                fontWeight: '600',
-            },
-            android: {
-                fontWeight: '800',
-            }
-        }),
         marginLeft: normalize(10),
-        marginBottom: normalize(12)
     },
     containerBanner: {
         position: 'relative',

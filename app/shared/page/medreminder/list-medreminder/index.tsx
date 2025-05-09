@@ -1,9 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from "./styles"
 import {RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
-import WrapperNoScrollNoDialogNoSafeArea from "@/shared/component/wrapperNoScrollNoDialogNoSafeArea";
 import {palette} from "@/shared/constants/colors.ts";
-import LinearGradient from "react-native-linear-gradient";
 import Icon from "@/shared/component/icon";
 import {arrowBack, drug, history, medica} from "@/assets/icons";
 import Typography from "@/shared/component/typography";
@@ -12,6 +10,8 @@ import {NavigationProps} from "@/shared/routes/stack.tsx";
 import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
 import {MedReminderInterface} from "@/service/medReminder/interface/MedReminderInterface.tsx";
 import {normalize} from "@/shared/helpers";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import HeaderWithIcon from "@/shared/component/headerBack";
 
 
 export default function ListMedReminder() {
@@ -47,29 +47,30 @@ export default function ListMedReminder() {
     }
 
     return (
-        <WrapperNoScrollNoDialogNoSafeArea loading={loading}>
-            <LinearGradient colors={[palette.main.p500, palette.main.p100]} style={styles.header}>
-                <View style={styles.headerContent}>
-                    <TouchableOpacity onPress={goBack}>
-                        <Icon  icon={arrowBack} tintColor={'white'} />
-                    </TouchableOpacity>
-                    <Typography style={styles.title}>REMINDER LIST</Typography>
-                </View>
-            </LinearGradient>
+        <WrapperNoScroll loading={loading}>
+            <HeaderWithIcon title={"REMINDER LIST"}/>
             <View style={styles.container}>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshLoading} onRefresh={refreshLoadingTrigger} />
-                    }
-                >
-                    {
-                        medReminder.length === 0 ? (
-                            <></>
-                        ) : (
+                {
+                    medReminder.length === 0 ?
+
+                        <View style={{ justifyContent : 'center', alignItems : 'center', flex: 1, height : '100%', width :'100%'}}>
+                            <Typography style={{fontSize : normalize(18)}}>No Medication Reminder Found !</Typography>
+                            <TouchableOpacity onPress={() => navigation.navigate('medReminderForm')} style={styles.addMedicationButton}>
+                                <Typography style={styles.addMedicationButtonText}>
+                                    Create New Reminder
+                                </Typography>
+                            </TouchableOpacity>
+                        </View>
+
+                        :      <ScrollView
+                        style={{height : '100%'}}
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={<RefreshControl refreshing={refreshLoading} onRefresh={refreshLoadingTrigger} />}
+                    >
+                        {
                             medReminder.map(function(med){
                                 return (
-                                    <TouchableOpacity key={med.id} style={{flex : 1}} onPress={function() {
+                                    <TouchableOpacity activeOpacity={0} key={med.id} style={{flex : 1, backgroundColor : 'white'}} onPress={function() {
                                         // @ts-ignore
                                         navigation.navigate("viewLogs", {medReminder : med})
                                     }}>
@@ -99,11 +100,11 @@ export default function ListMedReminder() {
                                     </TouchableOpacity>
                                 )
                             })
-                        )
-                    }
-                </ScrollView>
+                        }
+                    </ScrollView>
+                }
             </View>
-        </WrapperNoScrollNoDialogNoSafeArea>
+        </WrapperNoScroll>
     );
 
 }

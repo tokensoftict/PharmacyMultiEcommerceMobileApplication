@@ -14,6 +14,7 @@ import Doi from "@/shared/page/checkout/components/selectDeliveryOption/option/d
 import HeaderWithIcon from "@/shared/component/headerBack";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
 import Dsd from "@/shared/page/checkout/components/selectDeliveryOption/option/dsd.tsx";
+import SubHeader from "@/shared/component/subHeader";
 
 export default function SelectDeliveryOption({ onValidate }: { onValidate: (validateFn: () => Promise<boolean>) => void })  {
   const [deliverySelected, setDeliverySelected] = useState<OptionCardOptions>();
@@ -102,10 +103,7 @@ export default function SelectDeliveryOption({ onValidate }: { onValidate: (vali
         flex: 1,
         backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w100,
       }}>
-        <View style={{paddingVertical: normalize(15)}}>
-          <HeaderWithIcon icon={truckInTracking}   title="SELECT DELIVERY METHOD" />
-        </View>
-
+        <SubHeader icon={truckInTracking}   title="SELECT DELIVERY METHOD" />
         {
           isCheckOutDeliveryLoading
               ?

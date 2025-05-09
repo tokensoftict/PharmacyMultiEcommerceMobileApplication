@@ -40,7 +40,7 @@ export default function Header({title, product} : header) {
 
             {
                 Environment.isLogin() ? <TouchableOpacity>
-                    <Icon icon={like} onPress={() => addProductWishList(product)} />
+
                 </TouchableOpacity> : <View style={{height : normalize(20)}}></View>
             }
         </View>

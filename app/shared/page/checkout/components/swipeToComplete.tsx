@@ -11,6 +11,7 @@ import { Svg, Path } from "react-native-svg";
 import { palette, semantic } from "@/shared/constants/colors.ts";
 import {normalize} from "@/shared/helpers";
 import Typography from "@/shared/component/typography";
+import {useGlobal} from "@/shared/helpers/GlobalContext.tsx";
 
 const { width } = Dimensions.get("window");
 const SWIPE_THRESHOLD = width * 0.6;
@@ -18,7 +19,7 @@ const SWIPE_THRESHOLD = width * 0.6;
 // @ts-ignore
 const SwipeToComplete = ({ swipedAndCompleteOrder }) => {
     const translateX = useSharedValue(0);
-
+    const {checkoutButton, setCheckoutButton} = useGlobal();
     // ✅ Wrap state update in a separate function for Hermes
     const completeOrder = () => {
         setTimeout(() => {
@@ -48,7 +49,7 @@ const SwipeToComplete = ({ swipedAndCompleteOrder }) => {
             }
         });
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,{opacity : checkoutButton ? 1 : 0}]}>
             <View style={styles.swipeContainer}>
                 <Typography style={styles.label}>Swipe to Complete Order 👉</Typography>
 
@@ -103,34 +104,30 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     label: {
-        fontSize: 12,
-        marginBottom: 5,
+        fontSize: normalize(12),
+        marginBottom: normalize(5),
         color: palette.main.p500,
         fontWeight: "bold",
     },
     track: {
         width: "100%",
-        height: 60,
+        height: normalize(60),
         backgroundColor: "#ddd",
-        borderRadius: 10,
+        borderRadius: normalize(10),
         justifyContent: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: normalize(10),
         position: "relative",
         overflow: "hidden",
     },
     swipeButton: {
-        width: 120,
-        height: 60,
+        width: normalize(120),
+        height: normalize(60),
         backgroundColor: palette.main.p300,
-        borderRadius: 10,
+        borderRadius: normalize(10),
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
         left: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 10,
-        shadowRadius: 6,
     },
     buttonText: {
         fontSize: normalize(24),
@@ -138,12 +135,12 @@ const styles = StyleSheet.create({
     },
     swipeIndicator: {
         position: "absolute",
-        right: 20,
+        right: normalize(20),
         top: "50%",
         transform: [{ translateY: -15 }],
     },
     successText: {
-        fontSize: 20,
+        fontSize: normalize(20),
         color: "#4CAF50",
         fontWeight: "bold",
     },

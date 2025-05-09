@@ -19,6 +19,7 @@ import {NavigationProps} from "@/shared/routes/stack.tsx";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import Typography from "@/shared/component/typography";
+import {usePaystack} from "react-native-paystack-webview";
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -29,12 +30,15 @@ const CheckoutStepper = () => {
     const {isDarkMode} = useDarkMode();
     const [modalVisible, setModalVisible] = useState(false);
     const [order, setOrder] = useState({});
+    const [paymentMethod, setPaymentMethod] = useState();
     // @ts-ignore
     const styles = new _styles(isDarkMode);
     const checkOutService = new CheckoutService();
     const { showLoading, hideLoading } = useLoading();
-    const {navigate} = useNavigation<NavigationProps>()
     const navigation = useNavigation();
+
+    const { popup } = usePaystack();
+
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: step - 1,
@@ -57,6 +61,10 @@ const CheckoutStepper = () => {
         const validateFunc = validationRefs.current[step];
         if (validateFunc) {
             const isValid = await validateFunc(); // Await validation function
+            if(typeof isValid == "number") {
+                // @ts-ignore
+                setPaymentMethod(isValid)
+            }
             if(!isValid) return ;
         }
 
@@ -68,10 +76,46 @@ const CheckoutStepper = () => {
         setStep((prev) => Math.max(prev - 1, 1));
     };
 
-    function completeOrder()
+    function popUpPayment() {
+        showLoading("Please wait...");
+        checkOutService.getPayStackTransactionData().then((response) => {
+            console.log(response);
+            if(response.data.status === true){
+                const paymentData = response.data.data;
+                hideLoading();
+                paymentData['onSuccess'] = function(response: any) {
+                    console.log(response);
+                    if (response.status === "success") {
+                        completeOrder(response.reference);
+                    }
+                }
+
+                paymentData['onCancel'] = function() {
+                    console.log(response);
+                }
+
+                paymentData['onLoad'] = function(response: any) {
+                    console.log(response);
+                }
+
+                paymentData['onError'] = function(response: any) {
+                    console.log(response);
+                }
+                popup.checkout(paymentData);
+            } else {
+                hideLoading();
+                Toastss("There was an error generating payment, please try again");
+            }
+        }, function (error) {
+            hideLoading();
+            Toastss("There was an error generating payment, please try again");
+        })
+    }
+
+    function completeOrder(reference?: string)
     {
         showLoading("Placing Order... Please wait...");
-        checkOutService.completeOrder().then((response) => {
+        checkOutService.completeOrder(reference).then((response) => {
             hideLoading();
             if(response.data.status === true) {
                 const orderDetails = response.data.data;
@@ -80,6 +124,9 @@ const CheckoutStepper = () => {
             } else {
                 Toastss(response.data.message);
             }
+        }, function (error) {
+            hideLoading();
+            console.log(error);
         });
     }
 
@@ -185,7 +232,10 @@ const CheckoutStepper = () => {
                 {
                     step === 4
                         ?
-                        <SwipeToComplete swipedAndCompleteOrder={completeOrder}/>
+                        (paymentMethod === 4 || paymentMethod === 8) ?
+                            <SwipeToComplete  swipedAndCompleteOrder={popUpPayment}/>
+                            :
+                            <SwipeToComplete swipedAndCompleteOrder={completeOrder}/>
                         :
                         <View style={{width : '100%',  flexDirection: 'row',}}>
                             {step > 1 && (

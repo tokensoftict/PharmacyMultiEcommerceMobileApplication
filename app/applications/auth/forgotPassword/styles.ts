@@ -6,7 +6,9 @@ import {palette} from "../../../shared/constants/colors.ts";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: normalize(24)
+    paddingHorizontal: normalize(24),
+    height : '100%',
+    width : '100%'
   },
   containerTitle: {
     marginVertical: normalize(32)

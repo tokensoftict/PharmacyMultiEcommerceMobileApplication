@@ -1,15 +1,15 @@
 import {StackNavigationProp} from "@react-navigation/stack";
 import {RouteProp} from "@react-navigation/native";
-import Login from "../../applications/auth/login";
-import CreateAccount from "../../applications/auth/createAccount";
-import EnterOtp from "../../applications/auth/enterOtp";
-import ForgotPassword from "../../applications/auth/forgotPassword";
-import ResetPassword from "../../applications/auth/resetPassword";
-import WholesalesHomePage from "../../applications/wholesales/home/wholesalesHome.tsx";
-import DetailProduct from "../page/product";
-import ProductList from "../../shared/page/productList";
-import EditProfile from "../../applications/supermarket/editProfile";
-import Checkout from "../../shared/page/checkout";
+import Login from "@/applications/auth/login";
+import CreateAccount from "@/applications/auth/createAccount";
+import EnterOtp from "@/applications/auth/enterOtp";
+import ForgotPassword from "@/applications/auth/forgotPassword";
+import ResetPassword from "@/applications/auth/resetPassword";
+import WholesalesHomePage from "@/applications/wholesales/home/wholesalesHome.tsx";
+import DetailProduct from "@/shared//page/product";
+import ProductList from "@/shared/page/productList";
+import EditProfile from "@/applications/supermarket/editProfile";
+import Checkout from "@/shared/page/checkout";
 import AddressList from "@/shared/page/myaccount/address/addressList/index";
 import NewAddress from  "@/shared/page/myaccount/address/newAddress/index";
 import PaymentMethodList from "@/shared/page/myaccount/paymentmethod";
@@ -19,7 +19,7 @@ import Wishlist from "@/shared/page/wishlist";
 import Orders from "@/shared/page/orders";
 import ShowOrder from "@/shared/page/orders/show";
 import StoreSelectionScreen from "@/applications/auth/storeSelector";
-import MainMenu from "@/shared/page/medreminder/main";
+import MainMenu from "@/shared/page/medreminder/dashboard/main";
 import SplashScreen from "@/shared/page/medreminder/splashscreen";
 import MedReminderForm from "@/shared/page/medreminder/new-medreminder";
 import ListMedReminder from "@/shared/page/medreminder/list-medreminder";
@@ -27,14 +27,20 @@ import HistoryLogs from "@/shared/page/medreminder/history-logs";
 import RefillTracker from "@/shared/page/medreminder/refill-tracker";
 import ViewReminder from "@/shared/page/medreminder/view-reminder";
 import ViewLogs from "@/shared/page/medreminder/view-logs";
-import WholesalesNavigation from "@/applications/wholesales/WholesalesNavigation.tsx";
+import WholesalesNavigation from "@/applications/wholesales/WholesalesNavigation";
 import CreateWholesales from "@/applications/wholesales/create";
 import StorePendingApproval from "applications/wholesales/storependingapprovalpage";
 import {StoreProfile} from "@/applications/wholesales/storeprofile";
 import SupermarketNavigation from "@/applications/supermarket/SupermarketNavigation";
 import Categories from "@/shared/page/categories";
 import Brands from "@/shared/page/brands";
-import SalesRepresentativeNavigation from "@/applications/salesrepresentative/salesRepresentativeNavigation.tsx";
+import SalesRepresentativeNavigation from "@/applications/salesrepresentative/salesRepresentativeNavigation";
+import DeleteAccountScreen from "@/applications/auth/deleteMyAccount";
+import RestoreAccountScreen from "@/applications/auth/restoreMyAccount";
+import Notifications from "@/shared/page/myaccount/notification";
+import BrandLists from "@/shared/page/brandLists";
+import IntroSlider from "@/applications/introSlider";
+import QrcodeScreen from "@/shared/page/qrcode";
 
 export type RootStackParamList = {
     wholesales:undefined,
@@ -61,22 +67,26 @@ export type RootStackParamList = {
     showOrder:undefined,
     storeSelector:undefined,
 
-
     splashScreen:undefined,
     mainMenu : undefined,
-
-
     medReminderForm : undefined,
     listMedReminder : undefined,
     historyLogs : undefined,
     refillTracker : undefined,
     viewLogs : undefined,
     viewReminder : undefined,
+
     createWholesalesStore : undefined,
     storePendingApproval:undefined,
     storeProfile:undefined,
     brands:undefined,
     categories:undefined,
+    deleteAccount : undefined,
+    restoreMyAccount : undefined,
+    notifications : undefined,
+    brandList : undefined,
+    introSlider : undefined,
+    qrcode: undefined
 }
 
 export type RouteItem = {
@@ -267,6 +277,36 @@ const RoutesStack: RouteItem[] = [
     {
         path:'categories',
         component: Categories,
+        private: true
+    },
+    {
+        path:'deleteAccount',
+        component: DeleteAccountScreen,
+        private: true
+    },
+    {
+        path:'restoreMyAccount',
+        component: RestoreAccountScreen,
+        private: true
+    },
+    {
+        path:'notifications',
+        component: Notifications,
+        private: true
+    },
+    {
+        path:'brandList',
+        component: BrandLists,
+        private: true
+    },
+    {
+        path:'introSlider',
+        component: IntroSlider,
+        private: true
+    },
+    {
+        path:'qrcode',
+        component: QrcodeScreen,
         private: true
     },
 ];

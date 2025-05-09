@@ -1,13 +1,13 @@
 import axios from "axios";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import {UserProfile} from "@/service/auth/interfaces/UserProfile.tsx";
+import {WHOLESALES_URL} from "@env";
 
 const createStoreRequest = axios.create();
 
 createStoreRequest.interceptors.request.use( async function (request) {
 
-    //request.baseURL = 'http://wholesales.staging.generaldrugcentre.com/api/v1/';
-    request.baseURL = 'http://wholesales.mystore.test:8001/api/v1/';
+    request.baseURL = WHOLESALES_URL;
     request.headers['Content-Type'] = 'multipart/form-data';
 
     const authSession = new AuthSessionService();

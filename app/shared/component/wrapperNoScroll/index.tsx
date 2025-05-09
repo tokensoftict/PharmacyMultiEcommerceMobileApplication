@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
-import {Platform, SafeAreaView, ScrollView, View} from 'react-native';
-import OverlayLoader from "../overlayLoader";
-import CustomStatusBar from "../customStatusBar";
+import {KeyboardAvoidingView, Platform, StatusBar, View} from 'react-native';
+import OverlayLoader from "@/shared/component/overlayLoader";
 import {StatusBarStyle} from 'react-native/Libraries/Components/StatusBar/StatusBar';
-import {normalize} from '../../helpers';
-import useDarkMode from '../../hooks/useDarkMode.tsx';
-import {palette, semantic} from '../../constants/colors';
-import useEffectOnce from "../../../shared/hooks/useEffectOnce.tsx";
-import {store} from "../../../redux/store/store.tsx";
-import AddToCartDialog from "../../../shared/component/addToCartDialog";
-import {SafeAreaProvider} from "react-native-safe-area-context";
+import {normalize} from '@/shared/helpers';
+import {design, semantic} from '@/shared/constants/colors';
+import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
+import {store} from "@/redux/store/store.tsx";
+import AddToCartDialog from "@/shared/component/addToCartDialog";
+import {SafeAreaProvider,SafeAreaView} from "react-native-safe-area-context";
 
 interface WrapperProps {
     children: React.ReactNode;
@@ -27,7 +25,7 @@ export default function WrapperNoScroll({
                                             titleLoader,
                                             overlayLoaderHeight,
                                         }: WrapperProps) {
-    const {isDarkMode} = useDarkMode();
+
     const [addToCartProduct, setAddToCartProduct] = useState()
 
     useEffectOnce(() => {
@@ -40,16 +38,29 @@ export default function WrapperNoScroll({
     return (
 
         <SafeAreaProvider>
-            <SafeAreaView style={{
+            <StatusBar backgroundColor={design.text1.background} barStyle="light-content" />
+            <SafeAreaView
+                edges={['top']}
+                style={{
                 flex: 1,
-                backgroundColor : semantic.background.white.w101,
+                backgroundColor : design.text1.background
             }}>
-                <View style={{ backgroundColor : semantic.background.white.w101, flex : 1, width : '100%', height : '100%'}}>
-                    <View style={{height: normalize(25)}}/>
-                    <AddToCartDialog product={addToCartProduct}/>
-                    <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
-                    {children}
-                </View>
+
+                    <View style={{ backgroundColor : semantic.background.white.w101, flex : 1, width : '100%', height : '100%'}}>
+
+                        <AddToCartDialog product={addToCartProduct}/>
+                        <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
+                        <KeyboardAvoidingView
+                            style={{ flex: 1 }}
+                            behavior={Platform.OS === "ios" ? "padding" : undefined}
+                            keyboardVerticalOffset={Platform.OS === "ios" ? normalize(50) : 0} // adjust if needed
+                        >
+                        <View style={{opacity: loading ? 0 : 1, flex: 1, width : '100%', height : '100%', backgroundColor: "#FFF"}}>
+                            {children}
+                        </View>
+                        </KeyboardAvoidingView>
+                    </View>
+
             </SafeAreaView>
         </SafeAreaProvider>
     );

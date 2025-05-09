@@ -1,11 +1,11 @@
 import {axiosInstance}  from '../internet';
-import AuthSessionService from "../../service/auth/AuthSessionService.tsx";
-import {UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import {UserProfile} from "@/service/auth/interfaces/UserProfile.tsx";
+import { AUTH_URL } from '@env';
 
 axiosInstance.interceptors.request.use( async function (request) {
 
-    //request.baseURL = 'http://auth.staging.generaldrugcentre.com/api/v1/account/';
-    request.baseURL = 'http://auth.mystore.test:8001/api/v1/account/';
+    request.baseURL = AUTH_URL;
     request.headers['Content-Type'] = 'multipart/form-data';
 
     const authSession = new AuthSessionService();
@@ -39,7 +39,12 @@ axiosInstance.interceptors.request.use( async function (request) {
 
     return request;
 }, function (error) {
-    return Promise.reject(error);
+    return Promise.resolve({
+        data : {
+            status : false,
+            error : "There was error while processing request, please try again.",
+        }
+    });
 });
 
 
@@ -53,7 +58,7 @@ axiosInstance.interceptors.response.use((response) => response, (error) => {
                     error : error.response.data?.error
                 }
             })
-            break;
+
         case 404:
             return Promise.resolve({
                 data : {
@@ -68,7 +73,7 @@ axiosInstance.interceptors.response.use((response) => response, (error) => {
                     error : error.response.data?.error
                 }
             })
-            break;
+
         case 400:
             return Promise.resolve({
                 data : {

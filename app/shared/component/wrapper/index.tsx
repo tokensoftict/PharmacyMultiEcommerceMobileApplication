@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {RefreshControl, SafeAreaView, ScrollView, View} from 'react-native';
-import OverlayLoader from "../overlayLoader";
+import {KeyboardAvoidingView, Platform, RefreshControl, SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
+import OverlayLoader from "@/shared/component/overlayLoader";
 import {StatusBarStyle} from 'react-native/Libraries/Components/StatusBar/StatusBar';
-import {normalize} from '../../helpers';
-import useDarkMode from '../../hooks/useDarkMode.tsx';
-import {palette, semantic} from '../../constants/colors';
+import {normalize} from '@/shared/helpers';
+import useDarkMode from '@/shared/hooks/useDarkMode';
+import {design, semantic} from '@/shared/constants/colors';
 import AddToCartDialog from "@/shared/component/addToCartDialog";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 import {store} from "@/redux/store/store.tsx";
@@ -42,35 +42,55 @@ export default function Wrapper({
     return (
         Environment.checkForImpersonateCustomerData() ?
             <View style={{flex : 1,  backgroundColor: semantic.background.white.w101}}>
+                <StatusBar backgroundColor={design.text1.background} barStyle="light-content" />
                 <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight} />
                 <ScrollView
                     refreshControl={
                         <RefreshControl refreshing={loading ?? false} onRefresh={onRefresh} />
                     }
-                    >
+                >
                     {children}
                 </ScrollView>
             </View>
             : <SafeAreaProvider>
-            <SafeAreaView style={{
-                flex: 1,
-                backgroundColor : semantic.background.white.w101,
-            }}>
-                <View style={{ backgroundColor : semantic.background.white.w101, flex : 1, width : '100%', height : '100%'}}>
-                    <View style={{height: normalize(10)}}/>
-                    <AddToCartDialog product={addToCartProduct}/>
-                    <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight}/>
-                    <ScrollView
-                        refreshControl={
-                            <RefreshControl refreshing={loading ?? false} onRefresh={onRefresh} />
-                        }
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}
-                        showsVerticalScrollIndicator={false}>
-                        {children}
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
-        </SafeAreaProvider>
+                <StatusBar backgroundColor={design.text1.background} barStyle="light-content" />
+                <SafeAreaView style={{
+                    flex: 1,
+                    backgroundColor : semantic.background.white.w101,
+                }}>
+                    <KeyboardAvoidingView
+                        style={{ flex: 1 }}
+                        behavior={Platform.OS === "ios" ? "padding" : undefined}
+                        keyboardVerticalOffset={Platform.OS === "ios" ? normalize(50) : 0} // adjust if needed
+                    >
+                        <View style={{backgroundColor : semantic.background.white.w101, flex : 1, width : '100%', height : '100%'}}>
+                            {
+                                Platform.OS === 'ios' ?
+                                    <View style={{height: normalize(60)}}/>
+                                    :
+                                    <View style={{height: normalize(60)}}/>
+                            }
+                            <AddToCartDialog product={addToCartProduct}/>
+                            <OverlayLoader loading={loading} title={""} height={overlayLoaderHeight}/>
+                            <ScrollView
+                                refreshControl={
+                                    <RefreshControl refreshing={loading ?? false} onRefresh={onRefresh} />
+                                }
+                                style={{  opacity: loading ? 0 : 1, backgroundColor: 'rgba(255, 255, 255, 0)'}}
+                                showsVerticalScrollIndicator={false}>
+                                {children}
+                                {
+                                    Platform.OS === 'ios' ?
+                                        <View style={{height: normalize(60)}}/>
+                                        :
+                                        <View style={{height: normalize(60)}}/>
+                                }
+
+                            </ScrollView>
+                        </View>
+                    </KeyboardAvoidingView>
+                </SafeAreaView>
+            </SafeAreaProvider>
 
     );
 }

@@ -8,8 +8,8 @@ import {palette, semantic} from "@/shared/constants/colors.ts";
 import {normalize} from "@/shared/helpers";
 import Toastss from "@/shared/utils/Toast";
 import {useLoading} from "@/shared/utils/LoadingProvider";
-import HeaderWithIcon from "@/shared/component/headerBack";
 import CheckoutService from "@/service/checkout/CheckoutService";
+import SubHeader from "@/shared/component/subHeader";
 
 export default function SelectCheckoutAddress({ onValidate }: { onValidate: (validateFn: () => Promise<boolean>) => void })  {
     const [addressSelected, setAddressSelected] = useState<OptionCardOptions>();
@@ -83,11 +83,9 @@ export default function SelectCheckoutAddress({ onValidate }: { onValidate: (val
             width:'100%',
             height:'100%',
             flex: 1,
-            backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w100,
+            backgroundColor: semantic.background.white.w100,
         }}>
-            <View style={{paddingVertical: normalize(15)}}>
-                <HeaderWithIcon icon={location}   title="SELECT DELIVERY ADDRESS" />
-            </View>
+            <SubHeader icon={location}   title="SELECT DELIVERY ADDRESS" />
 
             {
                 isCheckOutAddressLoading

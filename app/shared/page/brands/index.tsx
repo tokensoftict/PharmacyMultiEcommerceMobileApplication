@@ -12,7 +12,6 @@ import {brand, shoppingBag} from "@/assets/icons";
 import {normalize} from "@/shared/helpers";
 import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 import FlatList = Animated.FlatList;
-import {ButtonOutline} from "@/shared/component/buttons";
 import {useNavigation} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack";
 import BrandService from "@/service/brands/BrandService";
@@ -20,7 +19,7 @@ import BrandService from "@/service/brands/BrandService";
 export default function Brands() {
     const {isDarkMode} = useDarkMode();
     const styles = _styles(isDarkMode);
-    let hasReachTheEnd = false;
+    const [lastPage, setLastPage] = useState(3);
     const navigation = useNavigation<NavigationProps>();
     const [isBrandLoading, setIsBrandLoading] = useState(false);
     const [brandResponseList, setBrandResponseList] = useState<Data[]>([]);
@@ -38,10 +37,12 @@ export default function Brands() {
     }
 
     function loadBrand () {
+        if(pageNumber >= lastPage) return ;
         setIsBrandLoading(true);
         (new BrandService()).getBrands(pageNumber).then((response) => {
             setIsBrandLoading(false);
             if(response.data.status === true) {
+                setLastPage(response.data.meta.last_page);
                 setPageNumber((existingPageNumber) => {
                     if(existingPageNumber == 1) return 2;
                     return (existingPageNumber + 1)
@@ -61,7 +62,7 @@ export default function Brands() {
 
     const categoryItem = (id : number, title : string, stocks: ProductList[]) => {
         return (
-            <View key={id} style={styles.categoryHolder}>
+            <View>
                 <View style={styles.categoryHeader}>
                     <Typography style={styles.categoryName}>{title.toUpperCase()}</Typography>
                     <Typography onPress={() => {
@@ -85,47 +86,29 @@ export default function Brands() {
 
 
     return (
+        <WrapperNoScroll loading={isBrandLoading}>
+            <HeaderWithIcon   title="BRANDS" />
         <View style={{flex: 1}}>
-            <WrapperNoScroll loading={isBrandLoading}>
-                {
-                    isBrandLoading ?
-                        <></> :
-                        <>
-                            <View style={{paddingHorizontal: normalize(24)}}>
-                                <HeaderWithIcon icon={brand}  onPress={() =>{
-                                    if(!isBrandLoading) {
-                                        loadBrand();
-                                    }
-                                }} title="BRANDS" />
-                            </View>
-                            <FlatList
-                                ListFooterComponent={
-                                    <View style={{paddingHorizontal:normalize(15), marginBottom:normalize(30)}}>
-                                        <ButtonOutline title={'LORD MORE'} onPress={() => {
-                                            loadBrand()
-                                        }}/>
-                                    </View>
-                                }
-                                numColumns={1}
-                                data={brandResponseList}
-                                keyExtractor={(item, index) => item.id.toString()+Math.floor(Math.random() * 10).toString()}
-                                renderItem={(item) => {
-                                    return  (
-                                        <View style={styles.holder}>
-                                            {
-                                                categoryItem(item.item?.id, item.item?.name, item.item?.stocks)
-                                            }
-                                        </View>
-                                    )
-
-                                }}>
-                            </FlatList>
-                            <View style={{height: normalize(80)}}/>
-                        </>
-                }
-
-            </WrapperNoScroll>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={brandResponseList}
+                removeClippedSubviews={false}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={1}
+                renderItem={({item}) => (
+                    <View style={styles.holder}>
+                        {categoryItem(item.id, item.name, item.stocks)}
+                    </View>
+                )}
+                onEndReached={() => {
+                    if (!isBrandLoading) {
+                        loadBrand();
+                    }
+                }}
+                onEndReachedThreshold={0.5}
+            />
         </View>
+        </WrapperNoScroll>
     );
 
 }

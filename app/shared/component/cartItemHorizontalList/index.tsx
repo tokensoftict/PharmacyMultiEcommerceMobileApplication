@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import Typography from "../typography";
-import { currencyType } from "../../constants/global";
+import { currencyType } from "@/shared/constants/global";
 import {_styles} from './styles'
-import useDarkMode from "../../hooks/useDarkMode.tsx";
+import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
 import { useNavigation } from "@react-navigation/native";
-
-import Counter from "../counter";
 import {NavigationProps} from "@/shared/routes/stack";
-import {ProductListInterface} from "@/service/product/ProductListInterface";
-import {normalize} from "../../../shared/helpers";
 import {Items} from "@/service/cart/interface/CartInterface.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
 
 interface ProductList {
     product: Items | undefined,
+    onPress: (product: Items | undefined) => void,
 }
-export default function CartItemHorizontalList({product}: ProductList) {
+export default function CartItemHorizontalList({product, onPress}: ProductList) {
     const {isDarkMode} = useDarkMode()
     const styles = _styles(isDarkMode)
     const [cant, setCant] = useState(1)
@@ -29,7 +26,7 @@ export default function CartItemHorizontalList({product}: ProductList) {
     }
 
     return (
-        <TouchableOpacity onPress={navigateTo} style={styles.container}>
+        <TouchableOpacity onPress={() => onPress(product)} style={styles.container}>
             <View style={styles.innerContainer}>
                 <View style={styles.containerImage}>
                     <Image style={styles.image} resizeMode="contain" source={{uri: product?.image}} />

@@ -1,6 +1,7 @@
 import {Platform, StyleSheet} from "react-native";
 import { normalize } from "../../helpers";
 import {design, palette, semantic} from "../../constants/colors";
+import {FONT} from "@/shared/constants/fonts.ts";
 
 export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
@@ -35,12 +36,16 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   containerImage: {
     width: '100%',
     height: normalize(115),
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   image: {
-    width: '100%',
-    height: normalize(115)
+    width: '60%',
+    height: '80%',
+    alignSelf: 'center',
   },
   name: {
+    fontFamily : FONT.LIGHT,
     fontWeight: '400',
     color: isDarkMode ? semantic.text.white : semantic.text.black,
     maxHeight: normalize(40),
@@ -73,6 +78,7 @@ export const _styles = (isDarkMode: boolean) => StyleSheet.create({
   },
   doorStep: {
     fontSize: normalize(10),
+    fontFamily : Platform.OS == 'android'?  FONT.EXTRA_BOLD :  FONT.LIGHT,
     color: isDarkMode ? semantic.text.white : palette.main.p500,
     fontWeight: '500'
   },

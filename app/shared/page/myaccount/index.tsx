@@ -1,13 +1,13 @@
 import {
+    add_circle,
     brand,
     categories,
     drug,
     edit,
-    eyeFilled,
-    help, homeLike,
+    homeLike,
     location, logout,
     notification,
-    order,
+    order, qrcode,
     security, store, storeprofile, switch_icon, truckInTracking,
     user,
     walletFilled,
@@ -15,8 +15,7 @@ import {
 import {CommonActions, useNavigation, useRoute} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import React, {useState} from "react";
-import Wrapper from "@/shared/component/wrapper";
-import {View, Image, TouchableOpacity, Alert} from "react-native";
+import {View, Image, TouchableOpacity, Alert, ScrollView} from "react-native";
 import {styles} from './styles';
 import Icon from "@/shared/component/icon";
 import Typography from "@/shared/component/typography";
@@ -28,11 +27,16 @@ import LoginService from "@/service/auth/LoginService.tsx";
 import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
 import Toastss from "@/shared/utils/Toast.tsx";
 import {semantic} from "@/shared/constants/colors.ts";
+import StoreDialog from "@/shared/page/myaccount/contactus";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import {IconButton} from "react-native-paper";
 
 export default function MyAccount() {
     const {navigate} = useNavigation<NavigationProps>();
     const userProfile = (new AuthSessionService()).getAuthSession();
     const { showLoading, hideLoading } = useLoading();
+    const [showContactUs, setShowContactUs] = useState<boolean>(false);
 
 
     function getAccountMenu(section: string) {
@@ -43,22 +47,15 @@ export default function MyAccount() {
                     leftIcon: <Icon icon={order} />,
                     onPress: () => navigate('orders'),
                 },
-                /*
-                {
-                    name: 'Voucher',
-                    leftIcon: <Icon icon={vocher} />,
-                    onPress: () => navigate('vouchers'),
-                },
-                */
                 {
                     name: 'Wishlist',
                     leftIcon: <Icon icon={homeLike} />,
                     onPress: () => navigate('wishlist'),
                 },
                 {
-                    name: 'Med Reminder',
-                    leftIcon: <Icon icon={drug} />,
-                    onPress: () => navigate('splashScreen'),
+                    name: 'My QR Code',
+                    leftIcon: <Icon icon={qrcode} />,
+                    onPress: () => navigate('qrcode'),
                 },
             ],
             accountSettings : [
@@ -109,7 +106,7 @@ export default function MyAccount() {
                 {
                     name: 'Notifications',
                     leftIcon: <Icon icon={notification} />,
-                    onPress: () => navigate('security'),
+                    onPress: () => navigate('notifications'),
                 },
                 {
                     name: 'Security',
@@ -169,15 +166,18 @@ export default function MyAccount() {
                 },
             ],
             support : [
+                /*
                 {
                     name: 'Help Center',
                     leftIcon: <Icon icon={help} />,
                     onPress: () => navigate('security'),
                 },
+
+                 */
                 {
                     name: 'Contact Us',
                     leftIcon: <Icon icon={security} />,
-                    onPress: () => navigate('security'),
+                    onPress: () => openContactUsModal(true),
                 },
             ]
         }
@@ -214,8 +214,9 @@ export default function MyAccount() {
                    })
                }
             }
+        } else {
+            menuItems.mystore.splice(1, 1)
         }
-
 
         if(Environment?.isSalesRepresentativeEnvironment()) {
             menuItems.general = [];
@@ -223,28 +224,21 @@ export default function MyAccount() {
             menuItems.mystore = [];
         }
 
-
         // @ts-ignore
         return menuItems[section]
     }
 
+    const openContactUsModal = (status : boolean) => {
+        setShowContactUs(status)
+    }
 
     return (
-        <Wrapper>
+        <WrapperNoScroll>
+            <HeaderWithIcon icon={user}  title={"MY ACCOUNT"}
+                            rightComponent={ <IconButton style={{alignItems : 'flex-end', opacity : 0}}  size={normalize(35)}  iconColor={'#FFF'} icon={add_circle}  />}
+            />
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                <View style={styles.profileText}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon icon={user} />
-                        <Typography
-                            style={{
-                                fontWeight: '700',
-                                fontSize: 24,
-                                marginLeft: normalize(10),
-                            }}>
-                            My Account
-                        </Typography>
-                    </View>
-                </View>
                 <View style={styles.profileInfo}>
                     <View style={{
                         flexDirection: 'row',
@@ -274,7 +268,7 @@ export default function MyAccount() {
                 }
 
                 {
-                    getAccountMenu("mystore").length > 0 ?
+                    getAccountMenu("accountSettings").length > 0 ?
                     <Section title="Account Settings" elements={getAccountMenu("accountSettings")} />
                         : <></>
                 }
@@ -285,6 +279,9 @@ export default function MyAccount() {
                 <Section title="Application Settings" elements={getAccountMenu("applicationSettings")} />
                 <Section title="Support" elements={getAccountMenu("support")} />
             </View>
-        </Wrapper>
+            <StoreDialog visible={showContactUs} onClose={() => openContactUsModal(false)} />
+            </ScrollView>
+            <View style={{height : normalize(90), backgroundColor : 'rgba(0, 0, 0, 0)'}}></View>
+        </WrapperNoScroll>
     );
 }

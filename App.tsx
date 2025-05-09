@@ -8,6 +8,7 @@ import {ActivityIndicator,View} from "react-native";
 import {LoadingProvider} from "@/shared/utils/LoadingProvider";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import {bootUpApplication} from "@/notification/usePushNotification.ts";
+import {InternetProvider} from "@/shared/helpers/InternetContext.tsx";
 const Stack = createStackNavigator<RootStackParamList>();
 
 
@@ -36,6 +37,7 @@ function App(): React.JSX.Element {
     return (
         <Provider store={store}>
             <NavigationContainer>
+                <InternetProvider>
                 <LoadingProvider>
                     <Stack.Navigator
                         // @ts-ignore
@@ -50,6 +52,7 @@ function App(): React.JSX.Element {
                         ))}
                     </Stack.Navigator>
                 </LoadingProvider>
+                </InternetProvider>
             </NavigationContainer>
         </Provider>
     );

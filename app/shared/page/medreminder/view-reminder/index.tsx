@@ -6,7 +6,7 @@ import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 import LinearGradient from "react-native-linear-gradient";
 import {styles} from "./styles"
 import * as Animatable from "react-native-animatable";
-import {TouchableOpacity, View, Text, Alert, FlatList} from "react-native";
+import {TouchableOpacity, View, Text, Alert, FlatList, StatusBar} from "react-native";
 import Icon from "@/shared/component/icon";
 import {arrowBack} from "@/assets/icons";
 import Typography from "@/shared/component/typography";
@@ -17,6 +17,7 @@ import {useLoading} from "@/shared/utils/LoadingProvider.tsx";
 import ButtonSheet from "@/shared/component/buttonSheet";
 import {normalize} from "@/shared/helpers";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import {design} from "@/shared/constants/colors.ts";
 
 export default function ViewReminder() {
     const [loading, setLoading] = useState(false);
@@ -24,8 +25,8 @@ export default function ViewReminder() {
     const route = useRoute();
     const [medication, setMedication] = useState<MedReminderSchedules>();
     const [taken, setTaken] = useState(false);
-    const pendingGradient = ["#FF5722", "#E64A19"];
-    const completedGradient =["#4CAF50", "#2E7D32"];
+    const pendingGradient = ["#FF5722", "#FF5722"];
+    const completedGradient =["#4CAF50", "#4CAF50"];
     const {showLoading, hideLoading} = useLoading();
     const [openIntervalDialog, setOpenIntervalDialog] = useState(false);
     const [interval, setInterval] = useState("");
@@ -134,6 +135,7 @@ export default function ViewReminder() {
     }
     return (
         <WrapperNoScrollNoDialogNoSafeArea>
+            <StatusBar backgroundColor={taken ? pendingGradient[0]  : completedGradient[0]} barStyle="light-content" />
             <LinearGradient colors={taken ? pendingGradient  : completedGradient} style={styles.header}>
                 <View style={styles.headerContent}>
                     <TouchableOpacity onPress={goBack}>

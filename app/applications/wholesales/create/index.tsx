@@ -1,5 +1,5 @@
 import {styles} from "@/applications/auth/createAccount/styles.ts";
-import {FlatList, Image, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, Platform, ScrollView, TouchableOpacity, View} from "react-native";
 import TitleAuth from "@/shared/component/titleAuth";
 import {normalize} from "@/shared/helpers";
 import {logo} from "@/assets/images";
@@ -18,8 +18,15 @@ import Typography from "@/shared/component/typography";
 import Toasts from "@/shared/utils/Toast.tsx";
 import FilePicker from "@/shared/utils/FilePicker.tsx";
 import createStoreRequest from "@/applications/wholesales/createStoreService";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import {CommonActions} from "@react-navigation/native";
+import Header from "@/shared/component/header";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import {semantic} from "@/shared/constants/colors.ts";
 
-export default function CreateWholesales() {
+// @ts-ignore
+export default function CreateWholesales({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const [business_name, setBusiness_name] = useState("");
@@ -160,11 +167,21 @@ export default function CreateWholesales() {
 
             setIsLoading(true);
             createStoreRequest.post("account/create-store", data).then((response) => {
-                setIsLoading(false);
                 if(response.data.status === true){
-                    Toasts("Hurray, Account created successfully.");
+                    new AuthSessionService().autoLogin().then(function (response) {
+                        if(response) {
+                            Toasts("Hurray, Your Business has been created successfully.");
+                            setIsLoading(false);
+                            CommonActions.reset({
+                                index: 0, // Set the index of the active screen
+                                routes: [{ name: 'storeSelector' }], // Replace with your target screen
+                            })
+                            navigation.replace("storeSelector");
+                        }
+                    })
                 } else {
-
+                    setIsLoading(false);
+                    Toasts("There was an error creating your account, please try again.");
                 }
             });
 
@@ -172,115 +189,122 @@ export default function CreateWholesales() {
     }
 
     return (
-        <Wrapper loading={isLoading} titleLoader={"Creating store Please wait..."}>
-            <View style={styles.container}>
-                <View style={styles.titleImageContainer}>
-                    <TitleAuth title="Create Your Store" />
-                    <Image
-                        style={{
-                            width: normalize(100),
-                            height: normalize(60),
-                            marginTop: normalize(10)
-                        }}
-                        source={logo}
-                    />
+        <WrapperNoScroll  titleLoader={"Creating store Please wait..."}>
+            <HeaderWithIcon title="Create Your Store" />
+            <ScrollView style={{   width: '100%', backgroundColor: semantic.fill.f03, borderTopEndRadius: normalize(20), borderTopStartRadius: normalize(20),}} showsVerticalScrollIndicator={false}>
+                <View style={styles.container}>
+                    <View style={styles.titleImageContainer}>
+                        <TitleAuth title="Create Your Store" />
+                        <Image
+                            style={{
+                                width: normalize(100),
+                                height: normalize(60),
+                                marginTop: normalize(10)
+                            }}
+                            source={logo}
+                        />
+                    </View>
+                    <View style={styles.form}>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                leftIcon={<Icon icon={store} />}
+                                label="Business name"
+                                value={business_name}
+                                onChangeText={(name) => setBusiness_name(name)}
+                                placeholder="Enter Your Business name"
+                                keyboardType="default"
+                            />
+                            {business_nameError !== '' ? <ErrorText>{business_nameError}</ErrorText> : ''}
+                        </View>
+                        <View style={styles.formControl}>
+                            <FilePicker label={"Business Certificate"}  onFileSelected={handleBusinessCertificate}/>
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <FilePicker label={"Premises Licence"} onFileSelected={handleBusinessPremises}/>
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                leftIcon={<Icon icon={phone} />}
+                                label="Business Phone Number"
+                                value={business_phone}
+                                onChangeText={(phone) => setBusiness_phone(phone)}
+                                placeholder="Business Phone Number"
+                                keyboardType={"phone-pad"}
+                            />
+                            {business_phoneError !== '' ? <ErrorText>{business_phoneError}</ErrorText> : ''}
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                leftIcon={<Icon icon={mail} />}
+                                label="Business Email Address"
+                                value={business_email}
+                                onChangeText={(email) => setBusiness_email(email)}
+                                placeholder="Business Email Address"
+                                keyboardType={"email-address"}
+                            />
+                            {business_emailError !== '' ? <ErrorText>{business_emailError}</ErrorText> : ''}
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                leftIcon={<Icon icon={location} />}
+                                label="Business Address Line 1"
+                                value={business_address_1}
+                                onChangeText={(address_1) => setBusiness_address_1(address_1)}
+                                placeholder="Business Address Line 1"
+                                keyboardType={"default"}
+                            />
+                            {business_address_1Error !== '' ? <ErrorText>{business_address_1Error}</ErrorText> : ''}
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                leftIcon={<Icon icon={location} />}
+                                label="Business Address Line 2"
+                                value={business_address_2}
+                                onChangeText={(address_2) => setBusiness_address_2(address_2)}
+                                placeholder="Business Address Line 2"
+                                keyboardType={"default"}
+                            />
+                            {business_address_2Error !== '' ? <ErrorText>{business_address_2Error}</ErrorText> : ''}
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                label="State"
+                                placeholder="State"
+                                editable={false}
+                                value={state?.name}
+                                onPressIn={() => triggerStateDialog(true)}
+                                rightIcon={<Icon icon={location} />}
+                            />
+                            {selectedStateError !== '' ? <ErrorText>{selectedStateError}</ErrorText> : ''}
+                        </View>
+
+                        <View style={styles.formControl}>
+                            <Input
+                                label="Town"
+                                placeholder="Town"
+                                value={town?.name}
+                                editable={false}
+                                onPressIn={() => triggerTownDialog(true)}
+                                rightIcon={<Icon icon={location} />}
+                            />
+                            {selectedTownError !== '' ? <ErrorText>{selectedTownError}</ErrorText> : ''}
+                        </View>
+                        <Button title="Create Store" loadingText="Creating store Please wait..." loading={isLoading} disabled={isLoading} onPress={createStore}  />
+                        {
+                            Platform.OS === 'ios' ?
+                                <View style={{height: normalize(60)}}/>
+                                : <></>
+                        }
+                    </View>
                 </View>
-
-                <View style={styles.form}>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            leftIcon={<Icon icon={store} />}
-                            label="Business name"
-                            value={business_name}
-                            onChangeText={(name) => setBusiness_name(name)}
-                            placeholder="Enter Your First Name"
-                            keyboardType="default"
-                        />
-                        {business_nameError !== '' ? <ErrorText>{business_nameError}</ErrorText> : ''}
-                    </View>
-                    <View style={styles.formControl}>
-                        <FilePicker label={"Business Certificate"}  onFileSelected={handleBusinessCertificate}/>
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <FilePicker label={"Premises Licence"} onFileSelected={handleBusinessPremises}/>
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            leftIcon={<Icon icon={phone} />}
-                            label="Business Phone Number"
-                            value={business_phone}
-                            onChangeText={(phone) => setBusiness_phone(phone)}
-                            placeholder="Business Phone Number"
-                            keyboardType={"phone-pad"}
-                        />
-                        {business_phoneError !== '' ? <ErrorText>{business_phoneError}</ErrorText> : ''}
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            leftIcon={<Icon icon={mail} />}
-                            label="Business Email Address"
-                            value={business_email}
-                            onChangeText={(email) => setBusiness_email(email)}
-                            placeholder="Business Email Address"
-                            keyboardType={"email-address"}
-                        />
-                        {business_emailError !== '' ? <ErrorText>{business_emailError}</ErrorText> : ''}
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            leftIcon={<Icon icon={location} />}
-                            label="Business Address Line 1"
-                            value={business_address_1}
-                            onChangeText={(address_1) => setBusiness_address_1(address_1)}
-                            placeholder="Business Address Line 1"
-                            keyboardType={"default"}
-                        />
-                        {business_address_1Error !== '' ? <ErrorText>{business_address_1Error}</ErrorText> : ''}
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            leftIcon={<Icon icon={location} />}
-                            label="Business Address Line 2"
-                            value={business_address_2}
-                            onChangeText={(address_2) => setBusiness_address_2(address_2)}
-                            placeholder="Business Address Line 2"
-                            keyboardType={"default"}
-                        />
-                        {business_address_2Error !== '' ? <ErrorText>{business_address_2Error}</ErrorText> : ''}
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            label="State"
-                            placeholder="State"
-                            editable={false}
-                            value={state?.name}
-                            onPressIn={() => triggerStateDialog(true)}
-                            rightIcon={<Icon icon={location} />}
-                        />
-                        {selectedStateError !== '' ? <ErrorText>{selectedStateError}</ErrorText> : ''}
-                    </View>
-
-                    <View style={styles.formControl}>
-                        <Input
-                            label="Town"
-                            placeholder="Town"
-                            value={town?.name}
-                            editable={false}
-                            onPressIn={() => triggerTownDialog(true)}
-                            rightIcon={<Icon icon={location} />}
-                        />
-                        {selectedTownError !== '' ? <ErrorText>{selectedTownError}</ErrorText> : ''}
-                    </View>
-                    <Button title="Create Store" loadingText="Creating store Please wait..." loading={isLoading} disabled={isLoading} onPress={createStore}  />
-                </View>
-            </View>
+            </ScrollView>
             <ButtonSheet onClose={() => triggerStateDialog(false)} dispatch={openStateDialog} height={normalize(500)}>
                 {
                     isStateLoading
@@ -340,6 +364,6 @@ export default function CreateWholesales() {
                 }
 
             </ButtonSheet>
-        </Wrapper>
+        </WrapperNoScroll>
     )
 }

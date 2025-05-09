@@ -82,10 +82,8 @@ const DeliveryMethodList = function()
 
     return (
         <WrapperNoScroll loading={isLoading}>
+            <HeaderWithIcon title="Delivery Method" />
             <View style={styles.container}>
-                <View style={styles.headerBack}>
-                    <HeaderWithIcon title="Delivery Method" />
-                </View>
                 {
                     isLoading ? <></>
                         :
@@ -98,7 +96,7 @@ const DeliveryMethodList = function()
                         </ScrollView>
                 }
             </View>
-            <ButtonSheet  onClose={() => setOpenDialog(false)} dispatch={openDialog} height={normalize(300)}>
+            <ButtonSheet  onClose={() => setOpenDialog(false)} dispatch={openDialog} height={normalize(280)}>
                 <View style={{padding: normalize(24)}}>
                     <TouchableOpacity onPress={() => setOpenDialog(false)} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Typography style={{fontWeight: '700', fontSize: normalize(18), marginBottom: normalize(10)}}>{"MY ADDRESS"}</Typography>

@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import HeaderWithIcon from "@/shared/component/headerBack";
-import {ScrollView, View} from "react-native";
+import {Dimensions, ScrollView, View} from "react-native";
 import {styles} from './styles'
 import Order from "@/shared/page/orders/components/order";
 import TopNavigation, {TopNavigationProps} from "@/shared/page/orders/components/topNavigation";
@@ -12,18 +12,19 @@ import OrderService from "@/service/order/OrderService.tsx";
 import {OrderListInterface} from "@/service/order/interface/OrderListInterface.tsx";
 import LottieView from "lottie-react-native";
 import Typography from "@/shared/component/typography";
+import OverlayLoader from "@/shared/component/overlayLoader";
+import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 export default function Orders() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [orderItemList, setOrderItemList] = useState<OrderListInterface[]>([]);
     const orderService = new OrderService();
-    useFocusEffect(
-        useCallback(() => {
-            // This will run whenever the screen comes into focus
-            loadOrders("In Progress")
-        }, [])
-    );
 
+    useEffectOnce(() => {
+        loadOrders("In Progress")
+    }, [])
+
+    const height = Dimensions.get("window").height - normalize(500);
 
     function loadOrders(orderType : string) {
         setIsLoading(true);
@@ -43,30 +44,33 @@ export default function Orders() {
 
 
     return (
-        <WrapperNoScroll loading={isLoading}>
+        <WrapperNoScroll>
+            <HeaderWithIcon  title={"MY ORDERS"} />
             <View style={{
-                paddingHorizontal: normalize(20),
-                paddingVertical: normalize(10),
-                height: normalize(100),
+                height: normalize(80),
+                marginTop: normalize(-20),
                 backgroundColor : semantic.background.white.w101
             }}>
-                <HeaderWithIcon  title={"MY ORDERS"} />
+                <View style={{ flex : 1, paddingHorizontal: normalize(10)}}>
                 <TopNavigation onChange={onTabSelected} />
+                </View>
             </View>
+            <View style={{flex: 1, height: '100%'}}>
             {
-                isLoading ? <></> :   <ScrollView showsVerticalScrollIndicator={false}>
+                isLoading ? <OverlayLoader height={height}  loading={isLoading} title={""} /> :
+                    <ScrollView style={{height : '100%'}} showsVerticalScrollIndicator={false}>
 
                     {
                         orderItemList.length === 0 ?
-                            <View style={{flex : 1, flexDirection : "column", justifyContent : "center", alignItems : "center"}}>
+                            <View style={{paddingHorizontal : normalize(50),flex : 1, flexDirection : "column", justifyContent : "center", alignItems : "center"}}>
                                 <LottieView
                                     source={require("@/assets/order_empty.json")}
                                     autoPlay
                                     resizeMode="contain"
                                     loop={false}
-                                    style={{   width: 500, height: 400,}}
+                                    style={{   width: 400, height: 300,}}
                                 />
-                                <Typography>No Order Found !</Typography>
+                                <Typography style={{textAlign : 'center',alignSelf : 'center',fontWeight : 'regular', fontSize : normalize(16)}}>No orders found just yet 🛍️ Start shopping to place your first one!</Typography>
                             </View>
                             :
                             <View style={styles.container}>
@@ -89,6 +93,7 @@ export default function Orders() {
 
                 </ScrollView>
             }
+            </View>
         </WrapperNoScroll>
     )
 }

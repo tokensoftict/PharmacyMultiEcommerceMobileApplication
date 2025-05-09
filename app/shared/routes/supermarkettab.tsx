@@ -1,16 +1,16 @@
 import {
     home as HomeIcon,
     myAccount,
-    listCart, categories, qrcode,
+    listCart, categories, qrcode, med_reminder,
 } from '@/assets/icons';
 import Cart from "@/shared/page/cart";
 import Categories from "@/shared/page/categories";
 import MyAccount from "@/shared/page/myaccount";
-import QrcodeScreen from "@/shared/page/qrcode";
 import Login from "@/applications/auth/login";
 import Environment from "@/shared/utils/Environment.tsx";
 import {useNavigation} from "@react-navigation/native";
-import SupermarketHome from "@/applications/supermarket/home/supermarketHome.tsx";
+import SupermarketHome from "@/applications/supermarket/home/supermarketHome";
+import MedReminderNavigationStack from "@/shared/routes/med_reminder_navigation";
 
 // @ts-ignore
 const RequireLogin = ({ children, fallback }) => {
@@ -49,14 +49,14 @@ export default [
         icon: listCart,
         component:withAuth(Cart),
     },
-
     {
         id: '4',
-        displayName: 'QR Code',
-        name: 'qrcode',
-        icon: qrcode,
-        component: withAuth(QrcodeScreen),
+        displayName: 'Reminder',
+        name: 'reminder',
+        icon: med_reminder,
+        component: withAuth(MedReminderNavigationStack),
     },
+
     {
         id: '5',
         displayName: 'Account',

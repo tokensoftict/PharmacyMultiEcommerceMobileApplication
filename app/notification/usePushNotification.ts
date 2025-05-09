@@ -2,9 +2,14 @@ import {PermissionsAndroid, Platform} from "react-native";
 import messaging from "@react-native-firebase/messaging";
 import {store} from "@/redux/store/store.tsx";
 import * as action from "@/redux/actions";
-import notifee, {EventType} from "@notifee/react-native";
+import notifee from "@notifee/react-native";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import {getApp} from "@react-native-firebase/app";
+import SpInAppUpdates, {
+    NeedsUpdateResponse,
+    IAUUpdateKind,
+    StartUpdateOptions,
+} from 'sp-react-native-in-app-updates';
 
 
 const requestUserPermission = async () => {
@@ -28,6 +33,24 @@ const requestUserPermission = async () => {
 
 }
 
+const checkForUpdate = function() {
+    const inAppUpdates = new SpInAppUpdates(
+        false // isDebug
+    );
+    inAppUpdates.checkNeedsUpdate().then((result) => {
+        if (result.shouldUpdate) {
+            let updateOptions: StartUpdateOptions = {};
+            if (Platform.OS === 'android') {
+                updateOptions = {
+                    updateType: IAUUpdateKind.FLEXIBLE,
+                };
+            }
+            inAppUpdates.startUpdate(updateOptions);
+        }
+    });
+}
+
+
 const getToken = async () => {
 
     try {
@@ -40,11 +63,26 @@ const getToken = async () => {
 
 }
 
+
+export async function requestAllNotificationPermissions() {
+    await requestUserPermission();
+    if (Platform.OS === 'android' && Platform.Version >= 33) {
+        await notifee.requestPermission();
+    }
+
+}
+
 export const bootUpApplication = async () => {
     const authService = new AuthSessionService();
-    authService.setLaunchPage(JSON.stringify({"page" : "supermarket", "extraData" : {}}));
+    const intro_page_status = await authService.getIntroPageStatus();
+    if(intro_page_status === "NO") {
+        await authService.destroySession();
+        authService.setLaunchPage(JSON.stringify({"page" : "introSlider", "extraData" : {}}));
+    } else{
+        authService.setLaunchPage(JSON.stringify({"page" : "supermarket", "extraData" : {}}));
+    }
     authService.setEnvironment("supermarket"); //set environment to be supermarket by default because supermarket is the default space
-    await requestUserPermission()
+    await requestAllNotificationPermissions();
     await getToken();
     await getApp().messaging().subscribeToTopic("psgdc_notification");
     await getApp().messaging().subscribeToTopic("psgdc_notification_testing");
@@ -107,5 +145,6 @@ export const bootUpApplication = async () => {
 
     }
 
+    checkForUpdate();
 
 }

@@ -17,15 +17,15 @@ export const _styles = (isFocus: boolean, isDarkMode: boolean, multiline :boolea
         },
         input: {
             flex: 1,
-            padding: normalize(8),
+            padding: normalize(5),
             color: isDarkMode ? semantic.text.white : semantic.text.black,
-            fontSize: normalize(14),
+            fontSize: normalize(13),
             height:  multiline ? normalize(150) : 'auto',
-            textAlignVertical : 'top'
+            textAlignVertical : 'center'
         },
         label: {
             fontSize: normalize(16),
             fontWeight: '500',
-            color: isDarkMode ? semantic.text.grey : semantic.text.black
+            color: semantic.text.grey
         }
     });

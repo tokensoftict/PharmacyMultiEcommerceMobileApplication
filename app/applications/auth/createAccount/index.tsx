@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Wrapper from "@/shared/component/wrapper";
 import Typography from "@/shared/component/typography";
 import Input from "@/shared/component/input";
-import {Image, View} from "react-native";
+import {Image, ScrollView, View} from "react-native";
 import { Button } from "@/shared/component/buttons";
 import { styles } from "./styles";
 import TitleAuth from "@/shared/component/titleAuth";
@@ -12,8 +12,9 @@ import {normalize} from "@/shared/helpers";
 import {logo} from "@/assets/images";
 import ErrorText from "@/shared/component/ErrorText";
 import SignUpService from "@/service/auth/SignUpService.tsx";
-import { useNavigation } from "@react-navigation/native";
+import {CommonActions, useNavigation} from "@react-navigation/native";
 import { NavigationProps } from "@/shared/routes/stack";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 export default function CreateAccount() {
   const navigation = useNavigation<NavigationProps>()
@@ -102,7 +103,16 @@ export default function CreateAccount() {
             setMessageError(response.message);
           }
         } else {
-          navigation.navigate('enterOTP');
+          if(response.hasOwnProperty('trashed') && response.trashed){
+            CommonActions.reset({
+              index: 0, // Set the index of the active screen
+              routes: [{ name: 'restoreMyAccount' }], // Replace with your target screen
+            })
+            navigation.navigate('restoreMyAccount');
+          } else {
+            // @ts-ignore
+            navigation.navigate('enterOTP',{otp : false});
+          }
         }
       }, function (error) {
         setIsLoading(false);
@@ -115,7 +125,8 @@ export default function CreateAccount() {
 
 
   return (
-      <Wrapper loading={isLoading} titleLoader={"Signing Up Please wait..."}>
+      <WrapperNoScroll titleLoader={"Signing Up Please wait..."}>
+      <ScrollView>
         <View style={styles.container}>
           <View style={styles.titleImageContainer}>
             <TitleAuth title="Create your Account" />
@@ -203,7 +214,8 @@ export default function CreateAccount() {
             <Typography onPress={goBackToSignIn} style={styles.link}>{"Sign In"}</Typography>
           </View>
         </View>
-      </Wrapper>
+      </ScrollView>
+      </WrapperNoScroll>
   )
 }
 

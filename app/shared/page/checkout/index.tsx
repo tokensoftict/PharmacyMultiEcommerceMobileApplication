@@ -1,23 +1,26 @@
-import React from 'react';
 import { View } from "react-native";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import { normalize } from "@/shared/helpers";
-import useDarkMode from "@/shared/hooks/useDarkMode";
-import { semantic } from "@/shared/constants/colors";
 import CheckoutStepper from "@/shared/page/checkout/components/checkForm.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
+import {GlobalProvider} from "@/shared/helpers/GlobalContext.tsx";
+import {PAYSTACK_PUBLIC_KEY} from "@env";
+import { PaystackProvider } from "react-native-paystack-webview/production/lib/PaystackProvider";
+
+
 
 
 export default function Checkout() {
-    const {isDarkMode} = useDarkMode()
+
     return (
-        <View style={{flex: 1,  backgroundColor: isDarkMode ? semantic.background.red.d500 : semantic.background.white.w500}}>
-            <View style={{paddingHorizontal: normalize(24)}}>
-                <View style={{height: normalize(60)}} />
+        <PaystackProvider publicKey={PAYSTACK_PUBLIC_KEY} currency="NGN">
+        <GlobalProvider>
+            <WrapperNoScroll >
                 <HeaderWithIcon title={"CHECKOUT"} />
-            </View>
-            <View style={{height: normalize(10)}} />
-            <CheckoutStepper />
-            <View style={{height: normalize(10)}} />
-        </View>
+                <CheckoutStepper />
+                <View style={{height: normalize(10)}} />
+            </WrapperNoScroll>
+        </GlobalProvider>
+        </PaystackProvider>
     );
 }

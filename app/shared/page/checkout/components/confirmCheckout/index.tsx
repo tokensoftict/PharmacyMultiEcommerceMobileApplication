@@ -5,38 +5,30 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    Text,
     ActivityIndicator, Alert
 } from "react-native";
 import {normalize} from "@/shared/helpers";
-import HeaderWithIcon from "@/shared/component/headerBack";
 import {close, shoppingBag} from "@/assets/icons";
 import React, {useCallback, useState} from "react";
 import {palette, semantic} from "@/shared/constants/colors.ts";
 import Typography from "@/shared/component/typography";
 import {currencyType} from "@/shared/constants/global.ts";
 import {useFocusEffect} from "@react-navigation/native";
-import CartService from "@/service/cart/CartService.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
 import {CartInterface} from "@/service/cart/interface/CartInterface.tsx";
 import useDarkMode from "@/shared/hooks/useDarkMode.tsx";
-import List from "@/shared/component/list";
-import CartItemHorizontalList from "@/shared/component/cartItemHorizontalList";
 import OverlayLoader from "@/shared/component/overlayLoader";
 import CheckBox from "@/shared/component/checkbox";
 import CheckoutService from "@/service/checkout/CheckoutService.tsx";
 import ButtonSheet from "@/shared/component/buttonSheet";
 import Icon from "@/shared/component/icon";
-import Input from "@/shared/component/input";
 import ErrorText from "@/shared/component/ErrorText";
-import MedReminderService from "@/service/medReminder/MedReminderService.tsx";
-import Toastss from "@/shared/utils/Toast.tsx";
 import Environment from "@/shared/utils/Environment.tsx";
+import SubHeader from "@/shared/component/subHeader";
+import {useGlobal} from "@/shared/helpers/GlobalContext.tsx";
 
 export default function ConfirmCheckout({ onValidate }: { onValidate: (validateFn: () => Promise<boolean>) => void })  {
-    const [isCartLoading, setIsCartLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [cartItemList, setCartItemList] = useState<CartInterface>();
     const {isDarkMode} = useDarkMode();
     const checkOutService = new CheckoutService();
     const [couponDialog, setCouponDialog] = useState(false);
@@ -45,53 +37,29 @@ export default function ConfirmCheckout({ onValidate }: { onValidate: (validateF
     const [applyCouponLoading, setApplyCouponLoading] = useState(false);
     const [removeCouponLoading, setRemoveCouponLoading] = useState(false);
     const [hasCoupon, setHasCoupon] = useState(undefined);
-    const { height } = Dimensions.get('window');
-    const isSmallScreen = height < 700; // iPhone SE and other small devices
-    const componentHeight = isSmallScreen ? height * 0.35 : height * 0.43;
-
+    const {checkoutButton, setCheckoutButton} = useGlobal();
     const [confirmOrderDetails, setConfirmOrderDetails] = useState<any>({
         'totalToPay' : 0,
         'totalToPayFormatted' : 0.0,
         'paymentAnalysis' : []
     });
 
+
     useFocusEffect(
         useCallback(() => {
             // This will run whenever the screen comes into focus
-            loadCartItems();
+            loadConfirmOrder();
         }, [])
     );
 
 
-
-    function loadCartItems() {
-        setIsCartLoading(true);
-        (new CartService()).get().then((response) => {
-            setIsCartLoading(false);
-            if(response.data.status === true) {
-                setCartItemList(response.data)
-                loadConfirmOrder();
-            }else {
-                setIsCartLoading(response.data.message);
-            }
-        }, (error) => {
-            setIsCartLoading(false);
-            Toasts('There was an error while loading cart');
-        })
-    }
-
-    function renderItem(item: any, key: number) {
-        return <View key={key} style={{marginBottom: 10, flex: 1}}>
-            <CartItemHorizontalList  product={item} />
-        </View>
-    }
-
     function loadConfirmOrder() {
         setIsLoading(true);
-
+        setCheckoutButton(false);
         checkOutService.getConfirmOrder().then((response) => {
             if(response.data.status) {
                 setConfirmOrderDetails(response.data.data);
+                setCheckoutButton(true);
                 response.data.data.paymentAnalysis.forEach((item: any) => {
                     if(item?.hasCoupon === true) {
                         setHasCoupon(item);
@@ -217,52 +185,19 @@ export default function ConfirmCheckout({ onValidate }: { onValidate: (validateF
         <View style={{
             flex: 1,
         }}>
-            <View style={{justifyContent : "space-between", flexDirection : "row",paddingVertical: normalize(10)}}>
-                <View>
-                    <HeaderWithIcon icon={shoppingBag}   title="Your Order" />
-                </View>
-                {
-                    Environment.isSuperMarketEnvironment() ?
-                        <View>
-                            <TouchableOpacity onPress={() => {setCouponDialog(true);}}>
-                                <Typography style={{color : semantic.alert.danger.d500, fontSize: normalize(12), fontWeight: '600', marginTop : normalize(4), marginRight: normalize(6)}}>{
-                                    // @ts-ignore
-                                    hasCoupon !== undefined ? "Remove "+hasCoupon.discount_type : "Apply Coupon or Voucher ?"
-                                }</Typography>
-                            </TouchableOpacity>
-                        </View> :
-                        <></>
-                }
-            </View>
-            <View style={{height:normalize(componentHeight)}}>
-                {
-                    isCartLoading ?
-                        <View style={{height : '100%'}}>
-                            <OverlayLoader loading={isCartLoading} title={""} height={normalize(componentHeight)} />
-                        </View> :
-                        <>
-
-                            {
-                                (cartItemList?.data.items ?? []).length > 0  ?
-
-                                    <View  style={{height : normalize(20), flex: 1, paddingHorizontal: normalize(0)}}>
-                                        <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop : normalize(-5), flex: 1}}>
-                                            <View style={{height: normalize(20)}} />
-                                            <List
-                                                between
-                                                data={cartItemList?.data.items ?? []}
-                                                rows={1}
-                                                renderItem={renderItem}
-                                            />
-                                        </ScrollView>
-                                    </View>
-                                    :
-                                    <></>
-                            }
-
-                        </>
-                }
-            </View>
+            {
+                Environment.isSuperMarketEnvironment() ?
+                    <View style={{zIndex:20, right : normalize(90), top : normalize(23), position : 'absolute',display : "flex", marginRight: normalize(-100)}}>
+                        <TouchableOpacity onPress={() => {setCouponDialog(true);}}>
+                            <Typography style={{color : semantic.alert.danger.d500, fontSize: normalize(12), fontWeight: '600', marginTop : normalize(4)}}>{
+                                // @ts-ignore
+                                hasCoupon !== undefined ? "Remove "+hasCoupon.discount_type : "Apply Coupon or Voucher ?"
+                            }</Typography>
+                        </TouchableOpacity>
+                    </View> :
+                    <></>
+            }
+            <SubHeader icon={shoppingBag}   title="Confirm Order" />
             <View style={{
                 position : 'absolute',
                 left : normalize(-60),
@@ -276,7 +211,7 @@ export default function ConfirmCheckout({ onValidate }: { onValidate: (validateF
                     isLoading
                         ?
                         <View style={{height: isLoading ? 100 : 'auto'}}>
-                            <OverlayLoader loading={isCartLoading} title={""} height={100} />
+                            <OverlayLoader loading={isLoading} title={""} height={100} />
                         </View>
                         :
                         <>
@@ -284,21 +219,22 @@ export default function ConfirmCheckout({ onValidate }: { onValidate: (validateF
                                 confirmOrderDetails.paymentAnalysis.length > 0 &&
                                 <View style={{ flex : 1, paddingVertical : normalize(15), flexDirection : 'column', justifyContent : 'space-between', height: 'auto', backgroundColor : semantic.alert.danger.d100}}>
                                     {
+
                                         confirmOrderDetails.paymentAnalysis.map((item: any, index : number) => {
                                             return (
 
-                                                    <View key={item.name} style={{ paddingHorizontal:normalize(10), paddingVertical : normalize(5),  borderStyle:"solid",  flexDirection: 'row', alignItems: 'flex-start',  justifyContent : 'space-between'}}>
-                                                        <View style={{width:'72%', display : 'flex', flexDirection : 'row'}}>
-                                                            {
-                                                                item?.id &&  <CheckBox onChange={() => toggleExtraTotal(item)} value={item.autoCheck} />
+                                                <View key={item.name} style={{ paddingHorizontal:normalize(10), paddingVertical : normalize(5),  borderStyle:"solid",  flexDirection: 'row', alignItems: 'flex-start',  justifyContent : 'space-between'}}>
+                                                    <View style={{width:'72%', display : 'flex', flexDirection : 'row'}}>
+                                                        {
+                                                            item?.id &&  <CheckBox onChange={() => toggleExtraTotal(item)} value={item.autoCheck} />
 
-                                                            }
-                                                            <View style={{width : normalize(4)}}></View>
-                                                            <Typography numberOfLines={1} style={{fontWeight :'500', width : '100%', fontSize: normalize(12)}}>{item.name}</Typography>
-                                                        </View>
-
-                                                        <Typography style={{fontWeight :'500'}}>{currencyType} {item.amount_formatted}</Typography>
+                                                        }
+                                                        <View style={{width : normalize(4)}}></View>
+                                                        <Typography numberOfLines={1} style={{fontWeight :'500', width : '100%', fontSize: normalize(12)}}>{item.name}</Typography>
                                                     </View>
+
+                                                    <Typography style={{fontWeight :'500'}}>{currencyType} {item.amount_formatted}</Typography>
+                                                </View>
 
                                             )
                                         })
@@ -329,7 +265,7 @@ export default function ConfirmCheckout({ onValidate }: { onValidate: (validateF
                         </>
                 }
             </View>
-            <ButtonSheet dispatch={couponDialog} height={normalize(240)}>
+            <ButtonSheet dispatch={couponDialog} height={normalize(220)}>
                 <View style={{padding: normalize(24)}}>
                     <TouchableOpacity onPress={() => setCouponDialog(false)} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Typography style={{fontWeight: '700', fontSize: normalize(18), marginBottom: normalize(10)}}>{

@@ -2,33 +2,13 @@ import { StyleSheet } from "react-native";
 import {normalize} from "@/shared/helpers";
 
 export const styles = StyleSheet.create({
-    header: {
-        flex: 0.2,
-        paddingTop: normalize(55),
-        borderBottomLeftRadius: normalize(15),
-        borderBottomRightRadius: normalize(15),
-        position: "relative",
-    },
     container: {
-        backgroundColor: "#f8f9fa",
-        flex : 0.8,
-        position: "absolute",
-        height: "100%",
+        flex : 1,
         width: "100%",
-        alignSelf: "center",
-        bottom: 0,
-        top: normalize(110),
-        shadowColor: "#000",
-        borderRadius: normalize(10),
-        shadowRadius: normalize(8),
-        elevation: normalize(3),
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.05,
+        flexDirection: "column",
+        display: "flex",
         paddingHorizontal: normalize(10),
-        paddingVertical: normalize(10),
+        height: '100%',
     },
     headerContent: {
         flexDirection: 'row',

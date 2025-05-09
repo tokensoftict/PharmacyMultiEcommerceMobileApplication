@@ -30,10 +30,13 @@ export default function Counter({onChange, cant = 1}: CounterProps) {
   }
 
   function onChangeText(number : string) {
-      if(number == "") {
-          number = "1";
+
+      if(number == ""){
+          setCounter(0)
+          return;
       }
 
+      onChange(parseInt(number), TypeChange.plus);
       setCounter(parseInt(number));
   }
 
@@ -46,7 +49,7 @@ export default function Counter({onChange, cant = 1}: CounterProps) {
       </TouchableOpacity>
       <TextInput
           keyboardType="numeric"
-          onChangeText={value => onChangeText(value)}
+          onChangeText={(value) => onChangeText(value)}
           value={count+""}
           style={styles.input}
       />

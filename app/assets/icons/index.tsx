@@ -76,4 +76,7 @@ export {default as storeprofile} from './storeprofile.png';
 export {default as upload_file} from './upload_file.png';
 export {default as file} from './file.png';
 export {default as dashboard} from './dashboard.png';
+export {default as call} from './call.png';
+export {default as whatsapp} from './whatsapp.png';
+export {default as med_reminder} from './med_reminder.png';
 

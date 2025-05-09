@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
-import { normalize } from "../../../shared/helpers";
-import {palette} from "../../../shared/constants/colors.ts";
+import { normalize } from "@/shared/helpers";
+import {palette} from "@/shared/constants/colors.ts";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: normalize(24)
+    paddingHorizontal: normalize(25),
+    marginTop: normalize(32),
   },
   titleImageContainer :{
     flexDirection: 'row',
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent : "space-between"
   },
   form: {

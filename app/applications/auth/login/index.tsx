@@ -7,7 +7,6 @@ import Icon from "@/shared/component/icon";
 import {eyeFilled, eyeOff, lock, mail} from "@/assets/icons";
 import { Button } from "@/shared/component/buttons";
 import Typography from "@/shared/component/typography";
-import Wrapper from "@/shared/component/wrapper";
 import CheckBox from "@/shared/component/checkbox";
 import LoginService from "@/service/auth/LoginService.tsx";
 import {normalize} from "@/shared/helpers";
@@ -16,6 +15,8 @@ import {logo} from "@/assets/images";
 import ErrorText from "@/shared/component/ErrorText";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
+import {CommonActions} from "@react-navigation/native";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 // @ts-ignore
 export default function Login({ navigation }) {
@@ -44,11 +45,11 @@ export default function Login({ navigation }) {
       setPasswordError('Password field is required');
     }else {
       setIsLoading(true);
+      setEmailError("");
+      setPasswordError("");
+      setMessageError("");
       loginService.login(email, password).then(async function (response: any) {
         setIsLoading(false);
-        setEmailError("");
-        setPasswordError("");
-        setMessageError("");
         if (response.status === false) {
           setPassword("");
           if (response.hasOwnProperty('email') && response.email !== false) {
@@ -61,19 +62,27 @@ export default function Login({ navigation }) {
             setMessageError(response.message);
           }
         } else {
-          const userProfile = await (new AuthSessionService().getAuthSession());
-          if(userProfile.data?.phone_verified_status === false){
-            Toasts("Please verify your phone number to continue!")
-            navigation.navigate('enterOTP'); // user have not verify there phone lets redirect to verify
-          }else{
-            Toasts('Login successful, please wait..');
-            setTimeout(() => {
-              if(userProfile.data.apps.length === 1){
-                navigation.replace("supermarket");
-              } else {
-                navigation.replace("storeSelector");
-              }
-            }, 1000)
+          if(response.hasOwnProperty('trashed') && response.trashed){
+            CommonActions.reset({
+              index: 0, // Set the index of the active screen
+              routes: [{ name: 'restoreMyAccount' }], // Replace with your target screen
+            })
+            navigation.navigate('restoreMyAccount');
+          } else {
+            const userProfile = await (new AuthSessionService().getAuthSession());
+            if (userProfile.data?.phone_verified_status === false) {
+              Toasts("Please verify your phone number to continue!")
+              navigation.navigate('enterOTP'); // user have not verify there phone lets redirect to verify
+            } else {
+              Toasts('Login successful, please wait..');
+              setTimeout(() => {
+                if (userProfile.data.apps.length === 1) {
+                  navigation.replace("supermarket");
+                } else {
+                  navigation.replace("storeSelector");
+                }
+              }, 1000)
+            }
           }
         }
       }, function (error){
@@ -86,7 +95,7 @@ export default function Login({ navigation }) {
     }
   }
   return (
-      <Wrapper>
+      <WrapperNoScroll>
         <View style={styles.container}>
           <View style={styles.titleImageContainer}>
             <TitleAuth title="Login Your Account" />
@@ -146,6 +155,6 @@ export default function Login({ navigation }) {
             <Typography onPress={signUp} style={styles.link}>{"Sign Up"}</Typography>
           </View>
         </View>
-      </Wrapper>
+      </WrapperNoScroll>
   )
 }

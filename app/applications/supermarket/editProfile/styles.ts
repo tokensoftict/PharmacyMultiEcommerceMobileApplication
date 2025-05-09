@@ -8,10 +8,10 @@ export const _styles = StyleSheet.create({
     flexDirection: 'column',
   },
   imageContainer: {
-    marginTop: normalize(30),
+    marginTop: normalize(20),
     alignSelf: 'center',
-    width: normalize(180),
-    height: normalize(180),
+    width: normalize(100),
+    height: normalize(100),
     marginRight: normalize(12),
   },
   image: {

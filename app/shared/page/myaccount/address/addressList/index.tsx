@@ -89,20 +89,34 @@ const AddressList = function()
     return (
         <WrapperNoScroll loading={isLoading}>
             <View style={styles.container}>
-                <View style={styles.headerBack}>
-                    <HeaderWithIcon title="MY ADDRESS" />
-                    <IconButton style={{marginTop: normalize(-10)}} size={normalize(30)} iconColor={'red'} icon={add_circle} onPress={() => {navigation.navigate('newAddress')}} />
-                </View>
+                <HeaderWithIcon
+                    title="MY ADDRESS"
+                    rightComponent={ <IconButton style={{alignItems : 'flex-end'}}  size={normalize(35)}  iconColor={'#FFF'} icon={add_circle} onPress={() => {navigation.navigate('newAddress')}} />}
+                />
                 {
-                    isLoading ? <></>
+                    isLoading
+                        ?
+                        <></>
                         :
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                            <ListCard
-                                value={addressSelected}
-                                onChange={onSelectAddress}
-                                options={ addressLists}
-                            />
-                        </ScrollView>
+                        (
+                            addressLists.length > 0 ?
+                                <ScrollView style={{paddingHorizontal : normalize(20)}} showsVerticalScrollIndicator={false}>
+                                    <ListCard
+                                        value={addressSelected}
+                                        onChange={onSelectAddress}
+                                        options={ addressLists}
+                                    />
+                                </ScrollView>
+                                :
+                                <View style={{ flex: 1,
+                                    paddingHorizontal: normalize(15),
+                                    justifyContent: 'center',}}>
+                                    <Typography style={{textAlign : 'center',alignSelf : 'center',fontWeight : 'regular', fontSize : normalize(16)}}>Looks like you haven’t added an address yet 🏡 Tap the button below to set one up!</Typography>
+                                    <View style={{paddingHorizontal : normalize(120), marginTop : normalize(10)}}>
+                                        <Button title="New Address" onPress={() =>navigation.navigate('newAddress') }/>
+                                    </View>
+                                </View>
+                        )
                 }
             </View>
             <ButtonSheet  onClose={() => setOpenDialog(false)} dispatch={openDialog} height={normalize(300)}>

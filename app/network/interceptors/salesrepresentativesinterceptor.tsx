@@ -1,11 +1,11 @@
 import {salesRepresentativeAxiosInstance} from '../internet';
-import AuthSessionService from "../../service/auth/AuthSessionService.tsx";
-import {UserProfile} from "../../service/auth/interfaces/UserProfile.tsx";
-
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
+import {UserProfile} from "@/service/auth/interfaces/UserProfile.tsx";
+import { SALES_REP_URL } from '@env';
 
 salesRepresentativeAxiosInstance.interceptors.request.use( async function (request) {
 
-    request.baseURL = 'http://rep.mystore.test:8001/api/v1/';
+    request.baseURL = SALES_REP_URL;
     request.headers['Content-Type'] = 'multipart/form-data';
 
 
@@ -38,7 +38,12 @@ salesRepresentativeAxiosInstance.interceptors.request.use( async function (reque
 
     return request;
 }, function (error) {
-    return Promise.reject(error);
+    return Promise.resolve({
+        data : {
+            status : false,
+            error : "There was error while processing request, please try again.",
+        }
+    });
 });
 
 
@@ -53,7 +58,7 @@ salesRepresentativeAxiosInstance.interceptors.response.use((response) => respons
                     error : error.response.data?.error
                 }
             })
-            break;
+
         case 404:
             return Promise.resolve({
                 data : {
@@ -68,7 +73,7 @@ salesRepresentativeAxiosInstance.interceptors.response.use((response) => respons
                     error : error.response.data?.error
                 }
             })
-            break;
+
         case 400:
             return Promise.resolve({
                 data : {

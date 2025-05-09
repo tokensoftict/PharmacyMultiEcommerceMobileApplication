@@ -1,23 +1,22 @@
 import {StyleSheet} from "react-native";
-import {semantic} from "../../../../constants/colors";
+import {design, semantic} from "../../../../constants/colors";
 import {normalize} from "@/shared/helpers";
 
 export const _styles = (isDarkMode: boolean) =>
     StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: isDarkMode ? semantic.background.red.d500 :  semantic.background.white.w500,
-            paddingHorizontal: normalize(10)
+            backgroundColor: semantic.background.white.w500,
+            flexDirection: 'column',
         },
         topSpace: {
             height: normalize(32),
         },
         headerBack: {
-            paddingHorizontal: normalize(10),
             display : 'flex',
             flexDirection : 'row',
             justifyContent : 'space-between',
-            paddingBottom: normalize(20),
+            backgroundColor :design.text1.background,
         },
         formContainer: {
             position: 'absolute',

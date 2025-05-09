@@ -42,7 +42,7 @@ export default function Header() {
       {
         Environment.isLogin() ?
             <View style={styles.row}>
-              <TouchableOpacity onPress={() => navigate('wishlist')}>
+              <TouchableOpacity onPress={() => navigate('notifications')}>
                 {isDarkMode ? (
                     <Icon customStyles={styles.iconSize} icon={homeNotificationsDark} />
                 ) : (

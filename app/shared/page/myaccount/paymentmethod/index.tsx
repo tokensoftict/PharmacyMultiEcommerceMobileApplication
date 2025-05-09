@@ -82,10 +82,8 @@ const PaymentMethodList = function()
 
     return (
         <WrapperNoScroll loading={isLoading}>
+            <HeaderWithIcon title="Payment Method" />
             <View style={styles.container}>
-                <View style={styles.headerBack}>
-                    <HeaderWithIcon title="Payment Method" />
-                </View>
                 {
                     isLoading ? <></>
                         :
@@ -98,7 +96,7 @@ const PaymentMethodList = function()
                         </ScrollView>
                 }
             </View>
-            <ButtonSheet  onClose={() => setOpenDialog(false)} dispatch={openDialog} height={normalize(350)}>
+            <ButtonSheet  onClose={() => setOpenDialog(false)} dispatch={openDialog} height={normalize(320)}>
                 <View style={{padding: normalize(24)}}>
                     <TouchableOpacity onPress={() => setOpenDialog(false)} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Typography style={{fontWeight: '700', fontSize: normalize(18), marginBottom: normalize(10)}}>{"MY ADDRESS"}</Typography>

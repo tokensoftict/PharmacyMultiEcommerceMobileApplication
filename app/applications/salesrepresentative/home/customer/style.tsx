@@ -1,8 +1,5 @@
-import {Dimensions, StyleSheet} from "react-native";
-import { normalize } from "@/shared/helpers";
-import {labels, palette} from "@/shared/constants/colors";
-
-
+import {StyleSheet} from "react-native";
+import {normalize} from "@/shared/helpers";
 const primaryColor = '#d32f2f';
 
 export const styles = StyleSheet.create({
@@ -13,90 +10,90 @@ export const styles = StyleSheet.create({
     },
     modalContainer: {
         backgroundColor: '#fefefe',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        paddingBottom: 20,
+        borderTopLeftRadius: normalize(24),
+        borderTopRightRadius: normalize(24),
+        paddingBottom: normalize(20),
         maxHeight: '90%',
     },
     header: {
         backgroundColor: primaryColor,
-        paddingTop: 40,
-        paddingBottom: 20,
+        paddingTop: normalize(40),
+        paddingBottom: normalize(20),
         alignItems: 'center',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
+        borderTopLeftRadius: normalize(24),
+        borderTopRightRadius: normalize(24),
     },
     closeBtn: {
         position: 'absolute',
-        right: 16,
-        top: 40,
-        zIndex: 10,
+        right: normalize(16),
+        top: normalize(40),
+        zIndex: normalize(10),
     },
     avatar: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: normalize(80),
+        height: normalize(80),
+        borderRadius: normalize(40),
         borderColor: '#fff',
-        borderWidth: 2,
-        marginBottom: 8,
+        borderWidth: normalize(2),
+        marginBottom: normalize(8),
     },
     customerName: {
-        fontSize: 20,
+        fontSize: normalize(20),
         fontWeight: 'bold',
         color: '#fff',
     },
     customerTag: {
-        fontSize: 14,
+        fontSize: normalize(14),
         color: '#f1f1f1',
     },
     contentContainer: {
-        padding: 16,
+        padding: normalize(16),
     },
     card: {
         backgroundColor: '#fff',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 16,
+        borderRadius: normalize(16),
+        padding: normalize(16),
+        marginBottom: normalize(16),
         shadowColor: '#000',
         shadowOpacity: 0.08,
-        shadowOffset: { width: 0, height: 3 },
-        shadowRadius: 6,
-        elevation: 4,
+        shadowOffset: { width: normalize(0), height: normalize(3) },
+        shadowRadius: normalize(6),
+        elevation: normalize(4),
     },
     cardTitle: {
-        fontSize: 16,
+        fontSize: normalize(16),
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: normalize(10),
         color: primaryColor,
     },
     label: {
         color: '#666',
-        marginTop: 10,
+        marginTop: normalize(10),
     },
     value: {
-        fontSize: 15,
+        fontSize: normalize(15),
         color: '#333',
     },
     fancyButtonWrapper: {
-        marginTop: 10,
+        marginTop: normalize(10),
     },
     fancyButtonText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: normalize(16),
     },
     fancyButtonShadowWrapper: {
-        borderRadius: 50,
+        borderRadius: normalize(50),
         backgroundColor: '#ff4b2b',
         shadowColor: '#000',
         shadowOpacity: 0.2,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 8,
-        elevation: 6, //
+        shadowOffset: { width: normalize(0), height: normalize(4) },
+        shadowRadius: normalize(8),
+        elevation: normalize(6), //
     },
     fancyButton: {
-        paddingVertical: 14,
-        borderRadius: 50,
+        paddingVertical: normalize(14),
+        borderRadius: normalize(50),
         alignItems: 'center',
         justifyContent: 'center',
     },

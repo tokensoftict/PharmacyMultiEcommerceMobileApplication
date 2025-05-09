@@ -1,17 +1,17 @@
-import Text, {FlatList, Image, Platform, ScrollView, TouchableOpacity, View} from 'react-native';
+import  {FlatList, Image, Platform, ScrollView, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 
-import HeaderWithIcon from '../../../../component/headerBack';
+import HeaderWithIcon from '@/shared/component/headerBack';
 
-import {Button} from '../../../../component/buttons';
-import {normalize} from '../../../../helpers';
-import Typography from '../../../../component/typography';
-import Input from '../../../../component/input';
-import {location} from '../../../../../assets/icons';
-import Icon from '../../../../component/icon';
-import CheckBox from '../../../../component/checkbox';
-import useDarkMode from '../../../../hooks/useDarkMode';
-import CustomStatusBar from '../../../../component/customStatusBar';
+import {Button} from '@/shared/component/buttons';
+import {normalize} from '@/shared/helpers';
+import Typography from '@/shared/component/typography';
+import Input from '@/shared/component/input';
+import {location} from '@/assets/icons';
+import Icon from '@/shared/component/icon';
+import CheckBox from '@/shared/component/checkbox';
+import useDarkMode from '@/shared/hooks/useDarkMode';
+import CustomStatusBar from '@/shared/component/customStatusBar';
 import {_styles} from './styles';
 import ButtonSheet from "@/shared/component/buttonSheet";
 import AddressService from "@/service/account/address/AddressService";
@@ -22,6 +22,7 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import {NavigationProps} from "@/shared/routes/stack.tsx";
 import useEffectOnce from "@/shared/hooks/useEffectOnce.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 
 const NewAddress = () => {
@@ -169,12 +170,8 @@ const NewAddress = () => {
 
 
     return (
-        <View style={styles.container}>
-            <CustomStatusBar />
-            <View style={styles.topSpace} />
-            <View style={styles.headerBack}>
-                <HeaderWithIcon title={formTitle} />
-            </View>
+        <WrapperNoScroll>
+            <HeaderWithIcon title={formTitle} />
             {
                 isLoadingAddress
                     ?
@@ -217,18 +214,21 @@ const NewAddress = () => {
                                 </View>
 
                                 <View style={{marginBottom: normalize(24)}}>
+                                    <TouchableOpacity  onPressIn={() => triggerStateDialog(true)}>
                                     <Input
                                         label="State"
                                         placeholder="State"
                                         editable={false}
                                         value={state?.name}
-                                        onPressIn={() => triggerStateDialog(true)}
                                         rightIcon={<Icon icon={location} />}
+                                        onPressIn={() => triggerStateDialog(true)}
                                     />
+                                    </TouchableOpacity>
                                     {selectedStateError !== '' ? <ErrorText>{selectedStateError}</ErrorText> : ''}
                                 </View>
 
                                 <View style={{marginBottom: normalize(24)}}>
+                                    <TouchableOpacity  onPressIn={() => triggerTownDialog(true)}>
                                     <Input
                                         label="Town"
                                         placeholder="Town"
@@ -237,6 +237,7 @@ const NewAddress = () => {
                                         onPressIn={() => triggerTownDialog(true)}
                                         rightIcon={<Icon icon={location} />}
                                     />
+                                    </TouchableOpacity>
                                     {selectedTownError !== '' ? <ErrorText>{selectedTownError}</ErrorText> : ''}
                                 </View>
 
@@ -312,7 +313,7 @@ const NewAddress = () => {
                 }
 
             </ButtonSheet>
-        </View>
+        </WrapperNoScroll>
     );
 };
 

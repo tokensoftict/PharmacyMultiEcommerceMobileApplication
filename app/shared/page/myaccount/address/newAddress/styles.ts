@@ -51,9 +51,7 @@ export const _styles = (isDarkMode: boolean) =>
         item: {
             paddingVertical: normalize(12),
             fontSize: 18,
-            borderBottomWidth : normalize(1),
-            borderStyle : 'solid',
-            borderColor : semantic.text.borderColor
+
         },
 
     });

@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as action from "@/redux/actions";
 import { store } from "@/redux/store/store";
+import {AUTH_URL} from "@env";
 
 export default class AuthSessionService{
     /**
@@ -11,15 +12,24 @@ export default class AuthSessionService{
         store.dispatch(action.setApplicationData(data))
     }
 
-    setMedReminderData(data :any) {
-        AsyncStorage.setItem("medReminderData", JSON.stringify(data));
+    setTempSession(data :any) {
+        store.dispatch(action.setApplicationData(data))
     }
 
-    getMedReminderData() :any {
-       return AsyncStorage.getItem("medReminderData") ?? []
+    completeSession() {
+        const data =store.getState().systemReducer.auth;
+        AsyncStorage.setItem("auth", JSON.stringify(data));
     }
 
-   async destroySession() {
+    async getIntroPageStatus() {
+        return await AsyncStorage.getItem("hasShownIntroPage") ?? "NO";
+    }
+
+    setIntroPageStatus(status : string) {
+        AsyncStorage.setItem("hasShownIntroPage", "YES")
+    }
+
+    async destroySession() {
         await AsyncStorage.removeItem("auth");
         store.dispatch(action.setApplicationData({}));
         store.dispatch(action.setLaunchPage(""));
@@ -29,7 +39,7 @@ export default class AuthSessionService{
 
     fetchData = async (token : string) => {
         try {
-            const response = await fetch("http://auth.mystore.test:8001/api/v1/account/me?deviceKey="+store.getState().systemReducer.fireBaseKey, {
+            const response = await fetch(AUTH_URL+"me?deviceKey="+store.getState().systemReducer.fireBaseKey, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`, // Attach token here
@@ -39,6 +49,7 @@ export default class AuthSessionService{
             });
 
             if (!response.ok) {
+                console.log(response.body);
                 return response;
             }
 
@@ -60,6 +71,7 @@ export default class AuthSessionService{
         const refreshData = await this.fetchData(data.data.token.access_token)
         if(refreshData.status === true) {
             refreshData['loginStatus'] = true;
+            console.log("refreshData", refreshData.status)
             this.setAuthSession(refreshData);
             return true;
         }
@@ -70,7 +82,7 @@ export default class AuthSessionService{
         return store.getState().systemReducer.auth;
     }
 
-     setPageSessionData(key : string, value : any)  {
+    setPageSessionData(key : string, value : any)  {
         const data = store.getState().systemReducer.pageRouteData;
         data[key] = value;
         store.dispatch(action.setPageRouterData(data));
@@ -114,5 +126,13 @@ export default class AuthSessionService{
             return store.getState().systemReducer.pageRouteData[key];
         }
         return "";
+    }
+
+    setTrashedUserData(data :any) {
+        store.dispatch(action.setTrashedUserData(data));
+    }
+
+    getTrashedUserData() {
+        return store.getState().systemReducer.trashedUserData ?? false;
     }
 }

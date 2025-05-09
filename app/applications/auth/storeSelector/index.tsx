@@ -10,6 +10,7 @@ import {
 import Typography from "@/shared/component/typography";
 import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import SentenceCase from "@/shared/utils/SentenceCase.tsx";
+import {normalize} from "@/shared/helpers";
 
 const appImages: Record<string, any> = {
     "wholesales": require("@/assets/images/wholesales.jpg"),
@@ -84,10 +85,10 @@ const StoreSelectionScreen = ({ navigation }) => {
                     <Animated.View key={index} style={[styles.cardWrapper, fadeInStyle]}>
                         <TouchableOpacity onPress={() => selectStore((store.name == "sales representative" ? 'sales_representative' : store.name), store.status)} activeOpacity={0.85}>
                             <View style={styles.card}>
-                                <Image source={appImages[store.name]} style={styles.cardImage} />
+                                <Image resizeMode="cover" source={appImages[store.name]} style={styles.cardImage} />
                                 <View style={styles.cardContent}>
-                                    <Typography style={styles.storeName}>{SentenceCase(store.name)}</Typography>
-                                    <Typography style={styles.storeDesc}>{store.description}</Typography>
+                                    <Typography numberOfLines={1} style={styles.storeName}>{store.name == "supermarket" ? "SUPERMARKET & PHARMACY" : ( store.name === "wholesales" ? "WHOLESALES & BULK-SALES" :  store.name)}</Typography>
+                                    <Typography numberOfLines={2} style={styles.storeDesc}>{store.description}</Typography>
                                     <Typography style={styles.lastLogin}>{store.last_seen}</Typography>
                                 </View>
                             </View>
@@ -108,69 +109,70 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 30,
-        paddingHorizontal: 20,
+        paddingVertical: normalize(30),
+        paddingHorizontal: normalize(20),
     },
     logoWrapper: {
-        marginBottom: 20,
+        marginBottom: normalize(20),
         alignItems: 'center',
     },
     logo: {
-        width: 150,
-        height: 150,
+        width: normalize(150),
+        height: normalize(150),
     },
     welcomeSection: {
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: normalize(30),
     },
     welcome: {
-        fontSize: 20,
+        fontSize: normalize(20),
         fontWeight: 'bold',
         color: '#B30000',
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: normalize(16),
         color: '#555',
-        marginTop: 6,
+        marginTop: normalize(6),
     },
     cardWrapper: {
         width: '100%',
-        marginBottom: 20,
+        marginBottom: normalize(20),
     },
     card: {
         backgroundColor: '#fefefe',
-        borderRadius: 16,
-        elevation: 4,
+        borderRadius: normalize(16),
+        elevation: normalize(1),
         overflow: 'hidden',
         flexDirection: 'row',
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 10,
+        shadowRadius: normalize(10),
     },
     cardImage: {
-        width: 100,
-        height: 100,
+        width: normalize(100),
+        height: '100%',
         borderTopLeftRadius: 16,
         borderBottomLeftRadius: 16,
     },
     cardContent: {
         flex: 1,
-        padding: 12,
+        padding: normalize(12),
         justifyContent: 'center',
+        backgroundColor: 'white',
     },
     storeName: {
-        fontSize: 18,
+        fontSize: normalize(18),
         fontWeight: '600',
         color: '#B30000',
     },
     storeDesc: {
-        fontSize: 14,
+        fontSize: normalize(14),
         color: '#333',
         marginTop: 4,
     },
     lastLogin: {
-        fontSize: 12,
+        fontSize: normalize(12),
         color: '#888',
         marginTop: 6,
     },

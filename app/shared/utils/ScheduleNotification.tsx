@@ -2,6 +2,12 @@ import notifee, {AndroidImportance, TimestampTrigger, TriggerType} from '@notife
 
 export async function scheduleNotification(notificationId : number, drugName : string, dosage : string , measurement : string, dateTime : string|number, extra : any, environment : string, notificationType : string) {
 
+    const channelId =  await notifee.createChannel({
+        id: 'med_reminder_notification',
+        name: 'Medication Reminder',
+        importance: AndroidImportance.HIGH,
+    });
+
     // Convert dateTime to timestamp
     const timestamp = new Date(dateTime);
 
@@ -9,7 +15,9 @@ export async function scheduleNotification(notificationId : number, drugName : s
     const trigger: TimestampTrigger = {
         type: TriggerType.TIMESTAMP,
         timestamp: timestamp.getTime(),
-        alarmManager: true,
+        alarmManager: {
+            allowWhileIdle: true,
+        },
     };
 
 
@@ -21,7 +29,7 @@ export async function scheduleNotification(notificationId : number, drugName : s
             body: `Dosage: ${dosage} ${measurement}`,
             data : {extra : JSON.stringify(extra), environment : environment, notificationType : notificationType},
             android: {
-                channelId: 'drug_alerts',
+                channelId: channelId,
                 importance: AndroidImportance.HIGH,
                 // @ts-ignore
                 fullScreenIntent: true,

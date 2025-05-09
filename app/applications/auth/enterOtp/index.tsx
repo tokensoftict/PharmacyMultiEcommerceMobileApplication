@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Wrapper from "@/shared/component/wrapper";
 import {Image, View} from "react-native";
 import Typography from "@/shared/component/typography";
-import OtpForm from "@/shared/component/otpForm";
+import { OtpInput } from "react-native-otp-entry";
 import { Button } from "@/shared/component/buttons";
 import {styles} from './styles'
 import TitleAuth from "@/shared/component/titleAuth";
@@ -13,10 +13,11 @@ import ErrorText from "@/shared/component/ErrorText";
 import OtpService from "@/service/auth/OtpService";
 import Toasts from "@/shared/utils/Toast";
 import useEffectOnce from "@/shared/hooks/useEffectOnce";
+import {palette, semantic} from "@/shared/constants/colors.ts";
 
 
 // @ts-ignore
-export default  function EnterOtp({ navigation }) {
+export default  function EnterOtp({ navigation, route }) {
     const [otpError, setOtpError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState("");
@@ -27,9 +28,12 @@ export default  function EnterOtp({ navigation }) {
 
 
     useEffectOnce(function(){
-       navigation.addListener("focus", function (){
-           requestForOtp();
-       });
+       const requestForOTP = route.params?.otp ?? true;
+       if(requestForOTP){
+           navigation.addListener("focus", function (){
+               requestForOtp();
+           });
+       }
     }, []);
 
     const navigateAndClearStack = () => {
@@ -52,6 +56,7 @@ export default  function EnterOtp({ navigation }) {
                 setIsLoading(false);
                 if (response.data.status === true) {
                     Toasts("Phone Number has been verified successfully");
+                    new AuthSessionService().completeSession();
                     navigateAndClearStack();
                 } else {
                     const error = response.data.error;
@@ -98,14 +103,28 @@ export default  function EnterOtp({ navigation }) {
                 </View>
 
                 <View style={styles.containerEmail}>
-                    <Typography>A Four digits code has been send to</Typography>
+                    <Typography>A Four digits code has been sent to</Typography>
                     <Typography style={styles.textEmail}>{userProfile.data.phone}</Typography>
                 </View>
 
                 <View style={styles.form}>
-                    <OtpForm valueOtp={{}} changeOtpField={(otp) => {}} onOtpCodeCompleted={(code) =>{
-                        setOtpCode(code);
-                    }}/>
+                    <OtpInput
+                        numberOfDigits={4}
+                        focusColor={palette.main.p500}
+                        autoFocus={false}
+                        hideStick={true}
+                        placeholder="******"
+                        blurOnFilled={true}
+                        disabled={false}
+                        type="numeric"
+                        secureTextEntry={false}
+                        focusStickBlinkingDuration={500}
+                        onFilled={(text) => setOtpCode(text)}
+                        textInputProps={{
+                            accessibilityLabel: "Enter Otp Code",
+                        }}
+                    />
+                    <View style={{height : normalize(10)}}/>
                     {otpError !== '' ? <ErrorText>{otpError}</ErrorText> : ''}
                 </View>
                 <View style={styles.containerBtns}>

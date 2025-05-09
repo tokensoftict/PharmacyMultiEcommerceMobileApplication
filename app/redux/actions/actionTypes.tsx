@@ -9,4 +9,6 @@ export const LAUNCH_PAGE = "LAUNCH_PAGE";
 
 export const IMPERSONATE_DATA = "IMPERSONATE_DATA";
 
+export const TRASHED_USER = "TRASHED_USER";
+
 export const FIREBASE_DEVICE_KEY = "FIREBASE_DEVICE_KEY";

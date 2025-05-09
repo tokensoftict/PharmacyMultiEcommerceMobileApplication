@@ -17,6 +17,7 @@ import {Button} from "@/shared/component/buttons";
 import ResetPasswordService from "@/service/auth/ResetPasswordService";
 import AuthSessionService from "@/service/auth/AuthSessionService";
 import Toasts from "@/shared/utils/Toast.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 export default function ResetPassword() {
     const navigation = useNavigation<NavigationProps>();
@@ -65,9 +66,9 @@ export default function ResetPassword() {
             passwordRequest.resetPassword(phone, pin, password, passwordConfirmation).then(function (response){
                 setIsLoading(false);
                 if(response.data.status === true){
-                 new AuthSessionService().setPageSessionData("phone", "");
-                 Toasts('Your password has been reset successfully 👋 , please login with your new password');
-
+                    new AuthSessionService().setPageSessionData("phone", "");
+                    Toasts('Your password has been reset successfully 👋 , please login with your new password');
+                    backToLoginPage();
                 }else{
                     const error = response.data.error;
                     if(error.hasOwnProperty("pin")){
@@ -89,10 +90,9 @@ export default function ResetPassword() {
     }
 
     return (
-        <Wrapper loading={isLoading}>
+        <WrapperNoScroll loading={isLoading}>
+            <HeaderWithIcon />
             <View style={styles.container}>
-                <HeaderWithIcon />
-
                 <View style={styles.titleImageContainer}>
                     <TitleAuth title="Reset Password"/>
                     <Image
@@ -167,7 +167,7 @@ export default function ResetPassword() {
 
             </View>
 
-        </Wrapper>
+        </WrapperNoScroll>
 
     );
 

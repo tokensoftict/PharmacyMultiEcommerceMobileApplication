@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {styles} from "./styles";
 import HeaderWithIcon from "@/shared/component/headerBack";
 import Wrapper from "@/shared/component/wrapper";
-import {Image, View} from "react-native";
+import {ActivityIndicator, Image, TouchableOpacity, View} from "react-native";
 import TitleAuth from "@/shared/component/titleAuth";
 import {normalize} from "@/shared/helpers";
 import {logo} from "@/assets/images";
@@ -13,6 +13,11 @@ import ErrorText from "@/shared/component/ErrorText";
 import {Button} from "@/shared/component/buttons";
 import Toasts from "@/shared/utils/Toast.tsx";
 import Security from "@/service/auth/Security.tsx";
+import {semantic} from "@/shared/constants/colors.ts";
+import Typography from "@/shared/component/typography";
+import {useNavigation} from "@react-navigation/native";
+import {NavigationProps} from "@/shared/routes/stack.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 export default function ChangePassword() {
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +33,7 @@ export default function ChangePassword() {
     const [errorOldPassword, setErrorOldPassword] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const [errorPasswordConfirmation, setErrorPasswordConfirmation] = useState("");
-
+    const navigation = useNavigation<NavigationProps>();
     const security = new Security();
 
 
@@ -80,10 +85,9 @@ export default function ChangePassword() {
     }
 
     return (
-        <Wrapper loading={isLoading}>
+        <WrapperNoScroll loading={isLoading}>
+            <HeaderWithIcon title={"SECURITY"} />
             <View style={styles.container}>
-                <HeaderWithIcon />
-
                 <View style={styles.titleImageContainer}>
                     <TitleAuth title="Change Password"/>
                     <Image
@@ -151,14 +155,16 @@ export default function ChangePassword() {
                     </View>
 
                     <View style={styles.formControl}>
-                        <Button title="Delete My Account" loading={isLoading} disabled={isLoading}  onPress={doPasswordReset}  loadingText="Resetting Your Password Please wait.." />
+                        <TouchableOpacity  style={styles.addToCartButton} onPress={() =>{navigation.navigate('deleteAccount')}}>
+                            <Typography style={styles.buttonText}>Delete My Account</Typography>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
 
             </View>
 
-        </Wrapper>
+        </WrapperNoScroll>
 
     );
 

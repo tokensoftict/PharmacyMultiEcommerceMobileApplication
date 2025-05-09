@@ -1,20 +1,20 @@
 import React, {useState} from "react";
-import Wrapper from "../../../shared/component/wrapper";
-import HeaderWithIcon from "../../../shared/component/headerBack";
-import {Image, View} from "react-native";
-import TitleAuth from "../../../shared/component/titleAuth";
-import Typography from "../../../shared/component/typography";
-import Input from "../../../shared/component/input";
-import { Button } from "../../../shared/component/buttons";
+import HeaderWithIcon from "@/shared/component/headerBack";
+import {Image, ScrollView, View} from "react-native";
+import TitleAuth from "@/shared/component/titleAuth";
+import Typography from "@/shared/component/typography";
+import Input from "@/shared/component/input";
+import { Button } from "@/shared/component/buttons";
 import {styles} from './styles'
-import {normalize} from "../../../shared/helpers";
-import {logo} from "../../../assets/images";
+import {normalize} from "@/shared/helpers";
+import {logo} from "@/assets/images";
 import {CommonActions, useNavigation} from "@react-navigation/native";
-import {NavigationProps} from "../../../shared/routes/stack.tsx";
-import ErrorText from "../../../shared/component/ErrorText";
-import ResetPasswordService from "../../../service/auth/ResetPasswordService.tsx";
-import AuthSessionService from "../../../service/auth/AuthSessionService.tsx";
+import {NavigationProps} from "@/shared/routes/stack.tsx";
+import ErrorText from "@/shared/component/ErrorText";
+import ResetPasswordService from "@/service/auth/ResetPasswordService.tsx";
+import AuthSessionService from "@/service/auth/AuthSessionService.tsx";
 import Toasts from "@/shared/utils/Toast.tsx";
+import WrapperNoScroll from "@/shared/component/wrapperNoScroll";
 
 export default function ForgotPassword() {
     const navigation = useNavigation<NavigationProps>();
@@ -44,6 +44,7 @@ export default function ForgotPassword() {
                     if(!isNaN(Number(emailOrPhone))){
                         //this means they entered a phone number
                         (new AuthSessionService().setPageSessionData("phone", emailOrPhone));
+                        navigation.navigate('resetPassword');
                         Toasts(response.data.data.message)
                     }else{
                         Toasts(response.data.data.message)
@@ -62,36 +63,38 @@ export default function ForgotPassword() {
     }
 
   return (
-    <Wrapper loading={isLoading}>
-      <View style={styles.container}>
+    <WrapperNoScroll loading={isLoading}>
         <HeaderWithIcon />
+      <ScrollView style={{height : '100%', width:'100%'}} showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
 
-        <View style={styles.titleImageContainer}>
-          <TitleAuth title="Forgot Password"/>
-          <Image
-              style={{
-                width: normalize(100),
-                height: normalize(60),
-                marginTop: normalize(10)
-              }}
-              source={logo}
-          />
-        </View>
+              <View style={styles.titleImageContainer}>
+                  <TitleAuth title="Forgot Password"/>
+                  <Image
+                      style={{
+                          width: normalize(100),
+                          height: normalize(60),
+                          marginTop: normalize(10)
+                      }}
+                      source={logo}
+                  />
+              </View>
 
 
-        <Typography style={styles.description}>{"Don't worry! it Happens. please enter the email associated with your account"}</Typography>
+              <Typography style={styles.description}>{"Don't worry! it Happens. please enter the email or phone number associated with your account"}</Typography>
 
-        <View style={styles.form}>
-          <Input
-            label="Email/Phone Number"
-            placeholder="Enter Your Email or Phone Number"
-            value={emailOrPhone}
-            onChangeText={(emailOrPhone) => setEmailOrPhone(emailOrPhone)}
-          />
-            {emailOrPhoneError !== '' ? <ErrorText>{emailOrPhoneError}</ErrorText> : ''}
-        </View>
-        <Button title={"Reset Password"} disabled={isLoading} loading={isLoading} onPress={doPasswordRequest} />
-      </View>
-    </Wrapper>
+              <View style={styles.form}>
+                  <Input
+                      label="Email/Phone Number"
+                      placeholder="Enter Your Email or Phone Number"
+                      value={emailOrPhone}
+                      onChangeText={(emailOrPhone) => setEmailOrPhone(emailOrPhone)}
+                  />
+                  {emailOrPhoneError !== '' ? <ErrorText>{emailOrPhoneError}</ErrorText> : ''}
+              </View>
+              <Button title={"Request Password Reset"} disabled={isLoading} loading={isLoading} onPress={doPasswordRequest} />
+          </View>
+      </ScrollView>
+    </WrapperNoScroll>
   )
 }
